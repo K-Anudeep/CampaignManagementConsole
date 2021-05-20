@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entities
 {
-    public class Product
+    public class Product    // creating product class
     {
         public int ProductID { get; set; }
         public string ProductName { get; set; }
