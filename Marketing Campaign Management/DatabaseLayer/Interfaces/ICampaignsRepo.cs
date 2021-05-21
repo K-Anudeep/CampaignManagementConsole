@@ -9,7 +9,7 @@ namespace DatabaseLayer.Interfaces
 {
     public interface ICampaignsRepo
     {
-        bool AddCampaign();
+        bool AddCampaign(Campaign campaign);
 
         List<Campaign> ViewCampaigns();
 
