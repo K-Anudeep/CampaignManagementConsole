@@ -49,6 +49,8 @@
     <Compile Include="Interfaces\IUsersRepo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\LeadsRepo.cs" />
+    <Compile Include="Repositories\SalesRepo.cs" />
+    <Compile Include="Repositories\CampaignsRepo.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
