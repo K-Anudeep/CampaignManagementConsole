@@ -25,6 +25,7 @@ namespace DatabaseLayer.Repositories
                     CommandType = CommandType.StoredProcedure,
                     Connection = Connection.connection
                 };
+                command.Parameters.AddWithValue("@name", campaigns.Name);
                 command.Parameters.AddWithValue("@venue", campaigns.Venue);
                 command.Parameters.AddWithValue("@assignedto", campaigns.AssignedTo);
                 command.Parameters.AddWithValue("@staron", campaigns.StartedOn);
