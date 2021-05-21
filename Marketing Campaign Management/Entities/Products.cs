@@ -8,11 +8,11 @@ namespace Entities
 {
     public class Products
     {
-        private int _ProductID;
+        private int _productID;
         public int ProductID
         {
-            get{return _ProductID; }
-            set{ _ProductID = value; }
+            get{return _productID; }
+            set{ _productID = value; }
         }
 
         private string _ProductName;
