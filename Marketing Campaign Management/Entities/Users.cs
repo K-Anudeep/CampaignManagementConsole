@@ -8,60 +8,60 @@ namespace Entities
 {
     public class Users
     {
-        private int _UserID;
+        private int _userID;
         public int UserID 
         { 
-            get {return _UserID; } 
-            set {_UserID=value;  } 
+            get {return _userID; } 
+            set {_userID=value;  } 
         }
 
-        private string _FullName; 
+        private string _fullName; 
         public string FullName
         {
-            get {return _FullName; }
-            set {_FullName=value;  }
+            get {return _fullName; }
+            set {_fullName=value;  }
         }
 
-        private string _LoginID;
+        private string _loginID;
         public string LoginID
         {
-            get {return _LoginID; }
-            set {_LoginID=value;  }
+            get {return _loginID; }
+            set {_loginID=value;  }
         }
 
-        private string _Password;
+        private string _password;
         public string Password
         {
-            get {return _Password; }
-            set {_Password=value;  }
+            get {return _password; }
+            set {_password=value;  }
         }
 
-        private DateTime _DateOfJoin;
+        private DateTime _dateOfJoin;
         public DateTime DateOfJoin
         {
-            get {return _DateOfJoin; }
-            set {_DateOfJoin=value;  }
+            get {return _dateOfJoin; }
+            set {_dateOfJoin=value;  }
         }
 
-        private string _Address;
+        private string _address;
         public string Address
         {
-            get {return _Address; }
-            set {_Address=value;  }
+            get {return _address; }
+            set {_address=value;  }
         }
 
-        private byte _Discontinued;
+        private byte _discontinued;
         public byte Discontinued
         {
-            get {return _Discontinued; }
-            set {_Discontinued=value;  }
+            get {return _discontinued; }
+            set {_discontinued=value;  }
         }
 
-        private byte _IsAdmin;
+        private byte _isAdmin;
         public byte IsAdmin
         {
-            get {return _IsAdmin; }
-            set {_IsAdmin=value;  }
+            get {return _isAdmin; }
+            set {_isAdmin=value;  }
         }
 
     }

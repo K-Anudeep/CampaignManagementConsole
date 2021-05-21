@@ -15,26 +15,26 @@ namespace Entities
             set{ _productID = value; }
         }
 
-        private string _ProductName;
+        private string _productName;
         public string ProductName
         {
-            get{return _ProductName;}
-            set{ _ProductName = value; }
+            get{return _productName;}
+            set{ _productName = value; }
            
         }
 
-        private string _Description;
+        private string _description;
         public string Description
         {
-            get{return _Description; }
-            set{ _Description = value;}
+            get{return _description; }
+            set{ _description = value;}
         }
 
-        private decimal _UnitPrice;
+        private decimal _unitPrice;
         public decimal UnitPrice
         {
-            get{return _UnitPrice;}
-            set{_UnitPrice = value;}
+            get{return _unitPrice;}
+            set{_unitPrice = value;}
         }
     }
 }
