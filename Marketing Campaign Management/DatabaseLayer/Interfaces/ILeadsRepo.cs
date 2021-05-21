@@ -9,10 +9,10 @@ namespace DatabaseLayer.Interfaces
 {
     public interface ILeadsRepo
     {
-        bool AddLeads();
+        bool AddLeads(Leads leads);
 
         List<Leads> ViewLeads();
 
-        Leads OneLead();
+        Leads GetALead(int LeadID);
     }
 }
