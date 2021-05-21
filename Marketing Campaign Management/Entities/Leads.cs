@@ -8,14 +8,44 @@ namespace Entities
 {
     public class Leads
     {
-        public int LeadID { get ; set ; }
-        public int CampaignID { get ; set ; }
-        public string ConsumerName { get ; set ; }
-        public string EmailAddress { get ; set ; }
-        public int PhoneNo { get ; set ; }
-        public string PreferredMoC { get ; set ; }
-        public DateTime DateApproached { get ; set ; }
-        public int ProductID { get ; set ; }
-        public string Status { get ; set ; }
+        private int _LeadID;
+        public int LeadID
+        {
+            get { return _LeadID; }
+            set { _LeadID = value; }
+        }
+        private int _CampaignID;
+        public int CampaignID
+        {
+            get { return _CampaignID; }
+            set { _CampaignID = value; }
+        }
+        private string _ConsumerName;
+
+        public string ConsumerName { get => _ConsumerName; set => _ConsumerName = value; }
+        private string emailAddress;
+        public string EmailAddress { get => emailAddress; set => emailAddress = value; }
+
+        private int _PhoneNo;
+        public int PhoneNo { get => _PhoneNo; set => _PhoneNo = value; }
+
+        private string _PreferredMoC;
+        public string PreferredMoC { get => _PreferredMoC; set => _PreferredMoC = value; }
+
+        private DateTime _DateApproached;
+        public DateTime DateApproached { get => _DateApproached; set => _DateApproached = value; }
+
+        private int _ProductID;
+        public int ProductID { get => _ProductID; set => _ProductID = value; }
+
+        private string _Status;
+        public string Status { get => _Status; set => _Status = value; }
+
+      
+ 
+     
+  
+
+
     }
 }
