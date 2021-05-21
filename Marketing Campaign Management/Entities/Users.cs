@@ -8,14 +8,61 @@ namespace Entities
 {
     public class Users
     {
-       public int UserID { get; set; }
-       public String FullName { get; set; }
-       public String LoginID { get; set; }
-       public String Password { get; set; }
-       public DateTime DateOfJoin { get; set; }
-       public String Address { get; set; }
-       public Byte Discontinued { get; set; }
-       public Byte IsAdmin { get; set; }
-   
+        private int _UserID;
+        public int UserID 
+        { 
+            get {return _UserID; } 
+            set {_UserID=value;  } 
+        }
+
+        private string _FullName; 
+        public string FullName
+        {
+            get {return _FullName; }
+            set {_FullName=value;  }
+        }
+
+        private string _LoginID;
+        public string LoginID
+        {
+            get {return _LoginID; }
+            set {_LoginID=value;  }
+        }
+
+        private string _Password;
+        public string Password
+        {
+            get {return _Password; }
+            set {_Password=value;  }
+        }
+
+        private DateTime _DateOfJoin;
+        public DateTime DateOfJoin
+        {
+            get {return _DateOfJoin; }
+            set {_DateOfJoin=value;  }
+        }
+
+        private string _Address;
+        public string Address
+        {
+            get {return _Address; }
+            set {_Address=value;  }
+        }
+
+        private byte _Discontinued;
+        public byte Discontinued
+        {
+            get {return _Discontinued; }
+            set {_Discontinued=value;  }
+        }
+
+        private byte _IsAdmin;
+        public byte IsAdmin
+        {
+            get {return _IsAdmin; }
+            set {_IsAdmin=value;  }
+        }
+
     }
 }
