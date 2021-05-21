@@ -25,12 +25,11 @@ namespace DatabaseLayer.Repositories
                     CommandType = CommandType.StoredProcedure,
                     Connection = Connection.connection
                 };
-                command.Parameters.AddWithValue("@name", campaigns.Name);
-                command.Parameters.AddWithValue("@venue", campaigns.Venue);
-                command.Parameters.AddWithValue("@assignedto", campaigns.AssignedTo);
-                command.Parameters.AddWithValue("@staron", campaigns.StartedOn);
-                command.Parameters.AddWithValue("@completedon", campaigns.CompletedOn);
-                command.Parameters.AddWithValue("@isopen", campaigns.IsOpen);
+                command.Parameters.AddWithValue("@Name", campaigns.Name);
+                command.Parameters.AddWithValue("@Venue", campaigns.Venue);
+                command.Parameters.AddWithValue("@AssignedTo", campaigns.AssignedTo);
+                command.Parameters.AddWithValue("@StartedOn", campaigns.StartedOn);
+                command.Parameters.AddWithValue("@IsOpen", campaigns.IsOpen);
                 Connection.Open();
                 command.ExecuteNonQuery();
                 return true;
@@ -55,7 +54,7 @@ namespace DatabaseLayer.Repositories
                     CommandType = CommandType.StoredProcedure,
                     Connection = Connection.connection
                 };
-                command.Parameters.AddWithValue("@cid",cId);
+                command.Parameters.AddWithValue("@CampaignId",cId);
                 Connection.Open();
                 command.ExecuteNonQuery();
                 return true;
