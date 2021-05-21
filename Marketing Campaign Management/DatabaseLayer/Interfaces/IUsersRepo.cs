@@ -9,7 +9,7 @@ namespace DatabaseLayer.Interfaces
 {
     public interface IUsersRepo
     {
-        bool AddUsers();
+        bool AddUsers(Users user);
 
         List<Users> DisplayUsers();
 
