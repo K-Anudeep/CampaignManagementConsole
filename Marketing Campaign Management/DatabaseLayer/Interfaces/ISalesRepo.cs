@@ -9,7 +9,7 @@ namespace DatabaseLayer.Interfaces
 {
     public interface ISalesRepo
     {
-        bool CreateSales();
+        bool CreateSales(Sales sales);
 
         List<Sales> ViewSales();
     }

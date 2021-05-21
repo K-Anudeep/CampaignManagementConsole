@@ -70,7 +70,18 @@ namespace DatabaseLayer.Repositories
             }
         }
 
-
+        public List<Campaigns> ViewCampaigns()
+        {
+            try
+            {
+                throw new NotImplementedException();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
 
     }
 }
