@@ -8,54 +8,33 @@ namespace Entities
 {
     public class Products
     {
-       private int _productid
-            public int ProductID
+        private int _ProductID;
+        public int ProductID
         {
-            get
-            {
-                return _productid;
-            }
-            set 
-            {
-                _productid = value;
-            }
+            get{return _ProductID; }
+            set{ _ProductID = value; }
         }
-            
-        private string _productname
-                public string ProductName
+
+        private string _ProductName;
+        public string ProductName
         {
-            get
-            {
-                return _productname;
-            }
-            set 
-            {
-                _productname = value;
-            }
+            get{return _ProductName;}
+            set{ _ProductName = value; }
+           
         }
-        private string _description
-                public string Description
+
+        private string _Description;
+        public string Description
         {
-            get
-            {
-                return _description;
-            }
-            set 
-            {
-                _description = value;
-            }
+            get{return _Description; }
+            set{ _Description = value;}
         }
-        private decimal _unitprice
-            public decimal UnitPrice
+
+        private decimal _UnitPrice;
+        public decimal UnitPrice
         {
-            get
-            {
-                return _unitprice;
-            }
-            set 
-            {
-                _unitprice = value;
-            }
+            get{return _UnitPrice;}
+            set{_UnitPrice = value;}
         }
     }
 }
