@@ -42,8 +42,8 @@ namespace Entities
 
 
 
-        private int _phoneNo;
-        public int PhoneNo
+        private string _phoneNo;
+        public string PhoneNo
         {
             get { return _phoneNo; }
             set { _phoneNo = value; }
