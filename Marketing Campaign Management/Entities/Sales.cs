@@ -8,46 +8,46 @@ namespace Entities
 {
     public class Sales
     {
-        private int _OrderID;
+        private int _orderID;
         public int OrderID 
         { 
-            get {return _OrderID; } 
-            set {_OrderID=value;  } 
+            get {return _orderID; } 
+            set {_orderID=value;  } 
         }
 
-        private int _LeadID; 
+        private int _leadID; 
         public int LeadID
         {
-            get {return _LeadID; }
-            set {_LeadID=value;  }
+            get {return _leadID; }
+            set {_leadID=value;  }
         }
 
-        private string _ShippingAddress;
+        private string _shippingAddress;
         public string ShippingAddress
         {
-            get {return _ShippingAddress; }
-            set {_ShippingAddress=value;  }
+            get {return _shippingAddress; }
+            set {_shippingAddress=value;  }
         }
 
-        private string _BillingAddress;
+        private string _billingAddress;
         public string BillingAddress
         {
-            get {return _BillingAddress; }
-            set {_BillingAddress=value;  }
+            get {return _billingAddress; }
+            set {_billingAddress=value;  }
         }
 
-        private DateTime _CreaterON;
+        private DateTime _createrON;
         public DateTime CreaterON
         {
-            get {return _CreaterON; }
-            set {_CreaterON=value;  }
+            get {return _createrON; }
+            set {_createrON=value;  }
         }
 
-        private string _PaymentMode;
+        private string _paymentMode;
         public string PaymentMode
         {
-            get {return _PaymentMode; }
-            set {_PaymentMode=value;  }
+            get {return _paymentMode; }
+            set {_paymentMode=value;  }
         }
 
     }
