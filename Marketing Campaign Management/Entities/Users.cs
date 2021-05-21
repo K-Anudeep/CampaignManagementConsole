@@ -50,11 +50,11 @@ namespace Entities
             set {_address=value;  }
         }
 
-        private byte _discontinued;
+        private byte _disContinued;
         public byte Discontinued
         {
-            get {return _discontinued; }
-            set {_discontinued=value;  }
+            get {return _disContinued; }
+            set {_disContinued=value;  }
         }
 
         private byte _isAdmin;
