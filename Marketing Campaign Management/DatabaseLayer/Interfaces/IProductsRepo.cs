@@ -9,7 +9,7 @@ namespace DatabaseLayer.Interfaces
 {
     public interface IProductsRepo
     {
-        bool AddProducts();
+        bool AddProducts(Products products);
 
         List<Products> DisplayProducts();
 

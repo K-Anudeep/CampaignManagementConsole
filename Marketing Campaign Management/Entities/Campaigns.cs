@@ -6,13 +6,20 @@ using System.Threading.Tasks;
 
 namespace Entities
 {
-    public class Campaign
+    public class Campaigns
     {
         private int _campaignID;
         public int CampaignID
         {
             get { return _campaignID; }
             set { _campaignID = value; }
+        }
+
+        private string _name;
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value;}
         }
 
         private string _venue;
