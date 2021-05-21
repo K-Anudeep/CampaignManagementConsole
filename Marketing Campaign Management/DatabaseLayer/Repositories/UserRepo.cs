@@ -25,7 +25,6 @@ namespace DatabaseLayer.Repositories
                     CommandType = CommandType.StoredProcedure,
                     Connection = Connection.connection
                 };
-                command.Parameters.AddWithValue("@UserId", user.UserID);
                 command.Parameters.AddWithValue("@FullName", user.FullName);
                 command.Parameters.AddWithValue("@LoginID", user.LoginID);
                 command.Parameters.AddWithValue("@Password", user.Password);
@@ -40,7 +39,8 @@ namespace DatabaseLayer.Repositories
             }
             catch (Exception ex)
             {
-                throw ex;
+                Console.WriteLine(ex.Message);
+                return false;
             }
             finally
             {
@@ -65,7 +65,8 @@ namespace DatabaseLayer.Repositories
             }
             catch (Exception ex)
             {
-                throw ex;
+                Console.WriteLine(ex.Message);
+                return false;
             }
             finally
             {
@@ -113,7 +114,8 @@ namespace DatabaseLayer.Repositories
             }
             catch(Exception ex)
             {
-                throw ex;
+                Console.WriteLine(ex.Message);
+                return null;
             }
         }
 

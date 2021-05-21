@@ -23,11 +23,10 @@ namespace DatabaseLayer.Repositories
                 command = new SqlCommand()
                 {
                     CommandText = "AddLeads",
-                    CommandType = System.Data.CommandType.StoredProcedure,
+                    CommandType = CommandType.StoredProcedure,
                     Connection = Connection.connection
 
                 };
-                command.Parameters.AddWithValue("@LeadId", leads.LeadID);
                 command.Parameters.AddWithValue("@CampaignID", leads.CampaignID);
                 command.Parameters.AddWithValue("@ConsumerName", leads.ConsumerName);
                 command.Parameters.AddWithValue("@EMailAddress", leads.EmailAddress);
@@ -42,7 +41,8 @@ namespace DatabaseLayer.Repositories
             }
             catch(Exception ex)
             {
-                throw ex;
+                Console.WriteLine(ex.Message);
+                return false;
             }
             finally
             {
@@ -89,6 +89,7 @@ namespace DatabaseLayer.Repositories
                 Connection.Close();
             }
         }
+
         public List<Leads> ViewLeads()
         {
             try
@@ -121,21 +122,16 @@ namespace DatabaseLayer.Repositories
                              }
                             );
                     }
-
-
                 }
                 return leads;
 
             }
             catch (Exception ex)
             {
-                throw ex;
+                Console.WriteLine(ex.Message);
+                return null;
             }
         }
-
-
-
-
 
     }
 }

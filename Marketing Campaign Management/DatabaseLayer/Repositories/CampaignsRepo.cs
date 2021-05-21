@@ -29,14 +29,14 @@ namespace DatabaseLayer.Repositories
                 command.Parameters.AddWithValue("@Venue", campaigns.Venue);
                 command.Parameters.AddWithValue("@AssignedTo", campaigns.AssignedTo);
                 command.Parameters.AddWithValue("@StartedOn", campaigns.StartedOn);
-                command.Parameters.AddWithValue("@IsOpen", campaigns.IsOpen);
                 Connection.Open();
                 command.ExecuteNonQuery();
                 return true;
             }
             catch (Exception ex)
             {
-                throw ex;
+                Console.WriteLine(ex.Message);
+                return false;
             }
             finally
             {
@@ -61,7 +61,8 @@ namespace DatabaseLayer.Repositories
             }
             catch (Exception ex)
             {
-                throw ex;
+                Console.WriteLine(ex.Message);
+                return false;
             }
             finally
             {

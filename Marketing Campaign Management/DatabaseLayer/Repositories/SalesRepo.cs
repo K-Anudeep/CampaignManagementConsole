@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Entities;
 using DatabaseLayer.Interfaces;
+using System.Data.SqlClient;
+using Entities;
+using System.Data;
 
 namespace DatabaseLayer.Repositories
-
+{ 
  public class SalesRepo : ISalesRepo
  { 
     SqlCommand command = null;
@@ -16,18 +18,17 @@ namespace DatabaseLayer.Repositories
     public bool CreateSales(Sales sales)
     {
         try
-        {
+        {           
             command = new SqlCommand()
             {
                 CommandText = "CreateSales",
                 CommandType = CommandType.StoredProcedure,
                 Connection = Connection.connection
             };
-
-            command.Parameters.AddWithValue("@leadid", sales.SalesLeadID);
-            command.Parameters.AddWithValue("@shippingaddress", sales.SalesShippingAddress);
-            command.Parameters.AddWithValue("@billingaddress", sales.SalesBillingAddress);
-            command.Parameters.AddWithValue("@createdon", sales.CreatedDate);
+            command.Parameters.AddWithValue("@leadid", sales.LeadID);
+            command.Parameters.AddWithValue("@shippingaddress", sales.ShippingAddress);
+            command.Parameters.AddWithValue("@billingaddress", sales.BillingAddress);
+            command.Parameters.AddWithValue("@createdon", sales.CreatedON);
             command.Parameters.AddWithValue("@paymentmode", sales.PaymentMode);
             Connection.Open();
             command.ExecuteNonQuery();
@@ -35,7 +36,8 @@ namespace DatabaseLayer.Repositories
         }
         catch (Exception ex)
         {
-            throw ex;
+           Console.WriteLine(ex.Message);
+           return false;
         }
         finally
         {
@@ -50,7 +52,7 @@ namespace DatabaseLayer.Repositories
             List<Sales> sales = null;
             command = new SqlCommand()
             {
-                CommandText = "ViewSales",
+                CommandText = "VIEWSALES",
                 CommandType = CommandType.StoredProcedure,
                 Connection = Connection.connection
             };
@@ -70,23 +72,20 @@ namespace DatabaseLayer.Repositories
                              LeadID = (int)dataRow["leadid"],
                              ShippingAddress = dataRow["shippingaddress"].ToString(),
                              BillingAddress = dataRow["billingaddress"].ToString(),
-                             CreatedDate = Convert.ToDateTime(dataRow["createddate"]),
+                             CreatedON = Convert.ToDateTime(dataRow["createddate"]),
                              PaymentMode = dataRow["paymentmode"].ToString()
                          }
-                         );
-                        
+                         );                        
                 }
-
-
             }
             return sales;
 
         }
         catch (Exception ex)
         {
-            throw ex;
+             Console.WriteLine(ex.Message);
+             return null;
         }
     }
-
  }
 }

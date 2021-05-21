@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Entities;
+using DatabaseLayer.Interfaces;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
-
-
 
 namespace DatabaseLayer.Repositories
 {
@@ -17,17 +16,16 @@ namespace DatabaseLayer.Repositories
         SqlCommand command = null;
         SqlDataAdapter dataAdapter = null;
 
-        public bool AddProduct(Products product)
+        public bool AddProducts(Products product)
         {
             try
             {
-                command = new SqlCommand();
+                command = new SqlCommand()
                 {
                     CommandText = "AddProduct",
                     CommandType = CommandType.StoredProcedure,
                     Connection = Connection.connection
                 };
-                command.Parameters.AddWithValue("@productid", product.ProductID);
                 command.Parameters.AddWithValue("@productname", product.ProductName);
                 command.Parameters.AddWithValue("@description", product.Description);
                 command.Parameters.AddWithValue("@unitprice", product.UnitPrice);
@@ -38,7 +36,8 @@ namespace DatabaseLayer.Repositories
             }
             catch (Exception ex)
             {
-                throw ex;
+                Console.WriteLine(ex.Message);
+                return false;
             }
             finally
             {
@@ -63,11 +62,11 @@ namespace DatabaseLayer.Repositories
                 dataAdapter.Fill(dataSet, "Product");
                 if (dataSet.Tables["Product"].Rows.Count > 0)
                 {
-                    employees = new List<Products>();
+                    products = new List<Products>();
                     foreach (DataRow dataRow in dataSet.Tables["Product"].Rows)
                     {
-                        employees.Add(
-                             new Product()
+                        products.Add(
+                             new Products()
                              {
                                  ProductID = (int)dataRow["ProductID"],
                                  ProductName = dataRow["ProductName"].ToString(),
@@ -77,47 +76,48 @@ namespace DatabaseLayer.Repositories
                             );
                     }
 
-
                 }
-                return employees;
+                return products;
 
             }
             catch (Exception ex)
             {
-                throw ex;
+                Console.WriteLine(ex.Message);
+                return null;
             }
         }
         public Products OneProduct(int pId)
         {
             try
             {
-                Product product = null;
+                Products product = null;
                 command = new SqlCommand()
                 {
                     CommandText = "OneProductByProductID",
                     CommandType = CommandType.StoredProcedure,
                     Connection = Connection.connection
                 };
-                command.Parameters.AddWithValue("@productid",ProductId);
+                command.Parameters.AddWithValue("@productid",pId);
                 dataAdapter = new SqlDataAdapter(command);
                 DataTable dataTable = new DataTable("Product");
                 dataAdapter.Fill(dataTable);
                 if (dataTable.Rows.Count > 0)
                 {
                     DataRow dataRow = dataTable.Rows[0];
-                    employee = new Product()
+                    product = new Products()
                     {
                         ProductName = dataRow["ProductName"].ToString(),
                         Description = dataRow["Description"].ToString(),
                         UnitPrice = (decimal)dataRow["UnitPrice"],
                     };
                 }
-                return employee;
+                return product;
 
             }
             catch (Exception ex)
             {
-                throw ex;
+                Console.WriteLine(ex.Message);
+                return null;
             }
 
         }
@@ -131,14 +131,15 @@ namespace DatabaseLayer.Repositories
                     CommandType = CommandType.StoredProcedure,
                     Connection = Connection.connection
                 };
-                command.Parameters.AddWithValue("@productid", ProductID);
+                command.Parameters.AddWithValue("@productid", pID);
                 Connection.Open();
                 command.ExecuteNonQuery();
                 return true;
             }
             catch (Exception ex)
             {
-                throw ex;
+                Console.WriteLine(ex.Message);
+                return false;
             }
             finally
             {
