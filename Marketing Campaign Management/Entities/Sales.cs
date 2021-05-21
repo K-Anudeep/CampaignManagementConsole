@@ -16,7 +16,7 @@ namespace Entities
         }
 
         private int _LeadID; 
-        public string LeadID
+        public int LeadID
         {
             get {return _LeadID; }
             set {_LeadID=value;  }
