@@ -48,6 +48,10 @@
     <Compile Include="Interfaces\ISalesRepo.cs" />
     <Compile Include="Interfaces\IUsersRepo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+	  <Compile Include="Repositories\CampaignsRepo.cs"/>
+	  <Compile Include="Repositories\LeadsRepo.cs"/>
+	  <Compile Include="Repositories\SalesRepo.cs"/>
+	  <Compile Include="Repositories\UserRepo.cs"/>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
