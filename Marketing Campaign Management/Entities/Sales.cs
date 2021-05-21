@@ -36,11 +36,11 @@ namespace Entities
             set {_billingAddress=value;  }
         }
 
-        private DateTime _createrON;
-        public DateTime CreaterON
+        private DateTime _createdON;
+        public DateTime CreatedON
         {
-            get {return _createrON; }
-            set {_createrON=value;  }
+            get {return _createdON; }
+            set {_createdON=value;  }
         }
 
         private string _paymentMode;
