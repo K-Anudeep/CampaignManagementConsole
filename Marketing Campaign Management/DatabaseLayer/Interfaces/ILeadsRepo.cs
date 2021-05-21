@@ -13,6 +13,6 @@ namespace DatabaseLayer.Interfaces
 
         List<Leads> ViewLeads();
 
-        Leads GetOneLead(int lId);
+        Leads GetALead(int LeadID);
     }
 }
