@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entities
 {
-    public class Campaign
+    public class Campaigns
     {
         private int _campaignID;
         public int CampaignID

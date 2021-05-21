@@ -11,7 +11,7 @@ namespace DatabaseLayer.Interfaces
     {
         bool AddCampaign();
 
-        List<Campaign> ViewCampaigns();
+        List<Campaigns> ViewCampaigns();
 
         bool CloseCampaign(int cId);
     }
