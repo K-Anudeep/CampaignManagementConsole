@@ -10,7 +10,7 @@ namespace BusinessLayer.Services
     {
         public bool CheckLeadStatus(int leadID)
         {
-           
+            return false;
         }
     }
 }
