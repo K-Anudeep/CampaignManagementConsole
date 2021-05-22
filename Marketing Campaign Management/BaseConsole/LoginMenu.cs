@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BaseConsole
 {
-    class Program
+    class LoginMenu
     {
         static void Main(string[] args)
         {
