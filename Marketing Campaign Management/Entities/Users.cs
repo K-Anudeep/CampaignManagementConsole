@@ -8,6 +8,8 @@ namespace Entities
 {
     public class Users
     {
+        public static int sessionId;
+
         private int _userID;
         public int UserID 
         { 

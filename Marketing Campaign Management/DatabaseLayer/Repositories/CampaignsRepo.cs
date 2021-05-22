@@ -70,13 +70,87 @@ namespace DatabaseLayer.Repositories
             }
         }
 
-        public List<Campaigns> ViewCampaigns()
+        public List<Campaigns> ViewCampaignsByExec()
         {
             try
             {
-                throw new NotImplementedException();
+                List<Campaigns> campaigns = null;
+                command = new SqlCommand()
+                {
+                    CommandText = "ViewCampaignByExec",
+                    CommandType = CommandType.StoredProcedure,
+                    Connection = Connection.connection
+                };
+
+                dataAdapter = new SqlDataAdapter(command);
+                DataSet dataSet = new DataSet();
+                dataAdapter.Fill(dataSet, "CampaignsByExec");
+                if (dataSet.Tables["CampaignsByExec"].Rows.Count > 0)
+                {
+                    campaigns = new List<Campaigns>();
+                    foreach (DataRow dataRow in dataSet.Tables["CampaignsByExec"].Rows)
+                    {
+                        campaigns.Add(
+                             new Campaigns()
+                             {
+                                 CampaignID = (int)dataRow["LeadID"],
+                                 Name = dataRow["Name"].ToString(),
+                                 Venue = dataRow["Venue"].ToString(),
+                                 AssignedTo = (int)dataRow["AssignedTo"],
+                                 StartedOn = (DateTime)(dataRow["StartedOn"]),
+                                 CompletedOn = Convert.ToDateTime(dataRow["CompletedOn"]),
+                                 IsOpen = (bool)dataRow["IsOpen"]
+                             }
+                            );
+                    }
+                }
+                return campaigns;
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
+        public List<Campaigns> ViewCampaignsByAssigned()
+        {
+            try
+            {
+                List<Campaigns> campaigns = null;
+                command = new SqlCommand()
+                {
+                    CommandText = "ViewCampaignByAssigned",
+                    CommandType = CommandType.StoredProcedure,
+                    Connection = Connection.connection
+                };
+
+                dataAdapter = new SqlDataAdapter(command);
+                DataSet dataSet = new DataSet();
+                dataAdapter.Fill(dataSet, "CampaignsByExec");
+                if (dataSet.Tables["CampaignsByExec"].Rows.Count > 0)
+                {
+                    campaigns = new List<Campaigns>();
+                    foreach (DataRow dataRow in dataSet.Tables["CampaignsByExec"].Rows)
+                    {
+                        campaigns.Add(
+                             new Campaigns()
+                             {
+                                 CampaignID = (int)dataRow["LeadID"],
+                                 Name = dataRow["Name"].ToString(),
+                                 Venue = dataRow["Venue"].ToString(),
+                                 AssignedTo = (int)dataRow["AssignedTo"],
+                                 StartedOn = (DateTime)(dataRow["StartedOn"]),
+                                 CompletedOn = Convert.ToDateTime(dataRow["CompletedOn"]),
+                                 IsOpen = (bool)dataRow["IsOpen"]
+                             }
+                            );
+                    }
+                }
+                return campaigns;
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 return null;
