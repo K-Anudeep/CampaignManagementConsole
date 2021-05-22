@@ -33,13 +33,13 @@ namespace DatabaseLayer.Repositories
                 command.Parameters.AddWithValue("@PhoneNo", leads.PhoneNo);
                 command.Parameters.AddWithValue("@PreferredMoC", leads.PreferredMoC);
                 command.Parameters.AddWithValue("@DateApproached", leads.DateApproached);
-                command.Parameters.AddWithValue("@ProductID",leads.ProductID);
+                command.Parameters.AddWithValue("@ProductID", leads.ProductID);
                 command.Parameters.AddWithValue("@Status", leads.Status);
                 Connection.Open();
                 command.ExecuteNonQuery();
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 return false;

@@ -82,8 +82,8 @@ namespace DatabaseLayer.Repositories
                 command = new SqlCommand()
                 {
                     CommandText = "DisplayUsers",
-                    CommandType= CommandType.StoredProcedure,
-                    Connection= Connection.connection
+                    CommandType = CommandType.StoredProcedure,
+                    Connection = Connection.connection
 
                 };
                 dataAdapter = new SqlDataAdapter(command);
@@ -107,12 +107,12 @@ namespace DatabaseLayer.Repositories
 
                             }
                             );
-                            
+
                     }
                 }
                 return users;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 return null;
@@ -146,10 +146,7 @@ namespace DatabaseLayer.Repositories
                         DateOfJoin = (DateTime)datarow["DateOfJoin"],
                         Discontinued = (byte)datarow["Discontinued"],
                         IsAdmin = (byte)datarow["IsAdmin"]
-
                     };
-
-
                 }
                 return user;
             }

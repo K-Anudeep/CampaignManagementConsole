@@ -10,7 +10,7 @@ using System.Data.SqlClient;
 
 namespace DatabaseLayer.Repositories
 {
-   public class CampaignsRepo :ICampaignsRepo
+    public class CampaignsRepo : ICampaignsRepo
     {
         SqlCommand command = null;
         SqlDataAdapter dataAdapter = null;
@@ -54,7 +54,7 @@ namespace DatabaseLayer.Repositories
                     CommandType = CommandType.StoredProcedure,
                     Connection = Connection.connection
                 };
-                command.Parameters.AddWithValue("@CampaignId",cId);
+                command.Parameters.AddWithValue("@CampaignId", cId);
                 Connection.Open();
                 command.ExecuteNonQuery();
                 return true;
@@ -114,7 +114,7 @@ namespace DatabaseLayer.Repositories
             }
         }
 
-        public List<Campaigns> ViewCampaignsByAssigned()
+        public List<Campaigns> ViewCampaignsByAssigned(int uId)
         {
             try
             {
@@ -155,6 +155,11 @@ namespace DatabaseLayer.Repositories
                 Console.WriteLine(ex.Message);
                 return null;
             }
+        }
+
+        public bool StatusCheck(int cId)
+        {
+
         }
 
     }

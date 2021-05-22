@@ -11,7 +11,7 @@ using System.Configuration;
 
 namespace DatabaseLayer.Repositories
 {
-	public class ProductRepo : IProductsRepo
+    public class ProductRepo : IProductsRepo
     {
         SqlCommand command = null;
         SqlDataAdapter dataAdapter = null;
@@ -44,7 +44,7 @@ namespace DatabaseLayer.Repositories
                 Connection.Close();
             }
         }
-       
+
         public List<Products> DisplayProducts()
         {
             try
@@ -71,7 +71,7 @@ namespace DatabaseLayer.Repositories
                                  ProductID = (int)dataRow["ProductID"],
                                  ProductName = dataRow["ProductName"].ToString(),
                                  Description = dataRow["Description"].ToString(),
-                                 UnitPrice= (decimal)dataRow["UnitPrice"],
+                                 UnitPrice = (decimal)dataRow["UnitPrice"],
                              }
                             );
                     }
@@ -97,7 +97,7 @@ namespace DatabaseLayer.Repositories
                     CommandType = CommandType.StoredProcedure,
                     Connection = Connection.connection
                 };
-                command.Parameters.AddWithValue("@productid",pId);
+                command.Parameters.AddWithValue("@productid", pId);
                 dataAdapter = new SqlDataAdapter(command);
                 DataTable dataTable = new DataTable("Product");
                 dataAdapter.Fill(dataTable);

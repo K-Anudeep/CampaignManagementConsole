@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DatabaseLayer;
 using Entities;
+using DatabaseLayer.Repositories;
 
 namespace BusinessLayer.Services
 {
-    public class AdminMenu
+    public interface IExecutiveService
     {
+        bool CheckLeadStatus(int leadID);
+
+        bool CampaignStatusCheck(int cID);
     }
 }

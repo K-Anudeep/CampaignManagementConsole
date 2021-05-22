@@ -16,5 +16,7 @@ namespace DatabaseLayer.Interfaces
         List<Campaigns> ViewCampaignsByAssigned(int uId);
 
         bool CloseCampaign(int cId);
+
+        bool StatusCheck(int cId);
     }
 }
