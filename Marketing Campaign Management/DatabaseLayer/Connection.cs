@@ -14,7 +14,7 @@ namespace DatabaseLayer
         public static SqlConnection connection = null;
         static Connection()
         {
-            connection = new SqlConnection(@"Data Source=sp1mcm;Initial Catalog=master;Integrated Security=True");
+            connection = new SqlConnection(@"Data Source=mcmdb.centralindia.cloudapp.azure.com;Initial Catalog=master;User ID=sp1admin;Password=sprint1dblog!");
         }
         public static void Open()
         {
