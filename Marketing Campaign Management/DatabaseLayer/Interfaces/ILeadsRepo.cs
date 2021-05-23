@@ -13,7 +13,7 @@ namespace DatabaseLayer.Interfaces
 
         List<Leads> ViewLeadsToExec();
 
-        List<Leads> ViewLeadsByCampaign();
+        List<Leads> ViewLeadsByCampaign(int cId);
 
         Leads GetALead(int leadID);
 

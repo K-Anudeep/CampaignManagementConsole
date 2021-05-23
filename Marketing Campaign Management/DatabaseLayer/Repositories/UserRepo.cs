@@ -21,7 +21,7 @@ namespace DatabaseLayer.Repositories
             {
                 command = new SqlCommand()
                 {
-                    CommandText = "AddUsers",
+                    CommandText = "Add_Users",
                     CommandType = CommandType.StoredProcedure,
                     Connection = Connection.connection
                 };
@@ -30,7 +30,6 @@ namespace DatabaseLayer.Repositories
                 command.Parameters.AddWithValue("@Password", user.Password);
                 command.Parameters.AddWithValue("@DateOfJoin", user.DateOfJoin);
                 command.Parameters.AddWithValue("@Address", user.Address);
-                command.Parameters.AddWithValue("@Discontinued", user.Discontinued);
                 command.Parameters.AddWithValue("@IsAdmin", user.IsAdmin);
                 Connection.Open();
                 command.ExecuteNonQuery();
@@ -52,16 +51,23 @@ namespace DatabaseLayer.Repositories
         {
             try
             {
-                command = new SqlCommand()
+                UserRepo userRepo = new UserRepo();
+                if (userRepo.OneUser(uId) != null)
                 {
-                    CommandText = "DiscontinueUser",
-                    CommandType = CommandType.StoredProcedure,
-                    Connection = Connection.connection
-                };
-                command.Parameters.AddWithValue("@UserID", uId);
-                Connection.Open();
-                command.ExecuteNonQuery();
-                return true;
+                    command = new SqlCommand()
+                    {
+                        CommandText = "DiscontinueUser",
+                        CommandType = CommandType.StoredProcedure,
+                        Connection = Connection.connection
+                    };
+                    command.Parameters.AddWithValue("@UserID", uId);
+                    Connection.Open();
+                    command.ExecuteNonQuery();
+                    return true;
+                }
+                else
+                    throw new Exception("User ID not found!");
+                
             }
             catch (Exception ex)
             {
@@ -103,6 +109,7 @@ namespace DatabaseLayer.Repositories
                                 Password = datarow["Password"].ToString(),
                                 DateOfJoin = (DateTime)datarow["DateOfJoin"],
                                 Discontinued = (byte)datarow["Discontinued"],
+                                Address = datarow["Address"].ToString(),
                                 IsAdmin = (byte)datarow["IsAdmin"]
 
                             }

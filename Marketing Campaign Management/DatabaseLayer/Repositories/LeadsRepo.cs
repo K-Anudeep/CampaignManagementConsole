@@ -204,7 +204,7 @@ namespace DatabaseLayer.Repositories
             }
         }
 
-        public List<Leads> ViewLeadsByCampaign()
+        public List<Leads> ViewLeadsByCampaign(int cId)
         {
             try
             {
@@ -212,12 +212,12 @@ namespace DatabaseLayer.Repositories
                 List<Leads> leads = null;
                 command = new SqlCommand()
                 {
-                    CommandText = "ViewLeadsToExecutive",
+                    CommandText = "ViewLeadsByCampaign",
                     CommandType = CommandType.StoredProcedure,
                     Connection = Connection.connection
                 };
                 SessionDetails session = new SessionDetails();
-                command.Parameters.AddWithValue("@UserID", session.UserID);
+                command.Parameters.AddWithValue("@CampaignID", cId);
                 command.ExecuteNonQuery();
                 dataAdapter = new SqlDataAdapter(command);
                 DataTable leadTable = new DataTable();

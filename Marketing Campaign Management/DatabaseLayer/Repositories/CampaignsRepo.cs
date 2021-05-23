@@ -48,16 +48,22 @@ namespace DatabaseLayer.Repositories
         {
             try
             {
-                command = new SqlCommand()
+                CampaignsRepo campaignsRepo = new CampaignsRepo();
+                if (campaignsRepo.OneCampaign(cId) != null)
                 {
-                    CommandText = "CloseCampaign",
-                    CommandType = CommandType.StoredProcedure,
-                    Connection = Connection.connection
-                };
-                command.Parameters.AddWithValue("@CampaignId", cId);
-                Connection.Open();
-                command.ExecuteNonQuery();
-                return true;
+                    command = new SqlCommand()
+                    {
+                        CommandText = "CloseCampaign",
+                        CommandType = CommandType.StoredProcedure,
+                        Connection = Connection.connection
+                    };
+                    command.Parameters.AddWithValue("@CampaignId", cId);
+                    Connection.Open();
+                    command.ExecuteNonQuery();
+                    return true;
+                }
+                else
+                    throw new Exception("Campaign ID not found!");
             }
             catch (Exception ex)
             {
@@ -68,6 +74,41 @@ namespace DatabaseLayer.Repositories
             {
                 Connection.Close();
             }
+        }
+
+        public Campaigns OneCampaign(int cId)
+        {
+            try
+            {
+                Connection.Open();
+                Campaigns campaigns= null;
+                command = new SqlCommand()
+                {
+                    CommandText = "OneCampaign",
+                    CommandType = CommandType.StoredProcedure,
+                    Connection = Connection.connection
+                };
+                command.Parameters.AddWithValue("@CampaignID", cId);
+                dataAdapter = new SqlDataAdapter(command);
+                DataTable dataTable = new DataTable("Campaign");
+                dataAdapter.Fill(dataTable);
+                if (dataTable.Rows.Count > 0)
+                {
+                    DataRow dataRow = dataTable.Rows[0];
+                    campaigns = new Campaigns()
+                    {
+                        CampaignID = Convert.ToInt32(dataRow["CampaignID"])
+                    };
+                }
+                return campaigns;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+
         }
 
         public List<Campaigns> ViewCampaignsByExec()
@@ -98,7 +139,7 @@ namespace DatabaseLayer.Repositories
                                  Venue = dataRow["Venue"].ToString(),
                                  AssignedTo = (int)dataRow["AssignedTo"],
                                  StartedOn = (DateTime)(dataRow["StartedOn"]),
-                                 CompletedOn = Convert.ToDateTime(dataRow["CompletedOn"]),
+                                 //CompletedOn = Convert.ToDateTime(dataRow["CompletedOn"]),
                                  IsOpen = (bool)dataRow["IsOpen"]
                              }
                             );

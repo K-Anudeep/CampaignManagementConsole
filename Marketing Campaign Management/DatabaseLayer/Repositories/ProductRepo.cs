@@ -90,6 +90,7 @@ namespace DatabaseLayer.Repositories
         {
             try
             {
+                Connection.Open();
                 Products product = null;
                 command = new SqlCommand()
                 {
@@ -108,7 +109,7 @@ namespace DatabaseLayer.Repositories
                     {
                         ProductName = dataRow["ProductName"].ToString(),
                         Description = dataRow["Description"].ToString(),
-                        UnitPrice = (decimal)dataRow["UnitPrice"],
+                        UnitPrice = Convert.ToDecimal(dataRow["UnitPrice"]),
                     };
                 }
                 return product;
