@@ -89,6 +89,40 @@ namespace DatabaseLayer.Repositories
             }
         }
 
+        public bool CheckLead(int LeadID)
+        {
+            try
+            {
+                command = new SqlCommand()
+                {
+                    CommandText = "CheckLead",
+                    CommandType = CommandType.StoredProcedure,
+                    Connection = Connection.connection
+                };
+                command.Parameters.AddWithValue("@CampaignID", LeadID);
+                IDbDataParameter val = command.CreateParameter();
+                val.Direction = ParameterDirection.ReturnValue;
+                command.Parameters.Add(val);
+                command.ExecuteNonQuery();
+                int validate = Convert.ToInt32(val.Value);
+                if (validate == 1)
+                {
+                    return true;
+                }
+                else
+                    throw new Exception("Error: Campaign is either not assigned to you or it is closed!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+        }
+
         public bool FollowLead(int leadID, string newStatus)
         {
             try

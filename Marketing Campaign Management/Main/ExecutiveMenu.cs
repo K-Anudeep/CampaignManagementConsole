@@ -60,22 +60,85 @@ namespace PresentationLayer
                 switch (sales)
                 {
                     case 1:
+                        Sales salesData = new Sales();
                         Console.WriteLine("Enter the LeadID to create Sales Order for: ");
                         int leadCheck = Convert.ToInt32(Console.ReadLine());
                         execService = new ExecutiveService();
-                        ////bool statusCheck = execService.CheckLeadStatus(leadCheck);
-                        //if (statusCheck == true)
-                        //{
-                        //    //Do it later
-                        //}
+                        bool statusCheck = execService.CheckLead(leadCheck);
+                        if (statusCheck == true)
+                        {
+                            salesData.LeadID = leadCheck;
+                            Console.WriteLine("Enter the Shipping Address: ");
+                            salesData.ShippingAddress = Console.ReadLine();
+                            Console.WriteLine("Is your billing address the same as shipping address? 1.Yes 2. No");
+                            int same = Convert.ToInt32(Console.ReadLine());
+                            if(same == 1)
+                            {
+                                salesData.BillingAddress = salesData.ShippingAddress;
+                            }
+                            else if(same == 2)
+                            {
+                                Console.WriteLine("Enter the Billing Address: ");
+                                salesData.BillingAddress = Console.ReadLine();
+                            }
+                            else
+                            {
+                                Console.WriteLine("--------------------------------------------------------------------------");
+                                Console.WriteLine("Choose the correct option!");
+                                Console.WriteLine("--------------------------------------------------------------------------");
+                            }
+                            Console.WriteLine("Enter your Payment Mode: 1. Prepaid 2. COD(Cash on Delivery)");
+                            int payment = Int32.Parse(Console.ReadLine());
+                            if (payment == 1)
+                            {
+                                salesData.PaymentMode = "Prepaid";
+                            }
+                            else if (payment == 2)
+                            {
+                                salesData.PaymentMode = "COD";
+                            }
+                            else
+                                Console.WriteLine("--------------------------------------------------------------------------");
+                                Console.WriteLine("Choose the correct option!");
+                                Console.WriteLine("--------------------------------------------------------------------------");
+
+                            bool addSales = execService.AddSales(salesData);
+                            if (addSales == true)
+                            {
+                                Console.WriteLine("Added!");
+                            }
+                            else
+                                Console.WriteLine("Adding Failed");
+                        }
+                        else
+                        {
+                            Console.WriteLine("--------------------------------------------------------------------------");
+                            Console.WriteLine("Status of the given Lead is New or Lost, cannot proceed with Sales Order");
+                            Console.WriteLine("--------------------------------------------------------------------------");
+                        }
                         break;
                     case 2:
+                        List<Sales> viewSales = new List<Sales>();
+                        execService = new ExecutiveService();
+                        viewSales = execService.ViewSales();
+                        if (viewSales != null)
+                        {
+                            foreach (Sales s in viewSales)
+                            {
+                                Console.WriteLine($"Order ID: {s.OrderID}, Lead ID: {s.LeadID}, Shipping Address: {s.ShippingAddress}, Billing Address: {s.BillingAddress}" +
+                                    $"Created Sales On: {s.CreatedON}, Payment Mode: {s.PaymentMode} ");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("--------------------------------------------------------------------------");
+                            Console.WriteLine("No Sales to display!");
+                            Console.WriteLine("--------------------------------------------------------------------------");
+                        }
                         break;
                     case 3:
                         break;
                 }
-
-
             }
             catch (Exception ex)
             {
@@ -179,7 +242,9 @@ namespace PresentationLayer
                         }
                         else
                         {
+                            Console.WriteLine("--------------------------------------------------------------------------");
                             Console.WriteLine("Specified Lead ID does not exist!");
+                            Console.WriteLine("--------------------------------------------------------------------------");
                         }
                         break;
                     case 3:
@@ -198,7 +263,9 @@ namespace PresentationLayer
                         }
                         else
                         {
+                            Console.WriteLine("--------------------------------------------------------------------------");
                             Console.WriteLine("No leads to display!");
+                            Console.WriteLine("--------------------------------------------------------------------------");
                         }
                         break;
                 }
@@ -227,13 +294,16 @@ namespace PresentationLayer
                         {
                             foreach (Campaigns c in viewCampaigns)
                             {
-                                Console.WriteLine($"Campaign ID: {c.CampaignID}, Name: {c.Name}, Venue: {c.Venue}, AssignedTo: {c.AssignedTo}, " +
-                                    $"Started ON: {c.StartedOn}, Completed ON: {c.CompletedOn}, Status: {c.IsOpen}");
+                                    Console.WriteLine($"Campaign ID: {c.CampaignID}, Name: {c.Name}, Venue: {c.Venue}, AssignedTo: {c.AssignedTo}, " +
+                                    $"Started ON: {c.StartedOn}, Completed ON: TBD, Status: {c.IsOpen}");
+                                Console.WriteLine("--------------------------------------------------------------------------");
                             }
-                        }
+                        }                        
                         else
                         {
+                            Console.WriteLine("--------------------------------------------------------------------------");
                             Console.WriteLine("No Campaigns to display!");
+                            Console.WriteLine("--------------------------------------------------------------------------");
                         }
 
                         break;

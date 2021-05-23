@@ -93,7 +93,7 @@ namespace DatabaseLayer.Repositories
                         campaigns.Add(
                              new Campaigns()
                              {
-                                 CampaignID = (int)dataRow["LeadID"],
+                                 CampaignID = (int)dataRow["CampaignID"],
                                  Name = dataRow["Name"].ToString(),
                                  Venue = dataRow["Venue"].ToString(),
                                  AssignedTo = (int)dataRow["AssignedTo"],
@@ -140,12 +140,12 @@ namespace DatabaseLayer.Repositories
                         campaigns.Add(
                              new Campaigns()
                              {
-                                 CampaignID = (int)dataRow["CampaignID"],
+                                 CampaignID = Convert.ToInt32(dataRow["CampaignID"]),
                                  Name = dataRow["Name"].ToString(),
                                  Venue = dataRow["Venue"].ToString(),
                                  AssignedTo = (int)dataRow["AssignedTo"],
                                  StartedOn = (DateTime)(dataRow["StartedOn"]),
-                                 CompletedOn = Convert.ToDateTime(dataRow["CompletedOn"]),
+                                 //CompletedOn = Convert.ToDateTime(dataRow["CompletedOn"]),
                                  IsOpen = (bool)dataRow["IsOpen"]
                              }
                             );

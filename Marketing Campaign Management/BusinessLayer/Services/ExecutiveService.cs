@@ -12,6 +12,10 @@ namespace BusinessLayer.Services
     {
         LeadsRepo leadsRepo = null;
         CampaignsRepo campaignsRepo = null;
+        SalesRepo salesRepo = null;
+
+        //LEADS
+
         public bool AddLeads(Leads leads)
         {
             try
@@ -66,7 +70,24 @@ namespace BusinessLayer.Services
                 throw ex;
             }
         }
-        
+
+        public List<Leads> ViewLeads()
+        {
+            try
+            {
+                leadsRepo = new LeadsRepo();
+                return leadsRepo.ViewLeadsToExec();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
+
+        //CAMPAIGNS
+
         public bool CampaignStatusCheck(int cId)
         {
             try
@@ -87,20 +108,7 @@ namespace BusinessLayer.Services
                 throw ex;
             }
         }
-
-        public List<Leads> ViewLeads()
-        {
-            try
-            {
-                leadsRepo = new LeadsRepo();
-                return leadsRepo.ViewLeadsToExec();              
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return null;
-            }
-        }
+        
 
         public List<Campaigns> ViewCampaignsAssigned()
         {
@@ -116,5 +124,46 @@ namespace BusinessLayer.Services
             }
 
         }
+
+
+        //SALES
+
+        public bool AddSales(Sales sales)
+        {
+            try
+            {
+                salesRepo = new SalesRepo();
+                bool add = salesRepo.CreateSales(sales);
+                if(add == true)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
+
+        public List<Sales> ViewSales()
+        {
+            try
+            {
+                salesRepo = new SalesRepo();
+                return salesRepo.ViewSales();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+
+        }
+
     }
 }

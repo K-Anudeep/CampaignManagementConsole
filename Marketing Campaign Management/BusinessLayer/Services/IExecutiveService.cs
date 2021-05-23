@@ -10,6 +10,10 @@ namespace BusinessLayer.Services
 {
     public interface IExecutiveService
     {
+        bool AddSales(Sales sales);
+
+        List<Sales> ViewSales();
+
         bool AddLeads(Leads leads);
 
         bool CheckLead(int leadID);
