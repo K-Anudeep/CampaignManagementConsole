@@ -355,7 +355,7 @@ namespace PresentationLayer
                             Users user = adminServices.OneUser(userId);
                             if (user != null)
                             {
-                                Console.WriteLine($"UserID:{user.UserID}\nFullName:{user.FullName}\nLoginID:{user.LoginID}\nPassword:{user.Password}\nDateJoin:{user.DateJoin}\nAddress:{user.Address}\nDiscountinued{user.Discountinued}\nisAdmin{user.isAdmin}");
+                                Console.WriteLine($"UserID:{user.UserID}\nFullName:{user.FullName}\nLoginID:{user.LoginID}\nPassword:{user.Password}\nDateJoin:{user.DateOfJoin}\nAddress:{user.Address}\nDiscountinued{user.Discontinued}\nisAdmin{user.IsAdmin}");
                             }
                             else
                             {
@@ -426,7 +426,6 @@ namespace PresentationLayer
 
                         break;
                     case 3:
-                        AdminMenu.AdminMenu();
                         break;
                 }
             }
