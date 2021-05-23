@@ -42,7 +42,9 @@ namespace PresentationLayer
                         keepLoop = false;
                         break;
                     default:
+                        Console.WriteLine("--------------------------------------------------------------------------");
                         Console.WriteLine("Invalid Choice");
+                        Console.WriteLine("--------------------------------------------------------------------------");
                         break;
                 }
             } while (keepLoop == true);
@@ -98,9 +100,11 @@ namespace PresentationLayer
                                 salesData.PaymentMode = "COD";
                             }
                             else
+                            {
                                 Console.WriteLine("--------------------------------------------------------------------------");
                                 Console.WriteLine("Choose the correct option!");
                                 Console.WriteLine("--------------------------------------------------------------------------");
+                            }
 
                             bool addSales = execService.AddSales(salesData);
                             if (addSales == true)
@@ -108,7 +112,11 @@ namespace PresentationLayer
                                 Console.WriteLine("Added!");
                             }
                             else
+                            {
+                                Console.WriteLine("--------------------------------------------------------------------------");
                                 Console.WriteLine("Adding Failed");
+                                Console.WriteLine("--------------------------------------------------------------------------");
+                            }
                         }
                         else
                         {
@@ -125,8 +133,8 @@ namespace PresentationLayer
                         {
                             foreach (Sales s in viewSales)
                             {
-                                Console.WriteLine($"Order ID: {s.OrderID}, Lead ID: {s.LeadID}, Shipping Address: {s.ShippingAddress}, Billing Address: {s.BillingAddress}" +
-                                    $"Created Sales On: {s.CreatedON}, Payment Mode: {s.PaymentMode} ");
+                                Console.WriteLine($"Order ID: {s.OrderID}, Lead ID: {s.LeadID}, Shipping Address: {s.ShippingAddress}, Billing Address: {s.BillingAddress}, Created Sales On: {s.CreatedON}, Payment Mode: {s.PaymentMode} ");
+                                Console.WriteLine("--------------------------------------------------------------------------");
                             }
                         }
                         else
@@ -190,18 +198,25 @@ namespace PresentationLayer
                             leads.DateApproached = Convert.ToDateTime(Console.ReadLine());
                             Console.WriteLine("Enter Product ID: ");
                             leads.ProductID = Int32.Parse(Console.ReadLine());
-
+                            execService = new ExecutiveService();
                             bool addLeads = execService.AddLeads(leads);
                             if (addLeads == true)
                             {
                                 Console.WriteLine("Added new Lead!");
                             }
                             else
+                            {
+                                Console.WriteLine("--------------------------------------------------------------------------");
                                 Console.WriteLine("Failed to add new lead");
+                                Console.WriteLine("--------------------------------------------------------------------------");
+
+                            }
                         }
                         else
                         {
+                            Console.WriteLine("--------------------------------------------------------------------------");
                             throw new Exception("Error Campaign Not Assigned to you or Campaign is Closed!");
+                            Console.WriteLine("--------------------------------------------------------------------------");
                         }
                         break;
                     case 2:
@@ -255,10 +270,9 @@ namespace PresentationLayer
                         {
                             foreach (Leads l in viewLeads)
                             {
-                                Console.WriteLine($"Lead ID: {l.LeadID}, Campaign ID: {l.CampaignID}, Consumer Name: {l.ConsumerName}, Email Address: {l.EmailAddress}" +
-                                    $"PhoneNo: {l.PhoneNo}");
-                                Console.WriteLine($"Preferred Mode if Contact: {l.PreferredMoC}, Date Approached: {l.DateApproached}, Product ID: {l.ProductID}, " +
-                                    $"Status: {l.Status}");
+                                Console.WriteLine($"Lead ID: {l.LeadID}, Campaign ID: {l.CampaignID}, Consumer Name: {l.ConsumerName}, Email Address: {l.EmailAddress}, PhoneNo: {l.PhoneNo}");
+                                Console.WriteLine($"Preferred Mode if Contact: {l.PreferredMoC}, Date Approached: {l.DateApproached}, Product ID: {l.ProductID}, Status: {l.Status}");
+                                Console.WriteLine("--------------------------------------------------------------------------");
                             }
                         }
                         else

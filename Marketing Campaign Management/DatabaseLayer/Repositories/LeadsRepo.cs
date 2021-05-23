@@ -71,7 +71,7 @@ namespace DatabaseLayer.Repositories
                     leads.ConsumerName = reader["ConsumerName"].ToString();
                     leads.EmailAddress = reader["EMailAddress"].ToString();
                     leads.PhoneNo = reader["PhoneNo"].ToString();
-                    leads.PreferredMoC = reader["PrefferedMoC"].ToString();
+                    leads.PreferredMoC = reader["PreferredMoC"].ToString();
                     leads.DateApproached = Convert.ToDateTime(reader["DateApproached"]);
                     leads.ProductID = Convert.ToInt32(reader["ProductID"]);
                     leads.Status = reader["Status"].ToString();
@@ -103,6 +103,7 @@ namespace DatabaseLayer.Repositories
                 IDbDataParameter val = command.CreateParameter();
                 val.Direction = ParameterDirection.ReturnValue;
                 command.Parameters.Add(val);
+                Connection.Open();
                 command.ExecuteNonQuery();
                 int validate = Convert.ToInt32(val.Value);
                 if (validate == 1)

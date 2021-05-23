@@ -81,7 +81,7 @@ namespace DatabaseLayer.Repositories
                     CommandType = CommandType.StoredProcedure,
                     Connection = Connection.connection
                 };
-
+                Connection.Open();
                 dataAdapter = new SqlDataAdapter(command);
                 DataSet dataSet = new DataSet();
                 dataAdapter.Fill(dataSet, "CampaignsByExec");
@@ -169,7 +169,7 @@ namespace DatabaseLayer.Repositories
 
                 command = new SqlCommand()
                 {
-                    CommandText = "StatusCheck",
+                    CommandText = "CampaignCheck",
                     CommandType = System.Data.CommandType.StoredProcedure,
                     Connection = Connection.connection
                 };
@@ -178,6 +178,7 @@ namespace DatabaseLayer.Repositories
                 IDbDataParameter val = command.CreateParameter();
                 val.Direction = ParameterDirection.ReturnValue;
                 command.Parameters.Add(val);
+                Connection.Open();
                 command.ExecuteNonQuery();
                 int validate = Convert.ToInt32(val.Value);
                 if (validate == 1)

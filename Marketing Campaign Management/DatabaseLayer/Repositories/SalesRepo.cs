@@ -55,7 +55,7 @@ namespace DatabaseLayer.Repositories
                     CommandType = CommandType.StoredProcedure,
                     Connection = Connection.connection
                 };
-
+                Connection.Open();
                 dataAdapter = new SqlDataAdapter(command);
                 DataSet dataSet = new DataSet();
                 dataAdapter.Fill(dataSet, "Sales");
@@ -71,7 +71,7 @@ namespace DatabaseLayer.Repositories
                                  LeadID = (int)dataRow["leadid"],
                                  ShippingAddress = dataRow["shippingaddress"].ToString(),
                                  BillingAddress = dataRow["billingaddress"].ToString(),
-                                 CreatedON = Convert.ToDateTime(dataRow["createddate"]),
+                                 CreatedON = Convert.ToDateTime(dataRow["createdon"]),
                                  PaymentMode = dataRow["paymentmode"].ToString()
                              }
                              );
