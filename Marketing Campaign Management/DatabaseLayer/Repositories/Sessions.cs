@@ -37,6 +37,7 @@ namespace DatabaseLayer.Repositories
                     DataRow datarow = datatable.Rows[0];
                     session = new SessionDetails()
                     {
+                        UserID = Convert.ToInt32(datarow["UserID"]),
                         FullName = datarow["FullName"].ToString(),
                         LoginID = datarow["LoginID"].ToString(),
                         IsAdmin = Convert.ToByte(datarow["IsAdmin"])

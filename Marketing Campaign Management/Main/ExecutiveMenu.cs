@@ -18,7 +18,7 @@ namespace PresentationLayer
             {
                 keepLoop = true;
                 Console.WriteLine("Select the option that you want to follow with:");
-                Console.WriteLine("1.LEADS ");
+                Console.WriteLine("1.LEADS");
                 Console.WriteLine("2.SALES");
                 Console.WriteLine("3.VIEW CAMPAIGN");
                 Console.WriteLine("4.LOGOUT");
@@ -96,6 +96,7 @@ namespace PresentationLayer
                 {
                     case 1:
                         Console.WriteLine("Enter the CampaignID: ");
+
                         leads.CampaignID = Convert.ToInt32(Console.ReadLine());
                         Console.WriteLine("Enter the Consumer Name: ");
                         leads.ConsumerName = Console.ReadLine();

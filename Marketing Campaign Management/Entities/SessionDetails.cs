@@ -8,6 +8,12 @@ namespace Entities
 {
     public class SessionDetails
     {
+        private static int _userID;
+        public int UserID
+        {
+            get { return _userID; }
+            set { _userID = value; }
+        }
 
         private static string _fullName;
         public  string FullName
