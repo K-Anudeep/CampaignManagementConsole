@@ -10,8 +10,17 @@ namespace BusinessLayer.Services
 {
     public interface IExecutiveService
     {
-        bool CheckLeadStatus(int leadID);
+        bool AddLeads(Leads leads);
+
+        bool CheckLead(int leadID);
 
         bool CampaignStatusCheck(int cID);
+
+        bool FollowLead(int lID, string newStatus);
+
+        List<Leads> ViewLeads();
+
+        List<Campaigns> ViewCampaignsAssigned();
+
     }
 }

@@ -13,10 +13,10 @@ namespace DatabaseLayer.Interfaces
 
         List<Campaigns> ViewCampaignsByExec();
 
-        List<Campaigns> ViewCampaignsByAssigned(int uId);
+        List<Campaigns> ViewCampaignsByAssigned();
 
         bool CloseCampaign(int cId);
 
-        bool StatusCheck(int cId);
+        bool CampaignStatusCheck(int cId);
     }
 }

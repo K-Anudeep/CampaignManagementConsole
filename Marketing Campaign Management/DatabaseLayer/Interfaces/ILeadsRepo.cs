@@ -11,8 +11,12 @@ namespace DatabaseLayer.Interfaces
     {
         bool AddLeads(Leads leads);
 
-        List<Leads> ViewLeads();
+        List<Leads> ViewLeadsToExec();
 
-        Leads GetALead(int LeadID);
+        List<Leads> ViewLeadsByCampaign();
+
+        Leads GetALead(int leadID);
+
+        bool FollowLead(int leadID, string newStatus);
     }
 }

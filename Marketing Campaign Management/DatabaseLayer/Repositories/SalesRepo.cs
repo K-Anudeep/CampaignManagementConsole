@@ -21,14 +21,13 @@ namespace DatabaseLayer.Repositories
             {
                 command = new SqlCommand()
                 {
-                    CommandText = "CreateSales",
+                    CommandText = "AddSales",
                     CommandType = CommandType.StoredProcedure,
                     Connection = Connection.connection
                 };
                 command.Parameters.AddWithValue("@leadid", sales.LeadID);
                 command.Parameters.AddWithValue("@shippingaddress", sales.ShippingAddress);
                 command.Parameters.AddWithValue("@billingaddress", sales.BillingAddress);
-                command.Parameters.AddWithValue("@createdon", sales.CreatedON);
                 command.Parameters.AddWithValue("@paymentmode", sales.PaymentMode);
                 Connection.Open();
                 command.ExecuteNonQuery();

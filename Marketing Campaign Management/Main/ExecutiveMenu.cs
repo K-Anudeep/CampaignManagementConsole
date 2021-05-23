@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Entities;
 using BusinessLayer.Services;
+using DatabaseLayer.Repositories;
 
 namespace PresentationLayer
 {
@@ -62,11 +63,11 @@ namespace PresentationLayer
                         Console.WriteLine("Enter the LeadID to create Sales Order for: ");
                         int leadCheck = Convert.ToInt32(Console.ReadLine());
                         execService = new ExecutiveService();
-                        bool statusCheck = execService.CheckLeadStatus(leadCheck);
-                        if (statusCheck == true)
-                        {
-                            //Do it later
-                        }
+                        ////bool statusCheck = execService.CheckLeadStatus(leadCheck);
+                        //if (statusCheck == true)
+                        //{
+                        //    //Do it later
+                        //}
                         break;
                     case 2:
                         break;
@@ -84,49 +85,121 @@ namespace PresentationLayer
         public void Leads()
         {
             Leads leads = new Leads();
+            CampaignsRepo campaignsRepo = new CampaignsRepo();
             try
             {
                 Console.WriteLine("Manage your Leads");
                 Console.WriteLine("1. Create Leads: ");
                 Console.WriteLine("2. Follow leads: ");
                 Console.WriteLine("3. View Leads based on your assigned Campaigns: ");
-                Console.WriteLine("3. Back to Main Menu");
+                Console.WriteLine("4. Back to Main Menu");
                 int Leads = int.Parse(Console.ReadLine());
                 switch (Leads)
                 {
                     case 1:
                         Console.WriteLine("Enter the CampaignID: ");
-
                         leads.CampaignID = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Enter the Consumer Name: ");
-                        leads.ConsumerName = Console.ReadLine();
-                        Console.WriteLine("Enter Email Address: ");
-                        leads.EmailAddress = Console.ReadLine();
-                        Console.WriteLine("Enter Phone Number: ");
-                        leads.PhoneNo = Console.ReadLine();
-                        Console.WriteLine("Enter your preffered Mode of Contact: 1. Email 2. Phone ");
-                        int moc = Convert.ToInt32(Console.ReadLine());
-                        if (moc == 1)
+                        bool campCheck = campaignsRepo.CampaignStatusCheck(leads.CampaignID);
+                        if (campCheck == true)
                         {
-                            leads.PreferredMoC = "Email";
-                        }
-                        else if (moc == 2)
-                        {
-                            leads.PreferredMoC = "Phone";
+                            Console.WriteLine("Enter the Consumer Name: ");
+                            leads.ConsumerName = Console.ReadLine();
+                            Console.WriteLine("Enter Email Address: ");
+                            leads.EmailAddress = Console.ReadLine();
+                            Console.WriteLine("Enter Phone Number: ");
+                            leads.PhoneNo = Console.ReadLine();
+                            Console.WriteLine("Enter your preffered Mode of Contact: 1. Email 2. Phone ");
+                            int moc = Convert.ToInt32(Console.ReadLine());
+                            if (moc == 1)
+                            {
+                                leads.PreferredMoC = "Email";
+                            }
+                            else if (moc == 2)
+                            {
+                                leads.PreferredMoC = "Phone";
+                            }
+                            else
+                            {
+                                leads.PreferredMoC = "Email";
+                                Console.WriteLine("Wrong Option: Defaulted to Email as the primary Mode of Contact.");
+                            }
+                            Console.WriteLine("Enter Date Approached by Consumer(YYYY-MM-DD): ");
+                            leads.DateApproached = Convert.ToDateTime(Console.ReadLine());
+                            Console.WriteLine("Enter Product ID: ");
+                            leads.ProductID = Int32.Parse(Console.ReadLine());
+
+                            bool addLeads = execService.AddLeads(leads);
+                            if (addLeads == true)
+                            {
+                                Console.WriteLine("Added new Lead!");
+                            }
+                            else
+                                Console.WriteLine("Failed to add new lead");
                         }
                         else
                         {
-                            leads.PreferredMoC = "Email";
-                            Console.WriteLine("Wrong Option: Defaulted to Email as the primary Mode of Contact.");
+                            throw new Exception("Error Campaign Not Assigned to you or Campaign is Closed!");
                         }
-                        Console.WriteLine("Enter Date Approached by Consumer(YYYY-MM-DD): ");
-                        leads.DateApproached = Convert.ToDateTime(Console.ReadLine());
-                        Console.WriteLine("Enter Product ID: ");
-                        leads.ProductID = Int32.Parse(Console.ReadLine());
                         break;
                     case 2:
+                        Console.WriteLine("Enter a LeadID: ");
+                        int leadId = Convert.ToInt32(Console.ReadLine());
+                        execService = new ExecutiveService();
+                        bool leadCheck = execService.CheckLead(leadId);
+                        if(leadCheck == true)
+                        {
+                            Console.WriteLine("How do you want to follow up with this Lead? 1. Won 2. Lost");
+                            int followUp = Convert.ToInt32(Console.ReadLine());
+                            if(followUp == 1)
+                            {
+                                string newStatus = "Won";
+                                bool follow = execService.FollowLead(leadId, newStatus);
+                                if (follow == true)
+                                {
+                                    Console.WriteLine("Status Updated!");
+                                }
+                                else
+                                    Console.WriteLine("Status update failed!");
+                            }
+                            else if(followUp == 2)
+                            {
+                                string newStatus = "Lost";
+                                bool follow = execService.FollowLead(leadId, newStatus);
+                                if (follow == true)
+                                {
+                                    Console.WriteLine("Status Updated!");
+                                }
+                                else
+                                    Console.WriteLine("Status update failed!");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Wrong option.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Specified Lead ID does not exist!");
+                        }
                         break;
                     case 3:
+                        List<Leads> viewLeads = new List<Leads>();
+                        execService = new ExecutiveService();
+                        viewLeads = execService.ViewLeads();
+                        if (viewLeads != null)
+                        {
+                            foreach (Leads l in viewLeads)
+                            {
+                                Console.WriteLine($"Lead ID: {l.LeadID}, Campaign ID: {l.CampaignID}, Consumer Name: {l.ConsumerName}, Email Address: {l.EmailAddress}" +
+                                    $"PhoneNo: {l.PhoneNo}");
+                                Console.WriteLine($"Preferred Mode if Contact: {l.PreferredMoC}, Date Approached: {l.DateApproached}, Product ID: {l.ProductID}, " +
+                                    $"Status: {l.Status}");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("No leads to display!");
+                        }
                         break;
                 }
             }
@@ -137,17 +210,32 @@ namespace PresentationLayer
         }
         public void Campaign()
         {
-            Campaigns campaign = null;
             try
             {
-                Console.WriteLine("choose view campagin options");
-                Console.WriteLine("1. view campaign");
-                Console.WriteLine("2. go back to main menu");
+                Console.WriteLine("Campaigns");
+                Console.WriteLine("1. View assigned Campaigns");
+                Console.WriteLine("2. Back to the previous menu.");
                 Console.WriteLine();
                 int Campaign = int.Parse(Console.ReadLine());
                 switch (Campaign)
                 {
                     case 1:
+                        List<Campaigns> viewCampaigns = new List<Campaigns>();
+                        execService = new ExecutiveService();
+                        viewCampaigns = execService.ViewCampaignsAssigned();
+                        if (viewCampaigns != null)
+                        {
+                            foreach (Campaigns c in viewCampaigns)
+                            {
+                                Console.WriteLine($"Campaign ID: {c.CampaignID}, Name: {c.Name}, Venue: {c.Venue}, AssignedTo: {c.AssignedTo}, " +
+                                    $"Started ON: {c.StartedOn}, Completed ON: {c.CompletedOn}, Status: {c.IsOpen}");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("No Campaigns to display!");
+                        }
+
                         break;
                     case 2:
                         break;

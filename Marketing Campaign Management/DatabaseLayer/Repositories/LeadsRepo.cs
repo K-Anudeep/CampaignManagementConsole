@@ -10,7 +10,7 @@ using System.Data;
 
 namespace DatabaseLayer.Repositories
 {
-    class LeadsRepo : ILeadsRepo
+    public class LeadsRepo : ILeadsRepo
     {
         SqlCommand command = null;
         SqlDataAdapter dataAdapter = null;
@@ -34,7 +34,6 @@ namespace DatabaseLayer.Repositories
                 command.Parameters.AddWithValue("@PreferredMoC", leads.PreferredMoC);
                 command.Parameters.AddWithValue("@DateApproached", leads.DateApproached);
                 command.Parameters.AddWithValue("@ProductID", leads.ProductID);
-                command.Parameters.AddWithValue("@Status", leads.Status);
                 Connection.Open();
                 command.ExecuteNonQuery();
                 return true;
@@ -54,7 +53,6 @@ namespace DatabaseLayer.Repositories
         {
             try
             {
-                Connection.Open();
                 command = new SqlCommand()
                 {
                     CommandText = "GetLeadByLeadID",
@@ -62,6 +60,7 @@ namespace DatabaseLayer.Repositories
                     Connection = Connection.connection
                 };
                 command.Parameters.AddWithValue("@LeadID", LeadID);
+                Connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 Leads leads = null;
                 if (reader.HasRows)
@@ -90,34 +89,67 @@ namespace DatabaseLayer.Repositories
             }
         }
 
-        public List<Leads> ViewLeads()
+        public bool FollowLead(int leadID, string newStatus)
         {
             try
             {
+                command = new SqlCommand()
+                {
+                    CommandText = "FollowLead",
+                    CommandType = CommandType.StoredProcedure,
+                    Connection = Connection.connection
+
+                };
+                command.Parameters.AddWithValue("@LeadID", leadID);
+                command.Parameters.AddWithValue("@Status", newStatus);
+                Connection.Open();
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+        }
+
+        public List<Leads> ViewLeadsToExec()
+        {
+            try
+            {
+                Connection.Open();
                 List<Leads> leads = null;
                 command = new SqlCommand()
                 {
-                    CommandText = "ViewLeads",
+                    CommandText = "ViewLeadsToExecutive",
                     CommandType = CommandType.StoredProcedure,
                     Connection = Connection.connection
                 };
-
+                SessionDetails session = new SessionDetails();
+                command.Parameters.AddWithValue("@UserID", session.UserID);
+                command.ExecuteNonQuery();
                 dataAdapter = new SqlDataAdapter(command);
-                DataSet dataSet = new DataSet();
-                dataAdapter.Fill(dataSet, "Leads");
-                if (dataSet.Tables["Leads"].Rows.Count > 0)
+                DataTable leadTable = new DataTable();
+                dataAdapter.Fill(leadTable);
+                if (leadTable.Rows.Count > 0)
                 {
                     leads = new List<Leads>();
-                    foreach (DataRow dataRow in dataSet.Tables["Leads"].Rows)
+                    foreach (DataRow dataRow in leadTable.Rows)
                     {
                         leads.Add(
                              new Leads()
                              {
-                                 LeadID = (int)dataRow["LeadID"],
-                                 CampaignID = (int)dataRow["CampaignID"],
+                                 LeadID = Convert.ToInt32(dataRow["LeadID"]),
+                                 CampaignID = Convert.ToInt32(dataRow["CampaignID"]),
                                  ConsumerName = dataRow["ConsumerName"].ToString(),
+                                 EmailAddress = dataRow["EmailAddress"].ToString(),
+                                 PhoneNo = dataRow["PhoneNo"].ToString(),
+                                 PreferredMoC = dataRow["PreferredMoC"].ToString(),
                                  Status = dataRow["Status"].ToString(),
-                                 ProductID = (int)dataRow["ProductID"],
+                                 ProductID = Convert.ToInt32(dataRow["ProductID"]),
                                  DateApproached = Convert.ToDateTime(dataRow["DateApproached"])
                              }
                             );
@@ -130,6 +162,63 @@ namespace DatabaseLayer.Repositories
             {
                 Console.WriteLine(ex.Message);
                 return null;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+        }
+
+        public List<Leads> ViewLeadsByCampaign()
+        {
+            try
+            {
+                Connection.Open();
+                List<Leads> leads = null;
+                command = new SqlCommand()
+                {
+                    CommandText = "ViewLeadsToExecutive",
+                    CommandType = CommandType.StoredProcedure,
+                    Connection = Connection.connection
+                };
+                SessionDetails session = new SessionDetails();
+                command.Parameters.AddWithValue("@UserID", session.UserID);
+                command.ExecuteNonQuery();
+                dataAdapter = new SqlDataAdapter(command);
+                DataTable leadTable = new DataTable();
+                dataAdapter.Fill(leadTable);
+                if (leadTable.Rows.Count > 0)
+                {
+                    leads = new List<Leads>();
+                    foreach (DataRow dataRow in leadTable.Rows)
+                    {
+                        leads.Add(
+                             new Leads()
+                             {
+                                 LeadID = Convert.ToInt32(dataRow["LeadID"]),
+                                 CampaignID = Convert.ToInt32(dataRow["CampaignID"]),
+                                 ConsumerName = dataRow["ConsumerName"].ToString(),
+                                 EmailAddress = dataRow["EmailAddress"].ToString(),
+                                 PhoneNo = dataRow["PhoneNo"].ToString(),
+                                 PreferredMoC = dataRow["PreferredMoC"].ToString(),
+                                 Status = dataRow["Status"].ToString(),
+                                 ProductID = Convert.ToInt32(dataRow["ProductID"]),
+                                 DateApproached = Convert.ToDateTime(dataRow["DateApproached"])
+                             }
+                            );
+                    }
+                }
+                return leads;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+            finally
+            {
+                Connection.Close();
             }
         }
 
