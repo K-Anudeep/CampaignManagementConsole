@@ -14,40 +14,47 @@ namespace PresentationLayer
         ExecutiveService execService = null;
         public ExecutiveMenu()
         {
-            bool keepLoop;
-            do
+            try
             {
-                keepLoop = true;
-                Console.WriteLine("Select the option that you want to follow with:");
-                Console.WriteLine("1.LEADS");
-                Console.WriteLine("2.SALES");
-                Console.WriteLine("3.VIEW CAMPAIGN");
-                Console.WriteLine("4.LOGOUT");
-                Console.WriteLine("");
-                Console.WriteLine("Enter your option");
-                int Options = int.Parse(Console.ReadLine());
-                switch (Options)
+                bool keepLoop;
+                do
                 {
-                    case 1:
-                        Leads();
-                        break;
-                    case 2:
-                        Sales();
-                        break;
-                    case 3:
-                        Campaign();
-                        break;
-                    case 4:
-                        Console.WriteLine("Successfully Logged Out!");
-                        keepLoop = false;
-                        break;
-                    default:
-                        Console.WriteLine("--------------------------------------------------------------------------");
-                        Console.WriteLine("Invalid Choice");
-                        Console.WriteLine("--------------------------------------------------------------------------");
-                        break;
-                }
-            } while (keepLoop == true);
+                    keepLoop = true;
+                    Console.WriteLine("Select the option that you want to follow with:");
+                    Console.WriteLine("1.LEADS");
+                    Console.WriteLine("2.SALES");
+                    Console.WriteLine("3.VIEW CAMPAIGN");
+                    Console.WriteLine("4.LOGOUT");
+                    Console.WriteLine("");
+                    Console.WriteLine("Enter your option");
+                    int Options = int.Parse(Console.ReadLine());
+                    switch (Options)
+                    {
+                        case 1:
+                            Leads();
+                            break;
+                        case 2:
+                            Sales();
+                            break;
+                        case 3:
+                            Campaign();
+                            break;
+                        case 4:
+                            Console.WriteLine("Successfully Logged Out!");
+                            keepLoop = false;
+                            break;
+                        default:
+                            Console.WriteLine("--------------------------------------------------------------------------");
+                            Console.WriteLine("Invalid Choice");
+                            Console.WriteLine("--------------------------------------------------------------------------");
+                            break;
+                    }
+                } while (keepLoop == true);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public void Sales()
