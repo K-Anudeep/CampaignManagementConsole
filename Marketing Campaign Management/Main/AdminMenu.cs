@@ -302,7 +302,8 @@ namespace PresentationLayer
                             {
                                 foreach (Users c in user)
                                 {
-                                    Console.WriteLine($"UserID:{c.UserID}\nName:{c.FullName}\nLoginID:{c.LoginID}\nPassword:{c.Password}\nDateJoin:{c.DateOfJoin}\nAddress:{c.Address}\nDiscountinued{c.Discontinued}\nisAdmin{c.IsAdmin}");
+                                    Console.WriteLine($"User ID: {c.UserID}, Name: {c.FullName}, Login ID: {c.LoginID}, Password: {c.Password}, Date of Joining: {c.DateOfJoin}");
+                                    Console.WriteLine($"Address: {c.Address}, Discountinued: {c.Discontinued}, Admin: {c.IsAdmin}");
                                     Console.WriteLine("--------------------------------------------------------------------------");
                                 }
                             }
@@ -355,7 +356,9 @@ namespace PresentationLayer
                             Users user = adminServices.OneUser(userId);
                             if (user != null)
                             {
-                                Console.WriteLine($"UserID:{user.UserID}\nFullName:{user.FullName}\nLoginID:{user.LoginID}\nPassword:{user.Password}\nDateJoin:{user.DateOfJoin}\nAddress:{user.Address}\nDiscountinued{user.Discontinued}\nisAdmin{user.IsAdmin}");
+                                Console.WriteLine($"User ID: {user.UserID}, Name: {user.FullName}, Login ID: {user.LoginID}, Password: {user.Password}, Date of Joining: {user.DateOfJoin}");
+                                Console.WriteLine($"Address: {user.Address}, Discountinued: {user.Discontinued}, Admin: {user.IsAdmin}");
+                                Console.WriteLine("--------------------------------------------------------------------------");
                             }
                             else
                             {

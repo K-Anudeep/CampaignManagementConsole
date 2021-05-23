@@ -103,14 +103,14 @@ namespace DatabaseLayer.Repositories
                         users.Add(
                             new Users()
                             {
-                                UserID = (int)datarow["UserID"],
+                                UserID = Convert.ToInt32(datarow["UserID"]),
                                 FullName = datarow["FullName"].ToString(),
                                 LoginID = datarow["LoginID"].ToString(),
                                 Password = datarow["Password"].ToString(),
-                                DateOfJoin = (DateTime)datarow["DateOfJoin"],
-                                Discontinued = (byte)datarow["Discontinued"],
+                                DateOfJoin = Convert.ToDateTime(datarow["DateOfJoin"]),
+                                Discontinued = Convert.ToByte(datarow["Discontinued"]),
                                 Address = datarow["Address"].ToString(),
-                                IsAdmin = (byte)datarow["IsAdmin"]
+                                IsAdmin = Convert.ToByte(datarow["IsAdmin"])
 
                             }
                             );
