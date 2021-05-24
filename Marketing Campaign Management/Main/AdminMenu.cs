@@ -73,9 +73,9 @@ namespace PresentationLayer
                 Console.WriteLine("Choose fromt he following: ");
                 Console.WriteLine("1.To Add Product");
                 Console.WriteLine("2.To Display Product");
-                Console.WriteLine("2.To Display a specific Product");
-                Console.WriteLine("2.To Delete a Product");
-                Console.WriteLine("4. Back to Main menu");
+                Console.WriteLine("3.To Display a specific Product");
+                Console.WriteLine("4.To Delete a Product");
+                Console.WriteLine("5. Back to Main menu");
                 int Products = int.Parse(Console.ReadLine());
                 switch (Products)
                 {
