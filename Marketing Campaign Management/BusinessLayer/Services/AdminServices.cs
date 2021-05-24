@@ -125,6 +125,19 @@ namespace BusinessLayer.Services
             }
         }
 
+        public Campaigns OneCampaign(int cId)
+        {
+            try
+            {
+                CampaignsRepo campaignsRepo= new CampaignsRepo();
+                return campaignsRepo.OneCampaign(cId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
         //Users
 
         public bool AddUser(Users users)

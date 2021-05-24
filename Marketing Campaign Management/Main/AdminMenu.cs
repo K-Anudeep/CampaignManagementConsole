@@ -164,13 +164,15 @@ namespace PresentationLayer
         }
         public void Campaigns()
         {
+            CampaignMenu:
             try
             {
                 adminServices = new AdminServices();
                 Console.WriteLine("Choose an option:");
                 Console.WriteLine("1. Add Campaigns");
                 Console.WriteLine("2. Close Campaigns");
-                Console.WriteLine("3. back to Main menu");
+                Console.WriteLine("3. Show a specific Campaign");
+                Console.WriteLine("4. back to Main menu");
                 int Campaigns = int.Parse(Console.ReadLine());
                 switch (Campaigns)
                 {
@@ -187,27 +189,34 @@ namespace PresentationLayer
                     case 1:
                         {
                             Campaigns campaign = new Campaigns();
-                            Console.WriteLine("Enter Campaign ID:");
-                            campaign.CampaignID = int.Parse(Console.ReadLine());
                             Console.WriteLine("Enter Campaign Name:");
                             campaign.Name = Console.ReadLine();
                             Console.WriteLine("Enter Venue:");
                             campaign.Venue = Console.ReadLine();
-                            Console.WriteLine("AssignedTo:");
+                            Console.WriteLine("Marketing Executive assigned to this:");
                             campaign.AssignedTo = Int32.Parse(Console.ReadLine());
-                            Console.WriteLine("StartedOn:");
-                            campaign.StartedOn = Convert.ToDateTime(Console.ReadLine());
-                            bool add = adminServices.AddCampaigns(campaign);
-                            if (add == true)
+                            if (adminServices.OneUser(campaign.AssignedTo) != null)
                             {
-                                Console.WriteLine("Added!");
+                                Console.WriteLine("Start date of Campaign(YYYY-MM-DD):");
+                                campaign.StartedOn = Convert.ToDateTime(Console.ReadLine());
+                                bool add = adminServices.AddCampaigns(campaign);
+                                if (add == true)
+                                {
+                                    Console.WriteLine("Added!");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("--------------------------------------------------------------------------");
+                                    Console.WriteLine("Error in Adding!");
+                                    Console.WriteLine("--------------------------------------------------------------------------");
+                                }
                             }
                             else
                             {
                                 Console.WriteLine("--------------------------------------------------------------------------");
-                                Console.WriteLine("Error in Adding!");
+                                Console.WriteLine("No user with that ID found!");
                                 Console.WriteLine("--------------------------------------------------------------------------");
-                            } 
+                            }
                             break;
                         }
                        
@@ -231,13 +240,32 @@ namespace PresentationLayer
 
                         break;
                     case 3:
+                        Console.WriteLine("Enter the Campaign ID to view it's details");
+                        int cId2 = Convert.ToInt32(Console.ReadLine());
+                        Campaigns campaigns = adminServices.OneCampaign(cId2);
+                        if (campaigns != null)
+                        {
+                            var table = new ConsoleTable("Campaign ID", "Campaign Name", "Assigned Executives", "Venue", "Started On", "Completed On", "Status");
+                            table.AddRow(campaigns.CampaignID, campaigns.Name, campaigns.AssignedTo, campaigns.Venue, campaigns.StartedOn, "TBD", campaigns.IsOpen);
+                            table.Write(Format.Alternative);
+                        }
+                        else
+                        {
 
+                            Console.WriteLine("Wrong Executive Name");
+                        }
+                        break;
+
+                    case 4:
                         break;
                 }
             }
             catch (Exception ex)
             {
-                throw ex;
+                Console.WriteLine("--------------------------------------------------------------------------");
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("--------------------------------------------------------------------------");
+                goto CampaignMenu;
             }
         }
         public void Users()
@@ -387,7 +415,7 @@ namespace PresentationLayer
                 adminServices = new AdminServices();
                 Console.WriteLine("Choose one of the options:");
                 Console.WriteLine("1. To View Leads by Campaign");
-                Console.WriteLine("2. To View Campaigns by Executives");
+                Console.WriteLine("2. To View Campaigns by Executives and Number of Leads for it");
                 Console.WriteLine("3. Back to Main menu");
                 int Reports = int.Parse(Console.ReadLine());
                 switch (Reports)

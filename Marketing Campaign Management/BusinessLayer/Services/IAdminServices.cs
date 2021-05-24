@@ -25,6 +25,8 @@ namespace BusinessLayer.Services
 
         bool CloseCampagin(int cId);
 
+        Campaigns OneCampaign(int cId);
+
         //USERS
 
         bool AddUser(Users users);

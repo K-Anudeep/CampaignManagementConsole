@@ -150,9 +150,9 @@ namespace DatabaseLayer.Repositories
                         FullName = datarow["FullName"].ToString(),
                         LoginID = datarow["LoginID"].ToString(),
                         Password = datarow["Password"].ToString(),
-                        DateOfJoin = (DateTime)datarow["DateOfJoin"],
-                        Discontinued = (byte)datarow["Discontinued"],
-                        IsAdmin = (byte)datarow["IsAdmin"]
+                        DateOfJoin = Convert.ToDateTime(datarow["DateOfJoin"]),
+                        Discontinued = Convert.ToByte(datarow["Discontinued"]),
+                        IsAdmin = Convert.ToByte(datarow["IsAdmin"])
                     };
                 }
                 return user;

@@ -97,7 +97,13 @@ namespace DatabaseLayer.Repositories
                     DataRow dataRow = dataTable.Rows[0];
                     campaigns = new Campaigns()
                     {
-                        CampaignID = Convert.ToInt32(dataRow["CampaignID"])
+                        CampaignID = (int)dataRow["CampaignID"],
+                        Name = dataRow["Name"].ToString(),
+                        Venue = dataRow["Venue"].ToString(),
+                        AssignedTo = (int)dataRow["AssignedTo"],
+                        StartedOn = (DateTime)(dataRow["StartedOn"]),
+                        //CompletedOn = Convert.ToDateTime(dataRow["CompletedOn"]),
+                        IsOpen = (bool)dataRow["IsOpen"]
                     };
                 }
                 return campaigns;
