@@ -223,6 +223,7 @@ namespace PresentationLayer
                         {
                             Console.WriteLine("--------------------------------------------------------------------------");
                             throw new Exception("Error Campaign Not Assigned to you or Campaign is Closed!");
+                            Console.WriteLine("--------------------------------------------------------------------------");
                         }
                         break;
                     case 2:
