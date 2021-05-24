@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Entities;
 using DatabaseLayer.Repositories;
 using BusinessLayer.Services;
+using ConsoleTables;
 
 namespace PresentationLayer
 {
@@ -397,12 +398,12 @@ namespace PresentationLayer
                         List<Leads> leads = adminServices.ViewLeadByCampaign(campID);
                         if (leads != null)
                         {
+                            var table = new ConsoleTable("Lead ID", "Campaign ID", "Consumer Name", "Email Address", "Phone", "Preferred Mode of Contact", "Date Approached", "Product ID", "Status");
                             foreach(Leads l in leads)
                             {
-                                Console.WriteLine($"Lead ID: {l.LeadID}, Campaign ID: {l.CampaignID}, Consumer Name: {l.ConsumerName}, Email Address: {l.EmailAddress}, PhoneNo: {l.PhoneNo}");
-                                Console.WriteLine($"Preferred Mode if Contact: {l.PreferredMoC}, Date Approached: {l.DateApproached}, Product ID: {l.ProductID}, Status: {l.Status}");
-                                Console.WriteLine("--------------------------------------------------------------------------");
+                                table.AddRow(l.LeadID, l.CampaignID, l.ConsumerName, l.EmailAddress, l.PhoneNo, l.PreferredMoC, l.DateApproached, l.ProductID, l.Status);                                
                             }
+                            table.Write(Format.Alternative);
                         }
                         else
                         {
@@ -417,13 +418,12 @@ namespace PresentationLayer
                         List<Campaigns> campaigns = adminServices.ViewCampaingByExecutive();
                         if (campaigns != null)
                         {
-                            foreach(Campaigns c in campaigns)
+                            var table = new ConsoleTable("Assigned Executives","Campaign ID", "Name", "Venue", "Started On", "Completed On", "Status", "Number of Leads");
+                            foreach (Campaigns c in campaigns)
                             {
-                                Console.WriteLine($"Assigned Executivs: {c.AssignedTo}, Campaign ID: {c.CampaignID}, Name: {c.Name}, Venue: {c.Venue}, " +
-                                    $"Started ON: {c.StartedOn}, Completed ON: TBD, Status: {c.IsOpen}, Number of Leads: {c.Leads}");
-                                Console.WriteLine("--------------------------------------------------------------------------");
+                                table.AddRow(c.AssignedTo,c.CampaignID,c.Name,c.Venue,c.StartedOn,"TBD",c.IsOpen,c.Leads);
                             }
-                            Console.ReadLine();
+                            table.Write(Format.Alternative);
                         }
                         else
                         {
