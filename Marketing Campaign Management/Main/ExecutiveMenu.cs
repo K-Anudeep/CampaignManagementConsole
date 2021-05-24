@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Entities;
 using BusinessLayer.Services;
 using DatabaseLayer.Repositories;
+using ConsoleTables;
 
 namespace PresentationLayer
 {
@@ -313,12 +314,12 @@ namespace PresentationLayer
                         viewCampaigns = execService.ViewCampaignsAssigned();
                         if (viewCampaigns != null)
                         {
+                            var table = new ConsoleTable("Assigned Executives", "Campaign ID", "Name", "Venue", "Started On", "Completed On", "Status");
                             foreach (Campaigns c in viewCampaigns)
                             {
-                                    Console.WriteLine($"Campaign ID: {c.CampaignID}, Name: {c.Name}, Venue: {c.Venue}, AssignedTo: {c.AssignedTo}, " +
-                                    $"Started ON: {c.StartedOn}, Completed ON: TBD, Status: {c.IsOpen}");
-                                Console.WriteLine("--------------------------------------------------------------------------");
+                                table.AddRow(c.AssignedTo, c.CampaignID, c.Name, c.Venue, c.StartedOn, "TBD", c.IsOpen);
                             }
+                            table.Write(Format.Alternative);
                         }                        
                         else
                         {

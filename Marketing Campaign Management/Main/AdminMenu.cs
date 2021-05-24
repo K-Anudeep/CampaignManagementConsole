@@ -128,7 +128,7 @@ namespace PresentationLayer
                         Products product = adminServices.OneProduct(productId);
                         if (product != null)
                         {
-                            Console.WriteLine($"ProductID:{product.ProductID}, Productname:{product.ProductName},Description:{product.Description},UnitPrice:{product.UnitPrice}");
+                            Console.WriteLine($"ProductID:{productId}, Productname:{product.ProductName},Description:{product.Description},UnitPrice:{product.UnitPrice}");
 
                         }
                         else
@@ -246,7 +246,7 @@ namespace PresentationLayer
                         if (campaigns != null)
                         {
                             var table = new ConsoleTable("Campaign ID", "Campaign Name", "Assigned Executives", "Venue", "Started On", "Completed On", "Status");
-                            table.AddRow(campaigns.CampaignID, campaigns.Name, campaigns.AssignedTo, campaigns.Venue, campaigns.StartedOn, "TBD", campaigns.IsOpen);
+                            table.AddRow(cId2, campaigns.Name, campaigns.AssignedTo, campaigns.Venue, campaigns.StartedOn, "TBD", campaigns.IsOpen);
                             table.Write(Format.Alternative);
                         }
                         else
@@ -385,7 +385,7 @@ namespace PresentationLayer
                             Users user = adminServices.OneUser(userId);
                             if (user != null)
                             {
-                                Console.WriteLine($"User ID: {user.UserID}, Name: {user.FullName}, Login ID: {user.LoginID}, Password: {user.Password}, Date of Joining: {user.DateOfJoin}");
+                                Console.WriteLine($"User ID: {userId}, Name: {user.FullName}, Login ID: {user.LoginID}, Password: {user.Password}, Date of Joining: {user.DateOfJoin}");
                                 Console.WriteLine($"Address: {user.Address}, Discountinued: {user.Discontinued}, Admin: {user.IsAdmin}");
                                 Console.WriteLine("--------------------------------------------------------------------------");
                             }
