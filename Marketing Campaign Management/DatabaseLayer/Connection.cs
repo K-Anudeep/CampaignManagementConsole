@@ -11,11 +11,10 @@ namespace DatabaseLayer
 {
     public static class Connection
     {
-        static string connectionManager = ConfigurationManager.ConnectionStrings["MCMConnection"].ConnectionString;
         public static SqlConnection connection = null;
         static Connection()
         {
-            connection = new SqlConnection(connectionManager);
+            connection = new SqlConnection(@"Data Source=mcmdb.centralindia.cloudapp.azure.com;Initial Catalog=master;User ID=sp1admin;Password=sprint1dblog!");
         }
         public static void Open()
         {
