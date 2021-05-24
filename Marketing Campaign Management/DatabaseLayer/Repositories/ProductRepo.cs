@@ -70,7 +70,7 @@ namespace DatabaseLayer.Repositories
                              {
                                  ProductID = (int)dataRow["ProductID"],
                                  ProductName = dataRow["ProductName"].ToString(),
-                                 Description = dataRow["Description"].ToString(),
+                                 Description = dataRow["Decription"].ToString(),
                                  UnitPrice = (decimal)dataRow["UnitPrice"],
                              }
                             );
@@ -94,7 +94,7 @@ namespace DatabaseLayer.Repositories
                 Products product = null;
                 command = new SqlCommand()
                 {
-                    CommandText = "OneProductByProductID",
+                    CommandText = "OneProduct",
                     CommandType = CommandType.StoredProcedure,
                     Connection = Connection.connection
                 };
@@ -108,7 +108,7 @@ namespace DatabaseLayer.Repositories
                     product = new Products()
                     {
                         ProductName = dataRow["ProductName"].ToString(),
-                        Description = dataRow["Description"].ToString(),
+                        Description = dataRow["Decription"].ToString(),
                         UnitPrice = Convert.ToDecimal(dataRow["UnitPrice"]),
                     };
                 }
