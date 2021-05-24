@@ -131,6 +131,7 @@ namespace DatabaseLayer.Repositories
                     campaigns = new List<Campaigns>();
                     foreach (DataRow dataRow in dataSet.Tables["CampaignsByExec"].Rows)
                     {
+                        //if(dataRow["CompletedOn"])
                         campaigns.Add(
                              new Campaigns()
                              {
