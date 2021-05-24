@@ -108,14 +108,12 @@ namespace PresentationLayer
                         DisplayProduct = adminServices.ViewProducts();
                         if (DisplayProduct != null)
                         {
-                            var table = new ConsoleTable("ProductID", "Productname ", "Description ", "UnitPrice");
+                            var table1 = new ConsoleTable("ProductID", "Productname ", "Description ", "UnitPrice");
                             foreach (Products p in DisplayProduct)
                             {
-                                table.AddRow(p.ProductID, p.ProductName, p.Description, p.UnitPrice);
-                                table.Write(Format.Alternative);
-                                Console.WriteLine(".........................................................");
-
+                                table1.AddRow(p.ProductID, p.ProductName, p.Description, p.UnitPrice);
                             }
+                            table1.Write(Format.Alternative);
                         }
                         else
                         {
