@@ -140,7 +140,8 @@ namespace DatabaseLayer.Repositories
                                  AssignedTo = (int)dataRow["AssignedTo"],
                                  StartedOn = (DateTime)(dataRow["StartedOn"]),
                                  //CompletedOn = Convert.ToDateTime(dataRow["CompletedOn"]),
-                                 IsOpen = (bool)dataRow["IsOpen"]
+                                 IsOpen = (bool)dataRow["IsOpen"],
+                                 Leads = Convert.ToInt32(dataRow["Leads"])
                              }
                             );
                     }

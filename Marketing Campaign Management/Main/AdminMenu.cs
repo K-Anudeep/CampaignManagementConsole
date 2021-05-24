@@ -417,11 +417,17 @@ namespace PresentationLayer
                         List<Campaigns> campaigns = adminServices.ViewCampaingByExecutive();
                         if (campaigns != null)
                         {
-
+                            foreach(Campaigns c in campaigns)
+                            {
+                                Console.WriteLine($"Assigned Executivs: {c.AssignedTo}, Campaign ID: {c.CampaignID}, Name: {c.Name}, Venue: {c.Venue}, " +
+                                    $"Started ON: {c.StartedOn}, Completed ON: TBD, Status: {c.IsOpen}, Number of Leads: {c.Leads}");
+                                Console.WriteLine("--------------------------------------------------------------------------");
+                            }
                             Console.ReadLine();
                         }
                         else
                         {
+
                             Console.WriteLine("Wrong Executive Name");
                         }
 

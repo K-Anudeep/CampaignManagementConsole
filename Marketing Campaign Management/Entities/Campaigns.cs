@@ -57,5 +57,8 @@ namespace Entities
             set { _isOpen = value; }
         }
 
+        public int Leads { get => _leads; set => _leads = value; }
+
+        private int _leads;
     }
 }
