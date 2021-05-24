@@ -139,9 +139,11 @@ namespace PresentationLayer
                         viewSales = execService.ViewSales();
                         if (viewSales != null)
                         {
+                            var table = new ConsoleTable("Order ID", "Lead ID ", "Shipping Address ", "Billing Address", " Created Sales On","Payment Mode");
                             foreach (Sales s in viewSales)
                             {
-                                Console.WriteLine($"Order ID: {s.OrderID}, Lead ID: {s.LeadID}, Shipping Address: {s.ShippingAddress}, Billing Address: {s.BillingAddress}, Created Sales On: {s.CreatedON}, Payment Mode: {s.PaymentMode} ");
+                                table.AddRow(s.OrderID, s.LeadID, s.ShippingAddress, s.BillingAddress, s.CreatedON, s.PaymentMode);
+                                table.Write(Format.Alternative);
                                 Console.WriteLine("--------------------------------------------------------------------------");
                             }
                         }
@@ -276,10 +278,11 @@ namespace PresentationLayer
                         viewLeads = execService.ViewLeads();
                         if (viewLeads != null)
                         {
+                            var table = new ConsoleTable("Lead ID ", "Campaign ID  ", "Consumer Name ", "  Email Address", "PhoneNo", "Preferred Mode if Contact", " Date Approached", "Product ID","Status");
                             foreach (Leads l in viewLeads)
                             {
-                                Console.WriteLine($"Lead ID: {l.LeadID}, Campaign ID: {l.CampaignID}, Consumer Name: {l.ConsumerName}, Email Address: {l.EmailAddress}, PhoneNo: {l.PhoneNo}");
-                                Console.WriteLine($"Preferred Mode if Contact: {l.PreferredMoC}, Date Approached: {l.DateApproached}, Product ID: {l.ProductID}, Status: {l.Status}");
+                                table.AddRow( l.LeadID, l.CampaignID, l.ConsumerName, l.EmailAddress, l.PhoneNo, l.PreferredMoC,l.DateApproached, l.ProductID, l.Status);
+                                table.Write(Format.Alternative);
                                 Console.WriteLine("--------------------------------------------------------------------------");
                             }
                         }

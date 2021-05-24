@@ -108,9 +108,11 @@ namespace PresentationLayer
                         DisplayProduct = adminServices.ViewProducts();
                         if (DisplayProduct != null)
                         {
+                            var table = new ConsoleTable("ProductID", "Productname ", "Description ", "UnitPrice");
                             foreach (Products p in DisplayProduct)
                             {
-                                Console.WriteLine($"ProductID:{p.ProductID}, Productname:{p.ProductName},Description:{p.Description},UnitPrice:{p.UnitPrice}");
+                                table.AddRow(p.ProductID, p.ProductName, p.Description, p.UnitPrice);
+                                table.Write(Format.Alternative);
                                 Console.WriteLine(".........................................................");
 
                             }
@@ -126,14 +128,16 @@ namespace PresentationLayer
                         Console.WriteLine("Enter Product ID to get the product details");
                         int productId = int.Parse(Console.ReadLine());
                         Products product = adminServices.OneProduct(productId);
+                        var table = new ConsoleTable("ProductID", "Productname ", "Description ", "UnitPrice");
+
                         if (product != null)
                         {
-                            Console.WriteLine($"ProductID:{productId}, Productname:{product.ProductName},Description:{product.Description},UnitPrice:{product.UnitPrice}");
-
+                            table.AddRow(product.ProductID, product.ProductName, product.Description, product.UnitPrice);
+                            table.Write(Format.Alternative);
                         }
                         else
                         {
-                            Console.WriteLine("NO products to Display");
+                            Console.WriteLine("No products to Display");
                         }
                         break;
                     case 4:
@@ -243,10 +247,10 @@ namespace PresentationLayer
                         Console.WriteLine("Enter the Campaign ID to view it's details");
                         int cId2 = Convert.ToInt32(Console.ReadLine());
                         Campaigns campaigns = adminServices.OneCampaign(cId2);
+                        var table = new ConsoleTable("Campaign ID", "Campaign Name", "Assigned Executives", "Venue", "Started On", "Completed On", "Status");
                         if (campaigns != null)
                         {
-                            var table = new ConsoleTable("Campaign ID", "Campaign Name", "Assigned Executives", "Venue", "Started On", "Completed On", "Status");
-                            table.AddRow(cId2, campaigns.Name, campaigns.AssignedTo, campaigns.Venue, campaigns.StartedOn, "TBD", campaigns.IsOpen);
+                            table.AddRow(cId2, campaigns.Name, campaigns.AssignedTo, campaigns.Venue, campaigns.StartedOn, campaigns.IsOpen);
                             table.Write(Format.Alternative);
                         }
                         else
@@ -329,10 +333,12 @@ namespace PresentationLayer
                             List<Users> user = adminServices.DisplayUsers();
                             if (user != null)
                             {
+                                var table = new ConsoleTable("User ID", "Name ", "Login ID", "Password", "Date of Joining", "Address", "Discountinued", "Admin");
                                 foreach (Users c in user)
                                 {
-                                    Console.WriteLine($"User ID: {c.UserID}, Name: {c.FullName}, Login ID: {c.LoginID}, Password: {c.Password}, Date of Joining: {c.DateOfJoin}");
-                                    Console.WriteLine($"Address: {c.Address}, Discountinued: {c.Discontinued}, Admin: {c.IsAdmin}");
+                                    table.AddRow(c.UserID, c.FullName, c.LoginID, c.Password, c.DateOfJoin, c.Address, c.Discontinued, c.IsAdmin);
+                                    table.Write(Format.Alternative);
+                         
                                     Console.WriteLine("--------------------------------------------------------------------------");
                                 }
                             }
@@ -383,10 +389,11 @@ namespace PresentationLayer
                             int userId = Convert.ToInt32(Console.ReadLine());
 
                             Users user = adminServices.OneUser(userId);
+                            var table = new ConsoleTable("User ID", "Name ", "Login ID", "Password", "Date of Joining", "Address", "Discountinued", "Admin");
                             if (user != null)
                             {
-                                Console.WriteLine($"User ID: {userId}, Name: {user.FullName}, Login ID: {user.LoginID}, Password: {user.Password}, Date of Joining: {user.DateOfJoin}");
-                                Console.WriteLine($"Address: {user.Address}, Discountinued: {user.Discontinued}, Admin: {user.IsAdmin}");
+                                table.AddRow(user.UserID, user.FullName, user.LoginID, user.Password, user.DateOfJoin, user.Address, user.Discontinued, user.IsAdmin);
+                                table.Write(Format.Alternative);
                                 Console.WriteLine("--------------------------------------------------------------------------");
                             }
                             else
