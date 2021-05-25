@@ -107,12 +107,12 @@ namespace PresentationLayer
                         DisplayProduct = adminServices.ViewProducts();
                         if (DisplayProduct != null)
                         {
-                            var table1 = new ConsoleTable("ProductID", "Productname ", "Description ", "UnitPrice");
+                            var productTable = new ConsoleTable("ProductID", "Productname ", "Description ", "UnitPrice");
                             foreach (Products p in DisplayProduct)
                             {
-                                table1.AddRow(p.ProductID, p.ProductName, p.Description, p.UnitPrice);
+                                productTable.AddRow(p.ProductID, p.ProductName, p.Description, p.UnitPrice);
                             }
-                            table1.Write(Format.Alternative);
+                            productTable.Write(Format.Alternative);
                         }
                         else
                         {
@@ -125,12 +125,12 @@ namespace PresentationLayer
                         Console.WriteLine("Enter Product ID to get the product details");
                         int productId = int.Parse(Console.ReadLine());
                         Products product = adminServices.OneProduct(productId);
-                        var table = new ConsoleTable("ProductID", "Productname ", "Description ", "UnitPrice");
+                        var oneTable = new ConsoleTable("ProductID", "Productname ", "Description ", "UnitPrice");
 
                         if (product != null)
                         {
-                            table.AddRow(product.ProductID, product.ProductName, product.Description, product.UnitPrice);
-                            table.Write(Format.Alternative);
+                            oneTable.AddRow(product.ProductID, product.ProductName, product.Description, product.UnitPrice);
+                            oneTable.Write(Format.Alternative);
                         }
                         else
                         {
@@ -244,11 +244,11 @@ namespace PresentationLayer
                         Console.WriteLine("Enter the Campaign ID to view it's details");
                         int cId2 = Convert.ToInt32(Console.ReadLine());
                         Campaigns campaigns = adminServices.OneCampaign(cId2);
-                        var table = new ConsoleTable("Campaign ID", "Campaign Name", "Assigned Executives", "Venue", "Started On", "Completed On", "Status");
+                        var campaignTable = new ConsoleTable("Campaign ID", "Campaign Name", "Assigned Executives", "Venue", "Started On", "Completed On", "Status");
                         if (campaigns != null)
                         {
-                            table.AddRow(cId2, campaigns.Name, campaigns.AssignedTo, campaigns.Venue, campaigns.StartedOn,"TBD", campaigns.IsOpen);
-                            table.Write(Format.Alternative);
+                            campaignTable.AddRow(cId2, campaigns.Name, campaigns.AssignedTo, campaigns.Venue, campaigns.StartedOn, "TBD", campaigns.IsOpen);
+                            campaignTable.Write(Format.Alternative);
                         }
                         else
                         {
@@ -331,12 +331,14 @@ namespace PresentationLayer
                             List<Users> user = adminServices.DisplayUsers();
                             if (user != null)
                             {
-                                var table = new ConsoleTable("User ID", "Name ", "Login ID", "Password", "Date of Joining", "Address", "Discountinued", "Admin");
+                                var usersTable = new ConsoleTable("User ID", "Name ", "Login ID", "Password", "Date of Joining", "Address", "Discountinued", "Admin");
                                 foreach (Users c in user)
                                 {
-                                    table.AddRow(c.UserID, c.FullName, c.LoginID, c.Password, c.DateOfJoin, c.Address, c.Discontinued, c.IsAdmin);
+                                    usersTable.AddRow(c.UserID, c.FullName, c.LoginID, c.Password, c.DateOfJoin, c.Address, c.Discontinued, c.IsAdmin);
+                                    usersTable.Write(Format.Alternative);
+                         
+                                    Console.WriteLine("--------------------------------------------------------------------------");
                                 }
-                                table.Write(Format.Alternative);
                             }
                             else
                             {
@@ -386,12 +388,11 @@ namespace PresentationLayer
                             int userId = Convert.ToInt32(Console.ReadLine());
 
                             Users user = adminServices.OneUser(userId);
-                            var table = new ConsoleTable("User ID", "Name ", "Login ID", "Password", "Date of Joining", "Address", "Discountinued", "Admin");
+                            var userTable = new ConsoleTable("User ID", "Name ", "Login ID", "Password", "Date of Joining", "Address", "Discountinued", "Admin");
                             if (user != null)
                             {
-                                table.AddRow(user.UserID, user.FullName, user.LoginID, user.Password, user.DateOfJoin, user.Address, user.Discontinued, user.IsAdmin);
-                                table.Write(Format.Alternative);
-                                Console.WriteLine("--------------------------------------------------------------------------");
+                                userTable.AddRow(user.UserID, user.FullName, user.LoginID, user.Password, user.DateOfJoin, user.Address, user.Discontinued, user.IsAdmin);
+                                userTable.Write(Format.Alternative);
                             }
                             else
                             {
@@ -430,12 +431,12 @@ namespace PresentationLayer
                         List<Leads> leads = adminServices.ViewLeadByCampaign(campID);
                         if (leads != null)
                         {
-                            var table = new ConsoleTable("Lead ID", "Campaign ID", "Consumer Name", "Email Address", "Phone", "Preferred Mode of Contact", "Date Approached", "Product ID", "Status");
+                            var reportTable = new ConsoleTable("Lead ID", "Campaign ID", "Consumer Name", "Email Address", "Phone", "Preferred Mode of Contact", "Date Approached", "Product ID", "Status");
                             foreach(Leads l in leads)
                             {
-                                table.AddRow(l.LeadID, l.CampaignID, l.ConsumerName, l.EmailAddress, l.PhoneNo, l.PreferredMoC, l.DateApproached, l.ProductID, l.Status);                                
+                                reportTable.AddRow(l.LeadID, l.CampaignID, l.ConsumerName, l.EmailAddress, l.PhoneNo, l.PreferredMoC, l.DateApproached, l.ProductID, l.Status);                                
                             }
-                            table.Write(Format.Alternative);
+                            reportTable.Write(Format.Alternative);
                         }
                         else
                         {
@@ -450,12 +451,12 @@ namespace PresentationLayer
                         List<Campaigns> campaigns = adminServices.ViewCampaingByExecutive();
                         if (campaigns != null)
                         {
-                            var table = new ConsoleTable("Assigned Executives","Campaign ID", "Name", "Venue", "Started On", "Completed On", "Status", "Number of Leads");
+                            var exeTable = new ConsoleTable("Assigned Executives","Campaign ID", "Name", "Venue", "Started On", "Completed On", "Status", "Number of Leads");
                             foreach (Campaigns c in campaigns)
                             {
-                                table.AddRow(c.AssignedTo,c.CampaignID,c.Name,c.Venue,c.StartedOn,"TBD",c.IsOpen,c.Leads);
+                                exeTable.AddRow(c.AssignedTo,c.CampaignID,c.Name,c.Venue,c.StartedOn,"TBD",c.IsOpen,c.Leads);
                             }
-                            table.Write(Format.Alternative);
+                            exeTable.Write(Format.Alternative);
                         }
                         else
                         {
