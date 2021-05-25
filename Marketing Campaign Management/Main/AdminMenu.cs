@@ -197,38 +197,45 @@ namespace PresentationLayer
                 int Campaigns = int.Parse(Console.ReadLine());
                 switch (Campaigns)
                 {
-                    //case 1:
-                    //    List<Campaigns> campaigns = AdminServices.ViewCampaignsByExec();
-
-                    //    foreach (Campaigns c in campaigns)
-                    //    {
-                    //        Console.WriteLine($"Campaign ID: {c.CampaignID}, Name: {c.Name}, Venue: {c.Venue}, AssignedTo: {c.AssignedTo}, " +
-                    //        $"Started ON: {c.StartedOn}, Completed ON: TBD, Status: {c.IsOpen}");
-                    //        Console.WriteLine("--------------------------------------------------------------------------");
-                    //    }
-                        //break;
                     case 1:
                         {
+                            dataChecks = new DataChecks();
                             Campaigns campaign = new Campaigns();
+                            AccessCheck accessCheck = new AccessCheck();
                             Console.WriteLine("Enter Campaign Name:");
                             campaign.Name = Console.ReadLine();
                             Console.WriteLine("Enter Venue:");
                             campaign.Venue = Console.ReadLine();
                             Console.WriteLine("Marketing Executive assigned to this:");
-                            campaign.AssignedTo = Int32.Parse(Console.ReadLine());
-                            if (adminServices.OneUser(campaign.AssignedTo) != null)
+                            int userID = 0;
+                            while (!int.TryParse(Console.ReadLine(), out userID))
                             {
-                                Console.WriteLine("Start date of Campaign(YYYY-MM-DD):");
-                                campaign.StartedOn = Convert.ToDateTime(Console.ReadLine());
-                                bool add = adminServices.AddCampaigns(campaign);
-                                if (add == true)
+                                Console.WriteLine("Please Enter a valid numerical ID value!");
+                                Console.WriteLine("Marketing Executive assigned to this:");
+                            }
+                            campaign.AssignedTo = userID;
+                            if (dataChecks.CheckUser(campaign.AssignedTo) == true)
+                            {
+                                if (dataChecks.AdminCheck(campaign.AssignedTo))
                                 {
-                                    Console.WriteLine("Added!");
+                                    Console.WriteLine("Start date of Campaign(YYYY-MM-DD):");
+                                    campaign.StartedOn = Convert.ToDateTime(Console.ReadLine());
+                                    bool add = adminServices.AddCampaigns(campaign);
+                                    if (add == true)
+                                    {
+                                        Console.WriteLine("Added!");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("--------------------------------------------------------------------------");
+                                        Console.WriteLine("Error in Adding!");
+                                        Console.WriteLine("--------------------------------------------------------------------------");
+                                    }
                                 }
                                 else
                                 {
                                     Console.WriteLine("--------------------------------------------------------------------------");
-                                    Console.WriteLine("Error in Adding!");
+                                    Console.WriteLine("Assigned user is an Admin, please assign a Marketing Executive!");
                                     Console.WriteLine("--------------------------------------------------------------------------");
                                 }
                             }
@@ -244,8 +251,13 @@ namespace PresentationLayer
                     case 2:
                         adminServices = new AdminServices();
                         Console.WriteLine("Enter Campign ID to be closed:");
-                        int cId = int.Parse(Console.ReadLine());
-                        if (adminServices.CloseCampaigns(cId))
+                        int cId = 0;
+                        while (!int.TryParse(Console.ReadLine(), out cId))
+                        {
+                            Console.WriteLine("Please Enter a valid numerical ID value!");
+                            Console.WriteLine("Enter Campign ID to be closed:");
+                        }
+                        if (dataChecks.CheckCampaign(cId))
                         {
                             Console.WriteLine("Campaign is Closed");
                             Console.WriteLine("--------------------------------------------------------------------------");
@@ -267,7 +279,7 @@ namespace PresentationLayer
                         var campaignTable = new ConsoleTable("Campaign ID", "Campaign Name", "Assigned Executives", "Venue", "Started On", "Completed On", "Status");
                         if (campaigns != null)
                         {
-                            campaignTable.AddRow(cId2, campaigns.Name, campaigns.AssignedTo, campaigns.Venue, campaigns.StartedOn, "TBD", campaigns.IsOpen);
+                            campaignTable.AddRow(cId2, campaigns.Name, campaigns.AssignedTo, campaigns.Venue, campaigns.StartedOn.ToString("d"), "TBD", campaigns.IsOpen);
                             campaignTable.Write(Format.Alternative);
                         }
                         else
@@ -355,10 +367,9 @@ namespace PresentationLayer
                                 foreach (Users c in user)
                                 {
                                     usersTable.AddRow(c.UserID, c.FullName, c.LoginID, c.Password, c.DateOfJoin, c.Address, c.Discontinued, c.IsAdmin);
-                                    usersTable.Write(Format.Alternative);
-                         
-                                    Console.WriteLine("--------------------------------------------------------------------------");
                                 }
+
+                                usersTable.Write(Format.Alternative);
                             }
                             else
                             {

@@ -48,9 +48,6 @@ namespace DatabaseLayer.Repositories
         {
             try
             {
-                CampaignsRepo campaignsRepo = new CampaignsRepo();
-                if (campaignsRepo.OneCampaign(cId) != null)
-                {
                     command = new SqlCommand()
                     {
                         CommandText = "CloseCampaign",
@@ -61,9 +58,6 @@ namespace DatabaseLayer.Repositories
                     Connection.Open();
                     command.ExecuteNonQuery();
                     return true;
-                }
-                else
-                    throw new Exception("Campaign ID not found!");
             }
             catch (Exception ex)
             {

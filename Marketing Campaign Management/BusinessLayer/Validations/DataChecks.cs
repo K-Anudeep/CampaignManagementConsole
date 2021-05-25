@@ -28,6 +28,16 @@ namespace BusinessLayer.Validations
             }
         }
 
+        public bool CheckCampaign(int cId)
+        {
+            if (campaignsRepo.OneCampaign(cId) != null)
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
         public bool CheckUser(int userID)
         {
             Users check = userRepo.OneUser(userID);
@@ -64,6 +74,20 @@ namespace BusinessLayer.Validations
             else
             {
                 return false;
+            }
+        }
+
+        public bool AdminCheck(int userID)
+        {
+            //To check if user is Admin
+            Users check = userRepo.OneUser(userID);
+            if (check.IsAdmin == 1)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
     }
