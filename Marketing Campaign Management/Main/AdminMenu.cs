@@ -180,16 +180,32 @@ namespace PresentationLayer
                         bool checkProduct = dataChecks.CheckProduct(productID);
                         if (checkProduct == true)
                         {
-                            bool delete = adminServices.DeleteProduct(productID);
-                            if (delete == true)
+                            Console.WriteLine("Deleting a product also delete all Campaigns and Leads associated to that Product. Do you still want to continue? yes/no");
+                            string confirm = Console.ReadLine();
+                            if (confirm == "yes")
                             {
-                                Console.WriteLine("Deleted!");
+                                bool delete = adminServices.DeleteProduct(productID);
+                                if (delete == true)
+                                {
+                                    Console.WriteLine("Deleted!");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("--------------------------------------------------------------------------");
+                                    Console.WriteLine("Error in Deleting!");
+                                    Console.WriteLine("--------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (confirm == "no")
+                            {
+                                break;
                             }
                             else
                             {
                                 Console.WriteLine("--------------------------------------------------------------------------");
-                                Console.WriteLine("Error in Deleting!");
+                                Console.WriteLine("Please enter from the given options.");
                                 Console.WriteLine("--------------------------------------------------------------------------");
+                                throw new Exception("IncorrectOptionError");
                             }
                         }
                         else
@@ -204,6 +220,7 @@ namespace PresentationLayer
                     default:
                         Console.WriteLine("--------------------------------------------------------------------------");
                         Console.WriteLine("Please enter from the given options.");
+                        Console.WriteLine("Deletion Aborted. Returning to previous Menu.");
                         Console.WriteLine("--------------------------------------------------------------------------");
                         throw new Exception("IncorrectOptionError");
 
@@ -324,18 +341,24 @@ namespace PresentationLayer
                         break;
                     case 3:
                         Console.WriteLine("Enter the Campaign ID to view it's details");
-                        int cId2 = Convert.ToInt32(Console.ReadLine());
+                        int cId2 = 0;
+                        while (!int.TryParse(Console.ReadLine(), out cId2))
+                        {
+                            Console.WriteLine("Please Enter a valid numerical ID value!");
+                            Console.WriteLine("Enter Campign ID to be view:");
+                        }
                         Campaigns campaigns = adminServices.OneCampaign(cId2);
                         var campaignTable = new ConsoleTable("Campaign ID", "Campaign Name", "Assigned Executives", "Venue", "Started On", "Completed On", "Status");
                         if (campaigns != null)
                         {
-                            campaignTable.AddRow(cId2, campaigns.Name, campaigns.AssignedTo, campaigns.Venue, campaigns.StartedOn.ToString("d"), "TBD", campaigns.IsOpen);
+                            campaignTable.AddRow(cId2, campaigns.Name, campaigns.AssignedTo, campaigns.Venue, campaigns.StartedOn.ToString("d"), campaigns.CompletedOn.ToString("d"), campaigns.IsOpen);
                             campaignTable.Write(Format.Alternative);
                         }
                         else
                         {
-
-                            Console.WriteLine("Wrong Executive Name");
+                            Console.WriteLine("--------------------------------------------------------------------------");
+                            Console.WriteLine("No data with that Executive ID");
+                            Console.WriteLine("--------------------------------------------------------------------------");
                         }
                         break;
                     case 4:
@@ -435,7 +458,7 @@ namespace PresentationLayer
                                 var usersTable = new ConsoleTable("User ID", "Name ", "Login ID", "Password", "Date of Joining", "Address", "Discountinued", "Admin");
                                 foreach (Users c in user)
                                 {
-                                    usersTable.AddRow(c.UserID, c.FullName, c.LoginID, c.Password, c.DateOfJoin, c.Address, c.Discontinued, c.IsAdmin);
+                                    usersTable.AddRow(c.UserID, c.FullName, c.LoginID, c.Password, c.DateOfJoin.ToString("d"), c.Address, c.Discontinued, c.IsAdmin);
                                 }
 
                                 usersTable.Write(Format.Alternative);
@@ -491,7 +514,7 @@ namespace PresentationLayer
                             var userTable = new ConsoleTable("User ID", "Name ", "Login ID", "Password", "Date of Joining", "Address", "Discountinued", "Admin");
                             if (user != null)
                             {
-                                userTable.AddRow(user.UserID, user.FullName, user.LoginID, user.Password, user.DateOfJoin, user.Address, user.Discontinued, user.IsAdmin);
+                                userTable.AddRow(user.UserID, user.FullName, user.LoginID, user.Password, user.DateOfJoin.ToString("d"), user.Address, user.Discontinued, user.IsAdmin);
                                 userTable.Write(Format.Alternative);
                             }
                             else
@@ -565,7 +588,7 @@ namespace PresentationLayer
                                 var reportTable = new ConsoleTable("Lead ID", "Campaign ID", "Consumer Name", "Email Address", "Phone", "Preferred Mode of Contact", "Date Approached", "Product ID", "Status");
                                 foreach (Leads l in leads)
                                 {
-                                    reportTable.AddRow(l.LeadID, l.CampaignID, l.ConsumerName, l.EmailAddress, l.PhoneNo, l.PreferredMoC, l.DateApproached, l.ProductID, l.Status);
+                                    reportTable.AddRow(l.LeadID, l.CampaignID, l.ConsumerName, l.EmailAddress, l.PhoneNo, l.PreferredMoC, l.DateApproached.ToString("d"), l.ProductID, l.Status);
                                 }
                                 reportTable.Write(Format.Alternative);
                             }
@@ -589,9 +612,12 @@ namespace PresentationLayer
                             var exeTable = new ConsoleTable("Assigned Executives","Campaign ID", "Name", "Venue", "Started On", "Completed On", "Status", "Number of Leads");
                             foreach (Campaigns c in campaigns)
                             {
-                                exeTable.AddRow(c.AssignedTo,c.CampaignID,c.Name,c.Venue,c.StartedOn,"TBD",c.IsOpen,c.Leads);
+                                exeTable.AddRow(c.AssignedTo,c.CampaignID,c.Name,c.Venue,c.StartedOn.ToString("d"),c.CompletedOn.ToString("d"),c.IsOpen,c.Leads);
                             }
                             exeTable.Write(Format.Alternative);
+                            Console.WriteLine("");
+                            Console.WriteLine("Note: Campaign Default End date is set to 7 days. Date gets updated upon closing the campaign.");
+                            
                         }
                         else
                         {

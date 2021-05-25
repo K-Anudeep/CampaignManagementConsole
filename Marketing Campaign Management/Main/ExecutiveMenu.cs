@@ -73,11 +73,13 @@ namespace PresentationLayer
                 {
                     exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
                 }
+                goto ExecMenu;
             }
         }
 
         public void Sales()
         {
+            SalesMenu:
             try
             {
                 Console.WriteLine("Choose: ");
@@ -91,6 +93,7 @@ namespace PresentationLayer
                         Sales salesData = new Sales();
                         Console.WriteLine("Enter the LeadID to create Sales Order for: ");
                         int leadCheck = Convert.ToInt32(Console.ReadLine());
+
                         execService = new ExecutiveService();
                         bool statusCheck = dataChecks.CheckLead(leadCheck);
                         if (statusCheck == true)
@@ -160,7 +163,7 @@ namespace PresentationLayer
                             var salesTable = new ConsoleTable("Order ID", "Lead ID ", "Shipping Address ", "Billing Address", " Created Sales On","Payment Mode");
                             foreach (Sales s in viewSales)
                             {
-                                salesTable.AddRow(s.OrderID, s.LeadID, s.ShippingAddress, s.BillingAddress, s.CreatedON, s.PaymentMode);
+                                salesTable.AddRow(s.OrderID, s.LeadID, s.ShippingAddress, s.BillingAddress, s.CreatedON.ToString("d"), s.PaymentMode);
                             }
                             salesTable.Write(Format.Alternative);
                         }
@@ -173,15 +176,33 @@ namespace PresentationLayer
                         break;
                     case 3:
                         break;
+                    default:
+                        Console.WriteLine("--------------------------------------------------------------------------");
+                        Console.WriteLine("Please enter from the given options.");
+                        Console.WriteLine("--------------------------------------------------------------------------");
+                        throw new Exception("IncorrectOptionError");
                 }
+            }
+            catch (Exception ex) when (ex.Message == "IncorrectOptionError")
+            {
+                using (StreamWriter w = File.AppendText("log.txt"))
+                {
+                    exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
+                }
+                goto SalesMenu;
             }
             catch (Exception ex)
             {
-                throw ex;
+                using (StreamWriter w = File.AppendText("log.txt"))
+                {
+                    exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
+                }
+                goto SalesMenu;
             }
         }
         public void Leads()
         {
+            LeadsMenu:
             Leads leads = new Leads();
             dataChecks = new DataChecks();
             try
@@ -297,7 +318,7 @@ namespace PresentationLayer
                             var leadsTable = new ConsoleTable("Lead ID ", "Campaign ID  ", "Consumer Name ", "  Email Address", "PhoneNo", "Preferred Mode if Contact", " Date Approached", "Product ID","Status");
                             foreach (Leads l in viewLeads)
                             {
-                                leadsTable.AddRow( l.LeadID, l.CampaignID, l.ConsumerName, l.EmailAddress, l.PhoneNo, l.PreferredMoC,l.DateApproached, l.ProductID, l.Status);
+                                leadsTable.AddRow( l.LeadID, l.CampaignID, l.ConsumerName, l.EmailAddress, l.PhoneNo, l.PreferredMoC,l.DateApproached.ToString("d"), l.ProductID, l.Status);
                             }
                             leadsTable.Write(Format.Alternative);
                         }
@@ -308,15 +329,33 @@ namespace PresentationLayer
                             Console.WriteLine("--------------------------------------------------------------------------");
                         }
                         break;
+                    default:
+                        Console.WriteLine("--------------------------------------------------------------------------");
+                        Console.WriteLine("Please enter from the given options.");
+                        Console.WriteLine("--------------------------------------------------------------------------");
+                        throw new Exception("IncorrectOptionError");
                 }
+            }
+            catch (Exception ex) when (ex.Message == "IncorrectOptionError")
+            {
+                using (StreamWriter w = File.AppendText("log.txt"))
+                {
+                    exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
+                }
+                goto LeadsMenu;
             }
             catch (Exception ex)
             {
-                throw ex;
+                using (StreamWriter w = File.AppendText("log.txt"))
+                {
+                    exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
+                }
+                goto LeadsMenu;
             }
         }
         public void Campaign()
         {
+            CampaignMenu:
             try
             {
                 Console.WriteLine("Campaigns");
@@ -335,9 +374,11 @@ namespace PresentationLayer
                             var campaignTable = new ConsoleTable("Assigned Executives", "Campaign ID", "Name", "Venue", "Started On", "Completed On", "Status");
                             foreach (Campaigns c in viewCampaigns)
                             {
-                                campaignTable.AddRow(c.AssignedTo, c.CampaignID, c.Name, c.Venue, c.StartedOn, "TBD", c.IsOpen);
+                                campaignTable.AddRow(c.AssignedTo, c.CampaignID, c.Name, c.Venue, c.StartedOn.ToString("d"),c.CompletedOn.ToString("d"), c.IsOpen);
                             }
                             campaignTable.Write(Format.Alternative);
+                            Console.WriteLine("");
+                            Console.WriteLine("Note: Campaign Default End date is set to 7 days. Date gets updated upon closing the campaign.");
                         }                        
                         else
                         {
@@ -349,12 +390,29 @@ namespace PresentationLayer
                         break;
                     case 2:
                         break;
+                    default:
+                        Console.WriteLine("--------------------------------------------------------------------------");
+                        Console.WriteLine("Please enter from the given options.");
+                        Console.WriteLine("--------------------------------------------------------------------------");
+                        throw new Exception("IncorrectOptionError");
                 }
 
             }
+            catch (Exception ex) when (ex.Message == "IncorrectOptionError")
+            {
+                using (StreamWriter w = File.AppendText("log.txt"))
+                {
+                    exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
+                }
+                goto CampaignMenu;
+            }
             catch (Exception ex)
             {
-                throw ex;
+                using (StreamWriter w = File.AppendText("log.txt"))
+                {
+                    exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
+                }
+                goto CampaignMenu;
             }
         }
     }

@@ -96,7 +96,7 @@ namespace DatabaseLayer.Repositories
                         Venue = dataRow["Venue"].ToString(),
                         AssignedTo = (int)dataRow["AssignedTo"],
                         StartedOn = (DateTime)(dataRow["StartedOn"]),
-                        //CompletedOn = Convert.ToDateTime(dataRow["CompletedOn"]),
+                        CompletedOn = Convert.ToDateTime(dataRow["CompletedOn"]),
                         IsOpen = (bool)dataRow["IsOpen"]
                     };
                 }
@@ -139,7 +139,7 @@ namespace DatabaseLayer.Repositories
                                  Venue = dataRow["Venue"].ToString(),
                                  AssignedTo = (int)dataRow["AssignedTo"],
                                  StartedOn = (DateTime)(dataRow["StartedOn"]),
-                                 //CompletedOn = Convert.ToDateTime(dataRow["CompletedOn"]),
+                                 CompletedOn = Convert.ToDateTime(dataRow["CompletedOn"]),
                                  IsOpen = (bool)dataRow["IsOpen"],
                                  Leads = Convert.ToInt32(dataRow["Leads"])
                              }
@@ -187,7 +187,7 @@ namespace DatabaseLayer.Repositories
                                  Venue = dataRow["Venue"].ToString(),
                                  AssignedTo = (int)dataRow["AssignedTo"],
                                  StartedOn = (DateTime)(dataRow["StartedOn"]),
-                                 //CompletedOn = Convert.ToDateTime(dataRow["CompletedOn"]),
+                                 CompletedOn = Convert.ToDateTime(dataRow["CompletedOn"]),
                                  IsOpen = (bool)dataRow["IsOpen"]
                              }
                             );
