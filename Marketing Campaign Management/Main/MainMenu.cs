@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using Entities;
 using BusinessLayer.Services;
 using BusinessLayer.Validations;
+using BusinessLayer.Exceptions;
 
 namespace PresentationLayer
 {
@@ -13,37 +15,64 @@ namespace PresentationLayer
     {
         public static void Menu()
         {
+            ExceptionLogging exceptionLogging = null;
             try
-            {
+            {                
                 SessionDetails session = new SessionDetails();
                 AccessCheck access = new AccessCheck();
                 Console.WriteLine("Enter Login ID: ");
                 string loginID = Console.ReadLine();
-                Console.WriteLine("Enter Password: ");
-                string loginPass = Console.ReadLine();
-                bool val = access.Validation(loginID, loginPass);
-                if (val == true)
+                if (loginID != "")
                 {
-                    bool adminCheck = access.AdminCheck();
-                    if (adminCheck == true)
+                    Console.WriteLine("Enter Password: ");
+                    string loginPass = Console.ReadLine();
+                    if (loginPass != "")
                     {
-                        Console.WriteLine($"WELCOME {session.FullName} to your Adminitrator Panel");
-                        AdminMenu adminMenu = new AdminMenu();
+                        bool val = access.Validation(loginID, loginPass);
+                        if (val == true)
+                        {
+                            bool adminCheck = access.AdminCheck();
+                            if (adminCheck == true)
+                            {
+                                Console.WriteLine($"WELCOME {session.FullName} to your Administrator Panel");
+                                AdminMenu adminMenu = new AdminMenu();
+                            }
+                            else
+                            {
+                                Console.WriteLine($"WELCOME {session.FullName} to your Marketing Executive Panel");
+                                ExecutiveMenu execMenu = new ExecutiveMenu();
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("--------------------------------------------------------------------------");
+                            Console.WriteLine("Please check the credentials and try again.");
+                            Console.WriteLine("--------------------------------------------------------------------------");
+                            throw new ExceptionLogging("Incorrect Credentials given");
+                        }
                     }
                     else
                     {
-                        Console.WriteLine($"WELCOME {session.FullName} to your Marketing Executive Panel");
-                        ExecutiveMenu execMenu = new ExecutiveMenu();
+                        Console.WriteLine("--------------------------------------------------------------------------");
+                        Console.WriteLine("Password Should not be empty");
+                        Console.WriteLine("--------------------------------------------------------------------------");
+                        throw new ExceptionLogging("Empty Password Field");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Incorret Credentials!");
+                    Console.WriteLine("--------------------------------------------------------------------------");
+                    Console.WriteLine("Login ID should not be empty!");
+                    Console.WriteLine("--------------------------------------------------------------------------");
+                    throw new ExceptionLogging("Empty Login Field");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                using (StreamWriter w = File.AppendText("log.txt"))
+                {
+                   exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
+                }
             }
         }
         static void Main(string[] args)
@@ -54,10 +83,15 @@ namespace PresentationLayer
                 {
                     Menu();
                 } while (true);
+                throw new Exception();
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine("An Error Occured: Please contact the Administrator");
+                using (StreamWriter w = File.AppendText("log.txt"))
+                {
+                    ExceptionLogging exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
+                }
             }
         }
     }

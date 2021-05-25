@@ -141,12 +141,12 @@ namespace PresentationLayer
                         viewSales = execService.ViewSales();
                         if (viewSales != null)
                         {
-                            var salestable = new ConsoleTable("Order ID", "Lead ID ", "Shipping Address ", "Billing Address", " Created Sales On","Payment Mode");
+                            var salesTable = new ConsoleTable("Order ID", "Lead ID ", "Shipping Address ", "Billing Address", " Created Sales On","Payment Mode");
                             foreach (Sales s in viewSales)
                             {
-                                salestable.AddRow(s.OrderID, s.LeadID, s.ShippingAddress, s.BillingAddress, s.CreatedON, s.PaymentMode);
+                                salesTable.AddRow(s.OrderID, s.LeadID, s.ShippingAddress, s.BillingAddress, s.CreatedON, s.PaymentMode);
                             }
-                            salestable.Write(Format.Alternative);
+                            salesTable.Write(Format.Alternative);
                         }
                         else
                         {
@@ -278,12 +278,12 @@ namespace PresentationLayer
                         viewLeads = execService.ViewLeads();
                         if (viewLeads != null)
                         {
-                            var leadstable = new ConsoleTable("Lead ID ", "Campaign ID  ", "Consumer Name ", "  Email Address", "PhoneNo", "Preferred Mode if Contact", " Date Approached", "Product ID","Status");
+                            var leadsTable = new ConsoleTable("Lead ID ", "Campaign ID  ", "Consumer Name ", "  Email Address", "PhoneNo", "Preferred Mode if Contact", " Date Approached", "Product ID","Status");
                             foreach (Leads l in viewLeads)
                             {
-                                leadstable.AddRow( l.LeadID, l.CampaignID, l.ConsumerName, l.EmailAddress, l.PhoneNo, l.PreferredMoC,l.DateApproached, l.ProductID, l.Status);
+                                leadsTable.AddRow( l.LeadID, l.CampaignID, l.ConsumerName, l.EmailAddress, l.PhoneNo, l.PreferredMoC,l.DateApproached, l.ProductID, l.Status);
                             }
-                            leadstable.Write(Format.Alternative);
+                            leadsTable.Write(Format.Alternative);
                         }
                         else
                         {
@@ -316,12 +316,12 @@ namespace PresentationLayer
                         viewCampaigns = execService.ViewCampaignsAssigned();
                         if (viewCampaigns != null)
                         {
-                            var campaigntable = new ConsoleTable("Assigned Executives", "Campaign ID", "Name", "Venue", "Started On", "Completed On", "Status");
+                            var campaignTable = new ConsoleTable("Assigned Executives", "Campaign ID", "Name", "Venue", "Started On", "Completed On", "Status");
                             foreach (Campaigns c in viewCampaigns)
                             {
-                                campaigntable.AddRow(c.AssignedTo, c.CampaignID, c.Name, c.Venue, c.StartedOn, "TBD", c.IsOpen);
+                                campaignTable.AddRow(c.AssignedTo, c.CampaignID, c.Name, c.Venue, c.StartedOn, "TBD", c.IsOpen);
                             }
-                            campaigntable.Write(Format.Alternative);
+                            campaignTable.Write(Format.Alternative);
                         }                        
                         else
                         {
