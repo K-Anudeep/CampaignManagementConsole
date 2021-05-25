@@ -8,57 +8,20 @@ namespace Entities
 {
     public class Campaigns
     {
-        private int _campaignID;
-        public int CampaignID
-        {
-            get { return _campaignID; }
-            set { _campaignID = value; }
-        }
+        public int CampaignID { get; set; }
 
-        private string _name;
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value;}
-        }
+        public string Name { get; set; }
 
-        private string _venue;
-        public string Venue
-        {
-            get { return _venue; }
-            set { _venue = value; }
-        }
+        public string Venue { get; set; }
 
-        private int _assignedTo;
-        public int AssignedTo
-        {
-            get { return _assignedTo;}
-            set { _assignedTo = value; }
-        }
+        public int AssignedTo { get; set; }
 
-        private DateTime _startedOn;
-        public DateTime StartedOn
-        {
-            get { return _startedOn; }
-            set { _startedOn = value;}
-        }
+        public DateTime StartedOn { get; set; }
 
-        private DateTime _completedOn;
-        public DateTime CompletedOn 
-        {
-            get { return _completedOn;}
-            set { _completedOn = value;}
-        }
+        public DateTime CompletedOn { get; set; }
 
-        private bool _isOpen;
-        public bool IsOpen
-        {
-            get { return _isOpen; }
-            set { _isOpen = value; }
-        }
+        public bool IsOpen { get; set; }
 
-        public int Leads { get => _leads; set => _leads = value; }
-
-        private int _leads;
+        public int Leads { get; set; }
     }
 }

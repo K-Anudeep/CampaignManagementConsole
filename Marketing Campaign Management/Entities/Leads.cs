@@ -8,28 +8,11 @@ namespace Entities
 {
     public class Leads
     {
-        private int _leadID;
-        public int LeadID
-        {
-            get { return _leadID; }
-            set { _leadID = value; }
-        }
+        public int LeadID { get; set; }
 
+        public int CampaignID { get; set; }
 
-        private int _campaignID;
-        public int CampaignID
-        {
-            get { return _campaignID; }
-            set { _campaignID = value; }
-        }
-
-
-        private string _consumerName;
-        public string ConsumerName
-        {
-            get { return _consumerName; }
-            set { _consumerName = value; }
-        }
+        public string ConsumerName { get; set; }
 
 
 
@@ -84,11 +67,5 @@ namespace Entities
             get { return _status; }
             set { _status = value; }
         }
-      
- 
-     
-  
-
-
     }
 }
