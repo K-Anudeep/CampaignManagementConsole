@@ -7,6 +7,8 @@ using Entities;
 using BusinessLayer.Services;
 using BusinessLayer.Validations;
 using ConsoleTables;
+using System.IO;
+using BusinessLayer.Exceptions;
 
 namespace PresentationLayer
 {
@@ -14,8 +16,10 @@ namespace PresentationLayer
     {
         AdminServices adminServices = null;
         DataChecks dataChecks = null;
+        ExceptionLogging exceptionLogging = null;
         public AdminMenu()
-        {            
+        {   
+            AdminMenu:
             try
             {
                 bool keepLoop;
@@ -30,7 +34,12 @@ namespace PresentationLayer
                     Console.WriteLine("5.Logout");
                     Console.WriteLine("");
                     Console.WriteLine("Enter your option");
-                    int Options = int.Parse(Console.ReadLine());
+                    int Options = 0;
+                    while (!int.TryParse(Console.ReadLine(), out Options))
+                    {
+                        Console.WriteLine("Please Enter a valid numerical value!");
+                        Console.WriteLine("Enter your option: ");
+                    }
                     switch (Options)
                     {
                         case 1:
@@ -51,21 +60,34 @@ namespace PresentationLayer
                             break;
                         default:
                             Console.WriteLine("--------------------------------------------------------------------------");
-                            Console.WriteLine("Invalid Choice");
+                            Console.WriteLine("Please enter from the given options.");
                             Console.WriteLine("--------------------------------------------------------------------------");
-                            break;
+                            throw new Exception("IncorrectOptionError");
                     }
                 } while (keepLoop == true);
 
 
             }
-            catch (Exception Ex)
+            catch(Exception ex) when (ex.Message == "IncorrectOptionError")
             {
-                throw Ex;
+                using (StreamWriter w = File.AppendText("log.txt"))
+                {
+                    exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
+                }
+                goto AdminMenu;
             }
+            catch (Exception ex)
+            {
+                using (StreamWriter w = File.AppendText("log.txt"))
+                {
+                    exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
+                }
+                goto AdminMenu;
+            }            
         }
         public void Products()
         {
+            ProductMenu:
             try
             {
                 adminServices = new AdminServices();
@@ -76,7 +98,12 @@ namespace PresentationLayer
                 Console.WriteLine("3.To Display a specific Product");
                 Console.WriteLine("4.To Delete a Product");
                 Console.WriteLine("5. Back to Main menu");
-                int Products = int.Parse(Console.ReadLine());
+                int Products = 0;
+                while (!int.TryParse(Console.ReadLine(), out Products))
+                {
+                    Console.WriteLine("Please Enter a valid numerical value!");
+                    Console.WriteLine("Enter your option: ");
+                }
                 switch (Products)
                 {
                     case 1:
@@ -174,13 +201,31 @@ namespace PresentationLayer
                         break;
                     case 5:
                         break;
+                    default:
+                        Console.WriteLine("--------------------------------------------------------------------------");
+                        Console.WriteLine("Please enter from the given options.");
+                        Console.WriteLine("--------------------------------------------------------------------------");
+                        throw new Exception("IncorrectOptionError");
+
                 }
 
 
             }
+            catch (Exception ex) when (ex.Message == "IncorrectOptionError")
+            {
+                using (StreamWriter w = File.AppendText("log.txt"))
+                {
+                    exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
+                }
+                goto ProductMenu;
+            }
             catch (Exception ex)
             {
-                throw ex;
+                using (StreamWriter w = File.AppendText("log.txt"))
+                {
+                    exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
+                }
+                goto ProductMenu;
             }
         }
         public void Campaigns()
@@ -194,7 +239,12 @@ namespace PresentationLayer
                 Console.WriteLine("2. Close Campaigns");
                 Console.WriteLine("3. Show a specific Campaign");
                 Console.WriteLine("4. back to Main menu");
-                int Campaigns = int.Parse(Console.ReadLine());
+                int Campaigns = 0;
+                while (!int.TryParse(Console.ReadLine(), out Campaigns))
+                {
+                    Console.WriteLine("Please Enter a valid numerical value!");
+                    Console.WriteLine("Enter your option: ");
+                }
                 switch (Campaigns)
                 {
                     case 1:
@@ -288,21 +338,35 @@ namespace PresentationLayer
                             Console.WriteLine("Wrong Executive Name");
                         }
                         break;
-
                     case 4:
                         break;
+                    default:
+                        Console.WriteLine("--------------------------------------------------------------------------");
+                        Console.WriteLine("Please enter from the given options.");
+                        Console.WriteLine("--------------------------------------------------------------------------");
+                        throw new Exception("IncorrectOptionError");
                 }
+            }
+            catch (Exception ex) when (ex.Message == "IncorrectOptionError")
+            {
+                using (StreamWriter w = File.AppendText("log.txt"))
+                {
+                    exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
+                }
+                goto CampaignMenu;
             }
             catch (Exception ex)
             {
-                Console.WriteLine("--------------------------------------------------------------------------");
-                Console.WriteLine(ex.Message);
-                Console.WriteLine("--------------------------------------------------------------------------");
+                using (StreamWriter w = File.AppendText("log.txt"))
+                {
+                    exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
+                }
                 goto CampaignMenu;
             }
         }
         public void Users()
         {
+            UserMenu:
             try
             {
                 adminServices = new AdminServices();
@@ -313,7 +377,12 @@ namespace PresentationLayer
                 Console.WriteLine("3. Discontinue a User");
                 Console.WriteLine("4. Get a specific User");
                 Console.WriteLine("5. Back to Main menu");
-                int Users = int.Parse(Console.ReadLine());
+                int Users = 0;
+                while (!int.TryParse(Console.ReadLine(), out Users))
+                {
+                    Console.WriteLine("Please Enter a valid numerical value!");
+                    Console.WriteLine("Enter your option: ");
+                }
                 switch (Users)
                 {
                     case 1:
@@ -437,46 +506,81 @@ namespace PresentationLayer
                     case 5:
                         
                         break;
+                    default:
+                        Console.WriteLine("--------------------------------------------------------------------------");
+                        Console.WriteLine("Please enter from the given options.");
+                        Console.WriteLine("--------------------------------------------------------------------------");
+                        throw new Exception("IncorrectOptionError");
                 }
+            }
+            catch (Exception ex) when (ex.Message == "IncorrectOptionError")
+            {
+                using (StreamWriter w = File.AppendText("log.txt"))
+                {
+                    exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
+                }
+                goto UserMenu;
             }
             catch (Exception ex)
             {
-                throw ex;
+                using (StreamWriter w = File.AppendText("log.txt"))
+                {
+                    exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
+                }
             }
+            goto UserMenu;
         }
         public void Reports()
         {
+            ReportMenu:
             try
             {
                 adminServices = new AdminServices();
+                dataChecks = new DataChecks();
                 Console.WriteLine("Choose one of the options:");
                 Console.WriteLine("1. To View Leads by Campaign");
                 Console.WriteLine("2. To View Campaigns by Executives and Number of Leads for it");
                 Console.WriteLine("3. Back to Main menu");
-                int Reports = int.Parse(Console.ReadLine());
+                int Reports = 0;
+                while (!int.TryParse(Console.ReadLine(), out Reports))
+                {
+                    Console.WriteLine("Please Enter a valid numerical value!");
+                    Console.WriteLine("Enter your option: ");
+                }
                 switch (Reports)
                 {
                     case 1:
                         Console.WriteLine("Enter CampaignID to see all it's Leads: ");
-                        int campID = Convert.ToInt32(Console.ReadLine());
-                        List<Leads> leads = adminServices.ViewLeadByCampaign(campID);
-                        if (leads != null)
+                        int campID = 0;
+                        while (!int.TryParse(Console.ReadLine(), out campID))
                         {
-                            var reportTable = new ConsoleTable("Lead ID", "Campaign ID", "Consumer Name", "Email Address", "Phone", "Preferred Mode of Contact", "Date Approached", "Product ID", "Status");
-                            foreach(Leads l in leads)
+                            Console.WriteLine("Please Enter a valid numerical value!");
+                            Console.WriteLine("Enter your option: ");
+                        }
+                        if (dataChecks.CheckCampaign(campID))
+                        {
+                            List<Leads> leads = adminServices.ViewLeadByCampaign(campID);
+                            if (leads != null)
                             {
-                                reportTable.AddRow(l.LeadID, l.CampaignID, l.ConsumerName, l.EmailAddress, l.PhoneNo, l.PreferredMoC, l.DateApproached, l.ProductID, l.Status);                                
+                                var reportTable = new ConsoleTable("Lead ID", "Campaign ID", "Consumer Name", "Email Address", "Phone", "Preferred Mode of Contact", "Date Approached", "Product ID", "Status");
+                                foreach (Leads l in leads)
+                                {
+                                    reportTable.AddRow(l.LeadID, l.CampaignID, l.ConsumerName, l.EmailAddress, l.PhoneNo, l.PreferredMoC, l.DateApproached, l.ProductID, l.Status);
+                                }
+                                reportTable.Write(Format.Alternative);
                             }
-                            reportTable.Write(Format.Alternative);
+                            else
+                            {
+                                Console.WriteLine("--------------------------------------------------------------------------");
+                                Console.WriteLine("Leads for the given CampaignID does not exist.");
+                                Console.WriteLine("--------------------------------------------------------------------------");
+                            }
                         }
                         else
                         {
-                            Console.WriteLine("--------------------------------------------------------------------------");
-                            Console.WriteLine("Data for given Campaign ID does not exist");
-                            Console.WriteLine("--------------------------------------------------------------------------");
+                            Console.WriteLine("Given Campaign ID does not exist");
+                            throw new Exception("NoDataExists");
                         }
-
-
                         break;
                     case 2:
                         List<Campaigns> campaigns = adminServices.ViewCampaingByExecutive();
@@ -498,11 +602,28 @@ namespace PresentationLayer
                         break;
                     case 3:
                         break;
+                    default:
+                        Console.WriteLine("--------------------------------------------------------------------------");
+                        Console.WriteLine("Please enter from the given options.");
+                        Console.WriteLine("--------------------------------------------------------------------------");
+                        throw new Exception("IncorrectOptionError");
                 }
+            }
+            catch (Exception ex) when (ex.Message == "IncorrectOptionError")
+            {
+                using (StreamWriter w = File.AppendText("log.txt"))
+                {
+                    exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
+                }
+                goto ReportMenu;
             }
             catch (Exception ex)
             {
-                throw ex;
+                using (StreamWriter w = File.AppendText("log.txt"))
+                {
+                    exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
+                }
+                goto ReportMenu;
             }
         }
     }

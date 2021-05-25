@@ -7,6 +7,8 @@ using Entities;
 using BusinessLayer.Services;
 using BusinessLayer.Validations;
 using ConsoleTables;
+using System.IO;
+using BusinessLayer.Exceptions;
 
 namespace PresentationLayer
 {
@@ -14,8 +16,11 @@ namespace PresentationLayer
     {
         ExecutiveService execService = null;
         DataChecks dataChecks = null;
+        ExceptionLogging exceptionLogging = null;
+
         public ExecutiveMenu()
         {
+            ExecMenu:
             try
             {
                 bool keepLoop;
@@ -50,13 +55,24 @@ namespace PresentationLayer
                             Console.WriteLine("--------------------------------------------------------------------------");
                             Console.WriteLine("Invalid Choice");
                             Console.WriteLine("--------------------------------------------------------------------------");
-                            break;
+                            throw new Exception("IncorrectOptionError");
                     }
                 } while (keepLoop == true);
             }
-            catch(Exception ex)
+            catch (Exception ex) when (ex.Message == "IncorrectOptionError")
             {
-                throw ex;
+                using (StreamWriter w = File.AppendText("log.txt"))
+                {
+                    exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
+                }
+                goto ExecMenu;
+            }
+            catch (Exception ex)
+            {
+                using (StreamWriter w = File.AppendText("log.txt"))
+                {
+                    exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
+                }
             }
         }
 
