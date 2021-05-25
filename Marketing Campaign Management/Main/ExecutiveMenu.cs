@@ -22,6 +22,7 @@ namespace PresentationLayer
                 do
                 {
                     keepLoop = true;
+                    Console.WriteLine("--------------------------------------------------------------------------");
                     Console.WriteLine("Select the option that you want to follow with:");
                     Console.WriteLine("1.LEADS");
                     Console.WriteLine("2.SALES");

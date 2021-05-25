@@ -22,7 +22,6 @@ namespace PresentationLayer
                 do
                 {
                     keepLoop = true;
-                    Console.WriteLine("WELCOME TO YOUR ADMINISTRATOR PAGE");
                     Console.WriteLine("--------------------------------------------------------------------------");
                     Console.WriteLine("1.Manage Products");
                     Console.WriteLine("2.Manage Campaigns");
