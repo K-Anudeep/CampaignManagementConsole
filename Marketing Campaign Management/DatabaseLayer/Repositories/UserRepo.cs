@@ -51,22 +51,16 @@ namespace DatabaseLayer.Repositories
         {
             try
             {
-                UserRepo userRepo = new UserRepo();
-                if (userRepo.OneUser(uId) != null)
+                command = new SqlCommand()
                 {
-                    command = new SqlCommand()
-                    {
-                        CommandText = "DiscontinueUser",
-                        CommandType = CommandType.StoredProcedure,
-                        Connection = Connection.connection
-                    };
-                    command.Parameters.AddWithValue("@UserID", uId);
-                    Connection.Open();
-                    command.ExecuteNonQuery();
-                    return true;
-                }
-                else
-                    throw new Exception("User ID not found!");
+                    CommandText = "DiscontinueUser",
+                    CommandType = CommandType.StoredProcedure,
+                    Connection = Connection.connection
+                };
+                command.Parameters.AddWithValue("@UserID", uId);
+                Connection.Open();
+                command.ExecuteNonQuery();
+                return true;             
                 
             }
             catch (Exception ex)
@@ -147,6 +141,7 @@ namespace DatabaseLayer.Repositories
                     DataRow datarow = datatable.Rows[0];
                     user = new Users()
                     {
+                        UserID = Convert.ToInt32(datarow["UserID"]),
                         FullName = datarow["FullName"].ToString(),
                         LoginID = datarow["LoginID"].ToString(),
                         Password = datarow["Password"].ToString(),

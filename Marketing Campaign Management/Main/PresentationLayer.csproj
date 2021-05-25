@@ -73,10 +73,6 @@
       <Project>{fd44a24d-8e20-4de3-ae4e-f83240ab90a8}</Project>
       <Name>BusinessLayer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DatabaseLayer\DatabaseLayer.csproj">
-      <Project>{f464bf9f-85d5-44b5-a2dd-9c07c078a9ea}</Project>
-      <Name>DatabaseLayer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Entities\Entities.csproj">
       <Project>{7afb29a2-4de0-4efd-8830-6bd672a717de}</Project>
       <Name>Entities</Name>

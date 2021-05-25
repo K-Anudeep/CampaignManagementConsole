@@ -107,6 +107,7 @@ namespace DatabaseLayer.Repositories
                     DataRow dataRow = dataTable.Rows[0];
                     product = new Products()
                     {
+                        ProductID = Convert.ToInt32(dataRow["ProductID"]),
                         ProductName = dataRow["ProductName"].ToString(),
                         Description = dataRow["Decription"].ToString(),
                         UnitPrice = Convert.ToDecimal(dataRow["UnitPrice"]),

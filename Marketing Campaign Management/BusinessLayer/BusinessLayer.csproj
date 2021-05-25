@@ -47,7 +47,7 @@
     <Compile Include="Services\IAdminServices.cs" />
     <Compile Include="Services\IExecutiveService.cs" />
     <Compile Include="Validations\AccessCheck.cs" />
-    <Compile Include="Validations\CampaignStatusCheck.cs" />
+    <Compile Include="Validations\DataChecks.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DatabaseLayer\DatabaseLayer.csproj">

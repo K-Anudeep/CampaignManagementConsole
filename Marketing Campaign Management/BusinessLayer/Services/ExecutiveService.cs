@@ -87,27 +87,6 @@ namespace BusinessLayer.Services
 
 
         //CAMPAIGNS
-
-        public bool CampaignStatusCheck(int cId)
-        {
-            try
-            {
-                campaignsRepo = new CampaignsRepo();
-                bool check = campaignsRepo.CampaignStatusCheck(cId);
-                if (check == true)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
-        }
         
 
         public List<Campaigns> ViewCampaignsAssigned()

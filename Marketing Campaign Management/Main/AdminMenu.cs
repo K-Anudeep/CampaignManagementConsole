@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Entities;
-using DatabaseLayer.Repositories;
 using BusinessLayer.Services;
+using BusinessLayer.Validations;
 using ConsoleTables;
 
 namespace PresentationLayer
@@ -13,23 +13,22 @@ namespace PresentationLayer
     class AdminMenu
     {
         AdminServices adminServices = null;
+        DataChecks dataChecks = null;
         public AdminMenu()
-        {
-
-            
+        {            
             try
             {
                 bool keepLoop;
                 do
                 {
                     keepLoop = true;
-                    Console.WriteLine("ADMINISTRATOR");
-                    Console.WriteLine("select the option that you want to follow with");
-                    Console.WriteLine("1.MANAGE PRODUCTS ");
-                    Console.WriteLine("2.MANAGE CAMPAIGNS ");
-                    Console.WriteLine("3.MANAGE USERS ");
-                    Console.WriteLine("4.MANAGE REPORTS ");
-                    Console.WriteLine("5.LOGOUT");
+                    Console.WriteLine("WELCOME TO YOUR ADMINISTRATOR PAGE");
+                    Console.WriteLine("--------------------------------------------------------------------------");
+                    Console.WriteLine("1.Manage Products");
+                    Console.WriteLine("2.Manage Campaigns");
+                    Console.WriteLine("3.Manage Users");
+                    Console.WriteLine("4.Manage Reports");
+                    Console.WriteLine("5.Logout");
                     Console.WriteLine("");
                     Console.WriteLine("Enter your option");
                     int Options = int.Parse(Console.ReadLine());
@@ -248,7 +247,7 @@ namespace PresentationLayer
                         var table = new ConsoleTable("Campaign ID", "Campaign Name", "Assigned Executives", "Venue", "Started On", "Completed On", "Status");
                         if (campaigns != null)
                         {
-                            table.AddRow(cId2, campaigns.Name, campaigns.AssignedTo, campaigns.Venue, campaigns.StartedOn, campaigns.IsOpen);
+                            table.AddRow(cId2, campaigns.Name, campaigns.AssignedTo, campaigns.Venue, campaigns.StartedOn,"TBD", campaigns.IsOpen);
                             table.Write(Format.Alternative);
                         }
                         else
@@ -275,6 +274,7 @@ namespace PresentationLayer
             try
             {
                 adminServices = new AdminServices();
+                dataChecks = new DataChecks();
                 Console.WriteLine("Chose and Option:");
                 Console.WriteLine("1. Add Users");
                 Console.WriteLine("2. Display Users");
@@ -335,10 +335,8 @@ namespace PresentationLayer
                                 foreach (Users c in user)
                                 {
                                     table.AddRow(c.UserID, c.FullName, c.LoginID, c.Password, c.DateOfJoin, c.Address, c.Discontinued, c.IsAdmin);
-                                    table.Write(Format.Alternative);
-                         
-                                    Console.WriteLine("--------------------------------------------------------------------------");
                                 }
+                                table.Write(Format.Alternative);
                             }
                             else
                             {
@@ -352,13 +350,14 @@ namespace PresentationLayer
 
                     case 3:
                         {
-                            Console.WriteLine("Are you sure you want to continue yes/no:");
+                            Console.WriteLine("Are you sure you want to continue? yes/no:");
                             string choice = Console.ReadLine();
 
                             if (choice.ToLower().Equals("yes"))
                             {
                                 Console.WriteLine("Enter UserID:");
                                 int userId = Convert.ToInt32(Console.ReadLine());
+                                bool userValid = dataChecks.CheckUser(userId);
                                 bool check = adminServices.DiscontinueUser(userId);
 
                                 if (check == true)

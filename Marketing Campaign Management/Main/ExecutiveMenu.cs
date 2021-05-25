@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Entities;
 using BusinessLayer.Services;
-using DatabaseLayer.Repositories;
+using BusinessLayer.Validations;
 using ConsoleTables;
 
 namespace PresentationLayer
@@ -13,6 +13,7 @@ namespace PresentationLayer
     class ExecutiveMenu
     {
         ExecutiveService execService = null;
+        DataChecks dataChecks = null;
         public ExecutiveMenu()
         {
             try
@@ -74,7 +75,7 @@ namespace PresentationLayer
                         Console.WriteLine("Enter the LeadID to create Sales Order for: ");
                         int leadCheck = Convert.ToInt32(Console.ReadLine());
                         execService = new ExecutiveService();
-                        bool statusCheck = execService.CheckLead(leadCheck);
+                        bool statusCheck = dataChecks.CheckLead(leadCheck);
                         if (statusCheck == true)
                         {
                             salesData.LeadID = leadCheck;
@@ -144,7 +145,6 @@ namespace PresentationLayer
                             {
                                 table.AddRow(s.OrderID, s.LeadID, s.ShippingAddress, s.BillingAddress, s.CreatedON, s.PaymentMode);
                                 table.Write(Format.Alternative);
-                                Console.WriteLine("--------------------------------------------------------------------------");
                             }
                         }
                         else
@@ -166,7 +166,7 @@ namespace PresentationLayer
         public void Leads()
         {
             Leads leads = new Leads();
-            CampaignsRepo campaignsRepo = new CampaignsRepo();
+            dataChecks = new DataChecks();
             try
             {
                 Console.WriteLine("Manage your Leads");
@@ -180,7 +180,7 @@ namespace PresentationLayer
                     case 1:
                         Console.WriteLine("Enter the CampaignID: ");
                         leads.CampaignID = Convert.ToInt32(Console.ReadLine());
-                        bool campCheck = campaignsRepo.CampaignStatusCheck(leads.CampaignID);
+                        bool campCheck = dataChecks.CampaignStatusCheck(leads.CampaignID);
                         if (campCheck == true)
                         {
                             Console.WriteLine("Enter the Consumer Name: ");
@@ -226,14 +226,13 @@ namespace PresentationLayer
                         {
                             Console.WriteLine("--------------------------------------------------------------------------");
                             throw new Exception("Error Campaign Not Assigned to you or Campaign is Closed!");
-                            Console.WriteLine("--------------------------------------------------------------------------");
                         }
                         break;
                     case 2:
                         Console.WriteLine("Enter a LeadID: ");
                         int leadId = Convert.ToInt32(Console.ReadLine());
                         execService = new ExecutiveService();
-                        bool leadCheck = execService.CheckLead(leadId);
+                        bool leadCheck = dataChecks.CheckLead(leadId);
                         if(leadCheck == true)
                         {
                             Console.WriteLine("How do you want to follow up with this Lead? 1. Won 2. Lost");
@@ -281,10 +280,9 @@ namespace PresentationLayer
                             var table = new ConsoleTable("Lead ID ", "Campaign ID  ", "Consumer Name ", "  Email Address", "PhoneNo", "Preferred Mode if Contact", " Date Approached", "Product ID","Status");
                             foreach (Leads l in viewLeads)
                             {
-                                table.AddRow( l.LeadID, l.CampaignID, l.ConsumerName, l.EmailAddress, l.PhoneNo, l.PreferredMoC,l.DateApproached, l.ProductID, l.Status);
-                                table.Write(Format.Alternative);
-                                Console.WriteLine("--------------------------------------------------------------------------");
+                                table.AddRow( l.LeadID, l.CampaignID, l.ConsumerName, l.EmailAddress, l.PhoneNo, l.PreferredMoC,l.DateApproached, l.ProductID, l.Status);                                
                             }
+                            table.Write(Format.Alternative);
                         }
                         else
                         {
