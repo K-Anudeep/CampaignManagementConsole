@@ -69,6 +69,7 @@ namespace PresentationLayer
             try
             {
                 adminServices = new AdminServices();
+                dataChecks = new DataChecks();
                 Console.WriteLine("Choose fromt he following: ");
                 Console.WriteLine("1.To Add Product");
                 Console.WriteLine("2.To Display Product");
@@ -85,7 +86,12 @@ namespace PresentationLayer
                         Console.WriteLine("Give Product Description:");
                         string ProDesc = Console.ReadLine();
                         Console.WriteLine("Enter Unit Price of the Product:");
-                        decimal ProUnitPrice = decimal.Parse(Console.ReadLine());
+                        decimal ProUnitPrice = 0;
+                        while (!decimal.TryParse(Console.ReadLine(), out ProUnitPrice))
+                        {
+                            Console.WriteLine("Please Enter a valid numerical value!");
+                            Console.WriteLine("Enter Unit Price of the Product:");
+                        }
                         Product.ProductName = ProName;
                         Product.Description = ProDesc;
                         Product.UnitPrice = ProUnitPrice;
@@ -138,18 +144,33 @@ namespace PresentationLayer
                         break;
                     case 4:
                         Console.WriteLine("Enter Product ID to delete");
-                        int productID = int.Parse(Console.ReadLine());
-                        bool delete = adminServices.DeleteProduct(productID);
-                        if (delete == true)
+                        int productID = 0;
+                        while (!int.TryParse(Console.ReadLine(), out productID))
                         {
-                            Console.WriteLine("Deleted!");
+                            Console.WriteLine("Please Enter a valid ID!");
+                            Console.WriteLine("Enter Product ID to delete");
+                        }
+                        bool checkProduct = dataChecks.CheckProduct(productID);
+                        if (checkProduct == true)
+                        {
+                            bool delete = adminServices.DeleteProduct(productID);
+                            if (delete == true)
+                            {
+                                Console.WriteLine("Deleted!");
+                            }
+                            else
+                            {
+                                Console.WriteLine("--------------------------------------------------------------------------");
+                                Console.WriteLine("Error in Deleting!");
+                                Console.WriteLine("--------------------------------------------------------------------------");
+                            }
                         }
                         else
                         {
                             Console.WriteLine("--------------------------------------------------------------------------");
-                            Console.WriteLine("Error in Deleting!");
+                            Console.WriteLine("Cannot Find Product!");
                             Console.WriteLine("--------------------------------------------------------------------------");
-                        }
+                        }                        
                         break;
                     case 5:
                         break;

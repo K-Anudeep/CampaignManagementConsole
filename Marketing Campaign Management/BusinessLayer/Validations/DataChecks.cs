@@ -13,6 +13,7 @@ namespace BusinessLayer.Validations
         CampaignsRepo campaignsRepo = new CampaignsRepo();
         UserRepo userRepo = new UserRepo();
         LeadsRepo leadsRepo = new LeadsRepo();
+        ProductRepo productRepo = new ProductRepo();
 
         public bool CampaignStatusCheck(int leadID)
         {
@@ -44,6 +45,19 @@ namespace BusinessLayer.Validations
         {
             bool check = leadsRepo.CheckLead(leadID);
             if (check == true)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CheckProduct(int productID)
+        {
+            Products check = productRepo.OneProduct(productID);
+            if (check != null)
             {
                 return true;
             }
