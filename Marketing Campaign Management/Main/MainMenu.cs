@@ -34,12 +34,14 @@ namespace PresentationLayer
                             bool adminCheck = access.AdminCheck();
                             if (adminCheck == true)
                             {
-                                Console.WriteLine($"WELCOME {session.FullName} to your Administrator Panel");
+                                Console.WriteLine("--------------------------------------------------------------------------");
+                                Console.WriteLine($"Welcome {session.FullName.ToUpper()} to your Administrator Panel");
                                 AdminMenu adminMenu = new AdminMenu();
                             }
                             else
                             {
-                                Console.WriteLine($"WELCOME {session.FullName} to your Marketing Executive Panel");
+                                Console.WriteLine("--------------------------------------------------------------------------");
+                                Console.WriteLine($"Welcome {session.FullName.ToUpper()} to your Marketing Executive Panel");
                                 ExecutiveMenu execMenu = new ExecutiveMenu();
                             }
                         }

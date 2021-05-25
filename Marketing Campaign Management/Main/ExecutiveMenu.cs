@@ -378,7 +378,7 @@ namespace PresentationLayer
                             }
                             campaignTable.Write(Format.Alternative);
                             Console.WriteLine("");
-                            Console.WriteLine("Note: Campaign Default End date is set to 7 days. Date gets updated upon closing the campaign.");
+                            Console.WriteLine("Note: Campaign Default duration is set to 7 days. Date gets updated upon closing the campaign.");
                         }                        
                         else
                         {
