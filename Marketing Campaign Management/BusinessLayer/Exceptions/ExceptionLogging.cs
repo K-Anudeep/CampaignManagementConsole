@@ -21,13 +21,15 @@ namespace BusinessLayer.Exceptions
 
         public static void WriteLog(Exception ex)
         {
-            StreamWriter writer = new StreamWriter("log.txt", true);
-            writer.WriteLine("\r\nLog Entry : ");
-            writer.WriteLine($"During: {DateTime.Now.ToLongTimeString()} {DateTime.Now.ToLongDateString()}");
-            writer.WriteLine($"Location : {ex.StackTrace}");
-            writer.WriteLine("  :");
-            writer.WriteLine($" Message :{ex.Message}");
-            writer.WriteLine("-------------------------------");
+            using (StreamWriter writer = new StreamWriter("log.txt", true))
+            {
+                writer.WriteLine("\r\nLog Entry : ");
+                writer.WriteLine($"During: {DateTime.Now.ToLongTimeString()} {DateTime.Now.ToLongDateString()}");
+                writer.WriteLine($"Location : {ex.StackTrace}");
+                writer.WriteLine("  :");
+                writer.WriteLine($" Message :{ex.Message}");
+                writer.WriteLine("-------------------------------");
+            }
         }
 
         public ExceptionLogging(string message) : base(message)
