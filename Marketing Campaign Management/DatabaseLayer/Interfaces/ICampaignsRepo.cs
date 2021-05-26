@@ -19,6 +19,8 @@ namespace DatabaseLayer.Interfaces
 
         bool CampaignStatusCheck(int cId);
 
+        Campaigns OneCampaign(int cId);
+
         List<Campaigns> ViewAllCampaigns();
     }
 }
