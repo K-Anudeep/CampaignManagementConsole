@@ -42,7 +42,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Connection.cs" />
     <Compile Include="Interfaces\ICampaignsRepo.cs" />
     <Compile Include="Interfaces\ILeadsRepo.cs" />
     <Compile Include="Interfaces\IProductsRepo.cs" />

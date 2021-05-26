@@ -106,16 +106,16 @@ namespace BusinessLayer.Validations
             else
                 return false;
         }
-        //public bool EmailCheck2(string email)
-        //{
-        //    string regexEmail = @"^([a - zA - Z0 - 9_\-\.] +)@((\[[0 - 9]{ 1,3}\.[0 - 9]{ 1,3}\.[0 - 9]{ 1,3}\.)| (([a - zA - Z0 - 9\-] +\.)+))([azA - Z]{ 2,4}|[0 - 9]{ 1,3})(\]?)$";
-        //    if (Regex.IsMatch(email.ToString(), regexEmail))
-        //    {
-        //        return true;
-        //    }
-        //    else
-        //        return false;
-        //}
+        public bool EmailCheck2(string email)
+        {
+            string regexEmail = @"^(([0 - 9a - z]((\.(? !\.)) |[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$";
+            if (Regex.IsMatch(email.ToString(), regexEmail))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
 
         public bool PhoneNoCheck(string phone)
         {

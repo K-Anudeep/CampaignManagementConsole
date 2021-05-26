@@ -12,6 +12,7 @@ namespace DatabaseLayer.Repositories
 {
     public class LeadsRepo : ILeadsRepo
     {
+        SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["MCMConnection"].ConnectionString);
         SqlCommand command = null;
         SqlDataAdapter dataAdapter = null;
 
@@ -24,7 +25,7 @@ namespace DatabaseLayer.Repositories
                 {
                     CommandText = "AddLeads",
                     CommandType = CommandType.StoredProcedure,
-                    Connection = Connection.connection
+                    Connection = connection
 
                 };
                 command.Parameters.AddWithValue("@CampaignID", leads.CampaignID);
@@ -34,7 +35,7 @@ namespace DatabaseLayer.Repositories
                 command.Parameters.AddWithValue("@PreferredMoC", leads.PreferredMoC);
                 command.Parameters.AddWithValue("@DateApproached", leads.DateApproached);
                 command.Parameters.AddWithValue("@ProductID", leads.ProductID);
-                Connection.Open();
+                connection.Open();
                 command.ExecuteNonQuery();
                 return true;
             }
@@ -45,7 +46,7 @@ namespace DatabaseLayer.Repositories
             }
             finally
             {
-                Connection.Close();
+                connection.Close();
             }
         }
 
@@ -57,10 +58,10 @@ namespace DatabaseLayer.Repositories
                 {
                     CommandText = "GetLeadByLeadID",
                     CommandType = CommandType.StoredProcedure,
-                    Connection = Connection.connection
+                    Connection = connection
                 };
                 command.Parameters.AddWithValue("@LeadID", LeadID);
-                Connection.Open();
+                connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 Leads leads = null;
                 if (reader.HasRows)
@@ -85,7 +86,7 @@ namespace DatabaseLayer.Repositories
             }
             finally
             {
-                Connection.Close();
+                connection.Close();
             }
         }
 
@@ -97,13 +98,13 @@ namespace DatabaseLayer.Repositories
                 {
                     CommandText = "CheckLead",
                     CommandType = CommandType.StoredProcedure,
-                    Connection = Connection.connection
+                    Connection = connection
                 };
                 command.Parameters.AddWithValue("@CampaignID", LeadID);
                 IDbDataParameter val = command.CreateParameter();
                 val.Direction = ParameterDirection.ReturnValue;
                 command.Parameters.Add(val);
-                Connection.Open();
+                connection.Open();
                 command.ExecuteNonQuery();
                 int validate = Convert.ToInt32(val.Value);
                 if (validate == 1)
@@ -120,7 +121,7 @@ namespace DatabaseLayer.Repositories
             }
             finally
             {
-                Connection.Close();
+                connection.Close();
             }
         }
 
@@ -132,12 +133,12 @@ namespace DatabaseLayer.Repositories
                 {
                     CommandText = "FollowLead",
                     CommandType = CommandType.StoredProcedure,
-                    Connection = Connection.connection
+                    Connection = connection
 
                 };
                 command.Parameters.AddWithValue("@LeadID", leadID);
                 command.Parameters.AddWithValue("@Status", newStatus);
-                Connection.Open();
+                connection.Open();
                 command.ExecuteNonQuery();
                 return true;
             }
@@ -147,7 +148,7 @@ namespace DatabaseLayer.Repositories
             }
             finally
             {
-                Connection.Close();
+                connection.Close();
             }
         }
 
@@ -155,13 +156,13 @@ namespace DatabaseLayer.Repositories
         {
             try
             {
-                Connection.Open();
+                connection.Open();
                 List<Leads> leads = null;
                 command = new SqlCommand()
                 {
                     CommandText = "ViewLeadsToExecutive",
                     CommandType = CommandType.StoredProcedure,
-                    Connection = Connection.connection
+                    Connection = connection
                 };
                 SessionDetails session = new SessionDetails();
                 command.Parameters.AddWithValue("@UserID", session.UserID);
@@ -200,7 +201,7 @@ namespace DatabaseLayer.Repositories
             }
             finally
             {
-                Connection.Close();
+                connection.Close();
             }
         }
 
@@ -208,13 +209,13 @@ namespace DatabaseLayer.Repositories
         {
             try
             {
-                Connection.Open();
+                connection.Open();
                 List<Leads> leads = null;
                 command = new SqlCommand()
                 {
                     CommandText = "ViewLeadsByCampaign",
                     CommandType = CommandType.StoredProcedure,
-                    Connection = Connection.connection
+                    Connection = connection
                 };
                 SessionDetails session = new SessionDetails();
                 command.Parameters.AddWithValue("@CampaignID", cId);
@@ -253,7 +254,7 @@ namespace DatabaseLayer.Repositories
             }
             finally
             {
-                Connection.Close();
+                connection.Close();
             }
         }
 

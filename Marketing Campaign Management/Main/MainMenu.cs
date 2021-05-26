@@ -71,10 +71,7 @@ namespace PresentationLayer
             }
             catch (Exception ex)
             {
-                using (StreamWriter w = File.AppendText("log.txt"))
-                {
-                   exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
-                }
+                ExceptionLogging.WriteLog(ex);
             }
         }
         static void Main(string[] args)
@@ -89,10 +86,7 @@ namespace PresentationLayer
             catch (Exception ex)
             {
                 Console.WriteLine("An Error Occured: Please contact the Administrator");
-                using (StreamWriter w = File.AppendText("log.txt"))
-                {
-                    ExceptionLogging exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
-                }
+                ExceptionLogging.WriteLog(ex);
             }
         }
     }

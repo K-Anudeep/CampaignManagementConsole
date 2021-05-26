@@ -7,11 +7,14 @@ using Entities;
 using DatabaseLayer.Interfaces;
 using System.Data;
 using System.Data.SqlClient;
+using System.Configuration;
+
 
 namespace DatabaseLayer.Repositories
 {
     public class CampaignsRepo : ICampaignsRepo
     {
+        SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["MCMConnection"].ConnectionString);
         SqlCommand command = null;
         SqlDataAdapter dataAdapter = null;
 
@@ -23,13 +26,13 @@ namespace DatabaseLayer.Repositories
                 {
                     CommandText = "AddCampaign",
                     CommandType = CommandType.StoredProcedure,
-                    Connection = Connection.connection
+                    Connection = connection
                 };
                 command.Parameters.AddWithValue("@Name", campaigns.Name);
                 command.Parameters.AddWithValue("@Venue", campaigns.Venue);
                 command.Parameters.AddWithValue("@AssignedTo", campaigns.AssignedTo);
                 command.Parameters.AddWithValue("@StartedOn", campaigns.StartedOn);
-                Connection.Open();
+                connection.Open();
                 command.ExecuteNonQuery();
                 return true;
             }
@@ -40,7 +43,7 @@ namespace DatabaseLayer.Repositories
             }
             finally
             {
-                Connection.Close();
+                connection.Close();
             }
         }
 
@@ -52,10 +55,10 @@ namespace DatabaseLayer.Repositories
                     {
                         CommandText = "CloseCampaign",
                         CommandType = CommandType.StoredProcedure,
-                        Connection = Connection.connection
+                        Connection = connection
                     };
                     command.Parameters.AddWithValue("@CampaignId", cId);
-                    Connection.Open();
+                    connection.Open();
                     command.ExecuteNonQuery();
                     return true;
             }
@@ -66,7 +69,7 @@ namespace DatabaseLayer.Repositories
             }
             finally
             {
-                Connection.Close();
+                connection.Close();
             }
         }
 
@@ -74,13 +77,13 @@ namespace DatabaseLayer.Repositories
         {
             try
             {
-                Connection.Open();
+                connection.Open();
                 Campaigns campaigns= null;
                 command = new SqlCommand()
                 {
                     CommandText = "OneCampaign",
                     CommandType = CommandType.StoredProcedure,
-                    Connection = Connection.connection
+                    Connection = connection
                 };
                 command.Parameters.AddWithValue("@CampaignID", cId);
                 dataAdapter = new SqlDataAdapter(command);
@@ -120,9 +123,9 @@ namespace DatabaseLayer.Repositories
                 {
                     CommandText = "ViewCampaignByExec",
                     CommandType = CommandType.StoredProcedure,
-                    Connection = Connection.connection
+                    Connection = connection
                 };
-                Connection.Open();
+                connection.Open();
                 dataAdapter = new SqlDataAdapter(command);
                 DataSet dataSet = new DataSet();
                 dataAdapter.Fill(dataSet, "CampaignsByExec");
@@ -165,11 +168,11 @@ namespace DatabaseLayer.Repositories
                 {
                     CommandText = "ViewCampaignByAssigned",
                     CommandType = CommandType.StoredProcedure,
-                    Connection = Connection.connection
+                    Connection = connection
                 };
                 SessionDetails session = new SessionDetails();
                 command.Parameters.AddWithValue("@UserID", session.UserID);
-                Connection.Open();
+                connection.Open();
                 command.ExecuteNonQuery();
                 dataAdapter = new SqlDataAdapter(command);
                 DataSet dataSet = new DataSet();
@@ -213,14 +216,14 @@ namespace DatabaseLayer.Repositories
                 {
                     CommandText = "CampaignCheck",
                     CommandType = System.Data.CommandType.StoredProcedure,
-                    Connection = Connection.connection
+                    Connection = connection
                 };
                 command.Parameters.AddWithValue("@CampaignID", cId);
                 command.Parameters.AddWithValue("@AssignedTo", sessionDetails.UserID);
                 IDbDataParameter val = command.CreateParameter();
                 val.Direction = ParameterDirection.ReturnValue;
                 command.Parameters.Add(val);
-                Connection.Open();
+                connection.Open();
                 command.ExecuteNonQuery();
                 int validate = Convert.ToInt32(val.Value);
                 if (validate == 1)

@@ -439,10 +439,7 @@ namespace PresentationLayer
             }
             catch (Exception ex) when (ex.Message == "IncorrectOptionError")
             {
-                using (StreamWriter w = File.AppendText("log.txt"))
-                {
-                    exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
-                }
+                ExceptionLogging.WriteLog(ex);
                 goto LeadsMenu;
             }
             catch (Exception ex)
