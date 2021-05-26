@@ -120,7 +120,7 @@ namespace PresentationLayer
                         }
                         Console.WriteLine("Give Product Description:");
                         string proDesc = null;
-                        while (!fieldChecks.StringCheck(Console.ReadLine(), out proName))
+                        while (!fieldChecks.StringCheck(Console.ReadLine(), out proDesc))
                         {
                             Console.WriteLine("Please enter a valid Description!");
                             Console.WriteLine("Try Again:");

@@ -31,10 +31,10 @@ namespace PresentationLayer
                     keepLoop = true;
                     Console.WriteLine("--------------------------------------------------------------------------");
                     Console.WriteLine("Select the option that you want to follow with:");
-                    Console.WriteLine("1.LEADS");
-                    Console.WriteLine("2.SALES");
-                    Console.WriteLine("3.VIEW CAMPAIGN");
-                    Console.WriteLine("4.LOGOUT");
+                    Console.WriteLine("1.Manage Leads");
+                    Console.WriteLine("2.Manage Sales");
+                    Console.WriteLine("3.View Campagin");
+                    Console.WriteLine("4.Logout");
                     Console.WriteLine("");
                     Console.WriteLine("Enter your option");
                     int Options = 0;
