@@ -2,8 +2,8 @@
   [UserID] int PRIMARY KEY IDENTITY(100, 1),
   [FullName] varchar(25),
   [LoginID] varchar(30),
-  [Password] vahrchar(30),
-  [DoJ] date,
+  [Password] varchar(30),
+  [DateOfJoin] date,
   [Address] varchar(200),
   [Discontinued] bit,
   [IsAdmin] bit
@@ -19,7 +19,7 @@ CREATE TABLE [Products] (
 GO
 
 CREATE TABLE [Campaign] (
-  [ID] int PRIMARY KEY IDENTITY(100, 1),
+  [CampaignID] int PRIMARY KEY IDENTITY(100, 1),
   [Name] varchar(30),
   [Venue] varchar(200),
   [AssignedTo] int,
@@ -30,13 +30,13 @@ CREATE TABLE [Campaign] (
 GO
 
 CREATE TABLE [Leads] (
-  [ID] int PRIMARY KEY IDENTITY(100, 1),
+  [LeadID] int PRIMARY KEY IDENTITY(100, 1),
   [CampaignID] int,
   [ConsumerName] varchar(30),
   [EmailAddress] varchar(30),
   [PhoneNo] varchar(10),
   [PreferredMoC] varchar(5),
-  [DateApproached] DateApproached,
+  [DateApproached] Date,
   [ProductID] int,
   [Status] varchar(4)
 )
@@ -55,11 +55,11 @@ GO
 ALTER TABLE [Campaign] ADD FOREIGN KEY ([AssignedTo]) REFERENCES [Users] ([UserID])
 GO
 
-ALTER TABLE [Leads] ADD FOREIGN KEY ([CampaignID]) REFERENCES [Campaign] ([ID])
+ALTER TABLE [Leads] ADD FOREIGN KEY ([CampaignID]) REFERENCES [Campaign] ([CampaignID])
 GO
 
 ALTER TABLE [Leads] ADD FOREIGN KEY ([ProductID]) REFERENCES [Products] ([ProductID])
 GO
 
-ALTER TABLE [Sales] ADD FOREIGN KEY ([LeadID]) REFERENCES [Leads] ([ID])
+ALTER TABLE [Sales] ADD FOREIGN KEY ([LeadID]) REFERENCES [Leads] ([LeadID])
 GO
