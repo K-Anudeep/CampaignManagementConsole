@@ -17,6 +17,7 @@ namespace PresentationLayer
     {
         ExecutiveService execService = null;
         DataChecks dataChecks = null;
+        FieldChecks fieldChecks = null;
         ExceptionLogging exceptionLogging = null;
 
         public ExecutiveMenu()
@@ -85,7 +86,9 @@ namespace PresentationLayer
 
         public void Sales()
         {
-            SalesMenu:
+        SalesMenu:
+            dataChecks = new DataChecks();
+            fieldChecks = new FieldChecks();
             try
             {
                 Console.WriteLine("Choose: ");
@@ -110,8 +113,14 @@ namespace PresentationLayer
                         {
                             salesData.LeadID = leadCheck;
                             Console.WriteLine("Enter the Shipping Address: ");
-                            salesData.ShippingAddress = Console.ReadLine();
-                            Choice1:
+                            string shippingAddress = null;
+                            while (!fieldChecks.StringCheck(Console.ReadLine(), out shippingAddress))
+                            {
+                                Console.WriteLine("Please Enter a valid address!");
+                                Console.WriteLine("Try again:");
+                            }
+                            salesData.ShippingAddress = shippingAddress;
+                        Choice1:
                             Console.WriteLine("Is your billing address the same as shipping address? 1.Yes 2. No");
                             int same = 0;
                             while (!int.TryParse(Console.ReadLine(), out same))
@@ -126,7 +135,13 @@ namespace PresentationLayer
                             else if(same == 2)
                             {
                                 Console.WriteLine("Enter the Billing Address: ");
-                                salesData.BillingAddress = Console.ReadLine();
+                                string billingAddress = null;
+                                while (!fieldChecks.StringCheck(Console.ReadLine(), out billingAddress))
+                                {
+                                    Console.WriteLine("Please Enter a valid address!");
+                                    Console.WriteLine("Try again:");
+                                }
+                                salesData.BillingAddress = billingAddress;
                             }
                             else
                             {
@@ -253,7 +268,13 @@ namespace PresentationLayer
                         if (campCheck == true)
                         {
                             Console.WriteLine("Enter the Consumer Name: ");
-                            leads.ConsumerName = Console.ReadLine();
+                            string consumerName = null;
+                            while (!fieldChecks.StringCheck(Console.ReadLine(), out consumerName))
+                            {
+                                Console.WriteLine("Please Enter a valid name!");
+                                Console.WriteLine("Try again:");
+                            }
+                            leads.ConsumerName = consumerName;
                             Console.WriteLine("Enter Email Address: ");
                             string email = Console.ReadLine();
                             while(!dataChecks.EmailCheck(email))
@@ -263,9 +284,16 @@ namespace PresentationLayer
                                 email = Console.ReadLine();
                             }
                             leads.EmailAddress = email;
-                            Console.WriteLine("Enter Phone Number: ");
-                            leads.PhoneNo = Console.ReadLine();
-                            Choice3:
+                            Console.WriteLine("Enter Phone Number(Start with 0 or +91): ");
+                            string phoneNo = Console.ReadLine();
+                            while (!dataChecks.PhoneNoCheck(phoneNo))
+                            {
+                                Console.WriteLine("Please enter a valid Phone Number that starts with 0 or +91.");
+                                Console.WriteLine("Try again: ");
+                                phoneNo = Console.ReadLine();
+                            }
+                            leads.PhoneNo = phoneNo;
+                        Choice3:
                             Console.WriteLine("Enter your preffered Mode of Contact: 1. Email 2. Phone ");
                             int moc = 0;
                             while (!int.TryParse(Console.ReadLine(), out moc))

@@ -116,5 +116,17 @@ namespace BusinessLayer.Validations
         //    else
         //        return false;
         //}
+
+        public bool PhoneNoCheck(string phone)
+        {
+            if(Regex.IsMatch(phone.ToString(), @"^([0] |\+91)?[6 - 9]\d{ 9}$"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
