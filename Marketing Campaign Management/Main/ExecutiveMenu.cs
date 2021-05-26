@@ -101,7 +101,7 @@ namespace PresentationLayer
                             Console.WriteLine("Try again: ");
                         }
                         execService = new ExecutiveService();
-                        bool statusCheck = dataChecks.CheckLead(leadCheck);
+                        bool statusCheck = dataChecks.SalesLead(leadCheck);
                         if (statusCheck == true)
                         {
                             salesData.LeadID = leadCheck;
@@ -113,7 +113,7 @@ namespace PresentationLayer
                                 Console.WriteLine("Try again:");
                             }
                             salesData.ShippingAddress = shippingAddress;
-                        Choice1:
+                            Choice1:
                             Console.WriteLine("Is your billing address the same as shipping address? 1.Yes 2. No");
                             int same = 0;
                             while (!int.TryParse(Console.ReadLine(), out same))
@@ -183,7 +183,7 @@ namespace PresentationLayer
                         else
                         {
                             Console.WriteLine("--------------------------------------------------------------------------");
-                            Console.WriteLine("Status of the given Lead is New or Lost, cannot proceed with Sales Order");
+                            Console.WriteLine("Lead ID does not exist or has incorrect Status, cannot proceed with Sales Order");
                             Console.WriteLine("--------------------------------------------------------------------------");
                         }
                         break;

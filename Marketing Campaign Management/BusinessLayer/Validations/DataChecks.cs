@@ -55,10 +55,29 @@ namespace BusinessLayer.Validations
 
         public bool CheckLead(int leadID)
         {
-            bool check = leadsRepo.CheckLead(leadID);
-            if (check == true)
+            Leads check = leadsRepo.GetALead(leadID);
+            if (check != null)
             {
                 return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool SalesLead(int leadID)
+        {
+            Leads check = leadsRepo.GetALead(leadID);
+            if (check != null)
+            {
+                bool check1 = leadsRepo.CheckLead(leadID);
+                if (check1 == true)
+                {
+                    return true;
+                }
+                else
+                    return false;
             }
             else
             {

@@ -104,7 +104,7 @@ namespace DatabaseLayer.Repositories
                     CommandType = CommandType.StoredProcedure,
                     Connection = connection
                 };
-                command.Parameters.AddWithValue("@CampaignID", LeadID);
+                command.Parameters.AddWithValue("@LeadID", LeadID);
                 IDbDataParameter val = command.CreateParameter();
                 val.Direction = ParameterDirection.ReturnValue;
                 command.Parameters.Add(val);
@@ -116,7 +116,7 @@ namespace DatabaseLayer.Repositories
                     return true;
                 }
                 else
-                    throw new Exception("Error: Campaign is either not assigned to you or it is closed!");
+                    return false;
             }
             catch (Exception ex)
             {
