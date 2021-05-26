@@ -146,6 +146,7 @@ namespace DatabaseLayer.Repositories
                         LoginID = datarow["LoginID"].ToString(),
                         Password = datarow["Password"].ToString(),
                         DateOfJoin = Convert.ToDateTime(datarow["DateOfJoin"]),
+                        Address = datarow["Address"].ToString(),
                         Discontinued = Convert.ToByte(datarow["Discontinued"]),
                         IsAdmin = Convert.ToByte(datarow["IsAdmin"])
                     };

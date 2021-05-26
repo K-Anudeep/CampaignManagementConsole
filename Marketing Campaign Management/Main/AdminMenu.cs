@@ -526,8 +526,7 @@ namespace PresentationLayer
                         }
                         break;
 
-                    case 5:
-                        
+                    case 5:                        
                         break;
                     default:
                         Console.WriteLine("--------------------------------------------------------------------------");
@@ -550,8 +549,9 @@ namespace PresentationLayer
                 {
                     exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
                 }
+                goto UserMenu;
             }
-            goto UserMenu;
+            
         }
         public void Reports()
         {

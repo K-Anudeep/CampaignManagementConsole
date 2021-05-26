@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
 using Entities;
 using BusinessLayer.Services;
 using BusinessLayer.Validations;
@@ -243,7 +244,13 @@ namespace PresentationLayer
                                 Console.WriteLine("Wrong Option: Defaulted to Email as the primary Mode of Contact.");
                             }
                             Console.WriteLine("Enter Date Approached by Consumer(YYYY-MM-DD): ");
-                            leads.DateApproached = Convert.ToDateTime(Console.ReadLine());
+                            DateTime date;
+                            while(!DateTime.TryParseExact(Console.ReadLine(),"yyyy-MM-dd",CultureInfo.InvariantCulture,DateTimeStyles.None, out date))
+                            {
+                                Console.WriteLine("Please enter a valid date in the given format.");
+                                Console.WriteLine("Enter Date: ");
+                            }
+                            date = leads.DateApproached;
                             Console.WriteLine("Enter Product ID: ");
                             leads.ProductID = Int32.Parse(Console.ReadLine());
                             execService = new ExecutiveService();
@@ -328,6 +335,8 @@ namespace PresentationLayer
                             Console.WriteLine("No leads to display!");
                             Console.WriteLine("--------------------------------------------------------------------------");
                         }
+                        break;
+                    case 4:
                         break;
                     default:
                         Console.WriteLine("--------------------------------------------------------------------------");

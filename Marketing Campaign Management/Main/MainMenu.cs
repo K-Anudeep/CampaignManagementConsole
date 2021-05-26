@@ -85,7 +85,6 @@ namespace PresentationLayer
                 {
                     Menu();
                 } while (true);
-                throw new Exception();
             }
             catch (Exception ex)
             {
