@@ -17,6 +17,7 @@ namespace PresentationLayer
     {
         AdminServices adminServices = null;
         DataChecks dataChecks = null;
+        FieldChecks fieldChecks = null;
         ExceptionLogging exceptionLogging = null;
         public AdminMenu()
         {   
@@ -93,6 +94,7 @@ namespace PresentationLayer
             {
                 adminServices = new AdminServices();
                 dataChecks = new DataChecks();
+                fieldChecks = new FieldChecks();
                 Console.WriteLine("Choose fromt he following: ");
                 Console.WriteLine("1.To Add Product");
                 Console.WriteLine("2.To Display Product");
@@ -110,19 +112,29 @@ namespace PresentationLayer
                     case 1:
                         Products Product = new Products();
                         Console.WriteLine("Enter Product Name:");
-                        string ProName = Console.ReadLine();
+                        string proName = null;
+                        while (!fieldChecks.StringCheck(Console.ReadLine(),out proName))
+                        {
+                            Console.WriteLine("Please enter a valid Name!");
+                            Console.WriteLine("Try Again:");
+                        }
                         Console.WriteLine("Give Product Description:");
-                        string ProDesc = Console.ReadLine();
+                        string proDesc = null;
+                        while (!fieldChecks.StringCheck(Console.ReadLine(), out proName))
+                        {
+                            Console.WriteLine("Please enter a valid Description!");
+                            Console.WriteLine("Try Again:");
+                        }
                         Console.WriteLine("Enter Unit Price of the Product:");
-                        decimal ProUnitPrice = 0;
-                        while (!decimal.TryParse(Console.ReadLine(), out ProUnitPrice))
+                        decimal proUnitPrice = 0;
+                        while (!decimal.TryParse(Console.ReadLine(), out proUnitPrice))
                         {
                             Console.WriteLine("Please Enter a valid numerical value!");
                             Console.WriteLine("Enter Unit Price of the Product:");
                         }
-                        Product.ProductName = ProName;
-                        Product.Description = ProDesc;
-                        Product.UnitPrice = ProUnitPrice;
+                        Product.ProductName = proName;
+                        Product.Description = proDesc;
+                        Product.UnitPrice = proUnitPrice;
                         bool add = adminServices.AddProducts(Product);
                         if(add == true)
                         {
@@ -268,12 +280,25 @@ namespace PresentationLayer
                     case 1:
                         {
                             dataChecks = new DataChecks();
+                            fieldChecks = new FieldChecks();
                             Campaigns campaign = new Campaigns();
                             AccessCheck accessCheck = new AccessCheck();
                             Console.WriteLine("Enter Campaign Name:");
-                            campaign.Name = Console.ReadLine();
+                            string name = null;
+                            while (!fieldChecks.StringCheck(Console.ReadLine(), out name))
+                            {
+                                Console.WriteLine("Please enter a valid Name!");
+                                Console.WriteLine("Try Again:");
+                            }
+                            campaign.Name = name;
                             Console.WriteLine("Enter Venue:");
-                            campaign.Venue = Console.ReadLine();
+                            string venue = null;
+                            while (!fieldChecks.StringCheck(Console.ReadLine(), out venue))
+                            {
+                                Console.WriteLine("Please enter a valid Venue Name!");
+                                Console.WriteLine("Try Again:");
+                            }
+                            campaign.Venue = venue;
                             Console.WriteLine("Marketing Executive assigned to this:");
                             int userID = 0;
                             while (!int.TryParse(Console.ReadLine(), out userID))
@@ -421,11 +446,29 @@ namespace PresentationLayer
                         {
                             Users user = new Users();
                             Console.WriteLine("Enter Full Name:");
-                            user.FullName = Console.ReadLine();
+                            string fullName = null;
+                            while (!fieldChecks.StringCheck(Console.ReadLine(), out fullName))
+                            {
+                                Console.WriteLine("Please enter a valid Full Name!");
+                                Console.WriteLine("Try Again:");
+                            }
+                            user.FullName = fullName;
                             Console.WriteLine("Enter a Login ID for the user:");
-                            user.LoginID = Console.ReadLine();
+                            string loginID = null;
+                            while (!fieldChecks.StringCheck(Console.ReadLine(), out loginID))
+                            {
+                                Console.WriteLine("Please enter a valid Login Name!");
+                                Console.WriteLine("Try Again:");
+                            }
+                            user.LoginID = loginID;
                             Console.WriteLine("Enter Password for the user:");
-                            user.Password = Console.ReadLine();
+                            string password = null;
+                            while (!fieldChecks.StringCheck(Console.ReadLine(), out password))
+                            {
+                                Console.WriteLine("Please enter a password!");
+                                Console.WriteLine("Try Again:");
+                            }
+                            user.Password = password;
                             Console.WriteLine("Enter Date Of Join(dd-MM-yyyy):");
                             string dateLine = Console.ReadLine();
                             DateTime date;
@@ -437,10 +480,22 @@ namespace PresentationLayer
                             }
                             user.DateOfJoin = date;
                             Console.WriteLine("Enter Address:");
-                            user.Address = Console.ReadLine();
+                            string address = null;
+                            while (!fieldChecks.StringCheck(Console.ReadLine(), out address))
+                            {
+                                Console.WriteLine("Please enter a valid address!");
+                                Console.WriteLine("Try Again:");
+                            }
+                            user.Address = address;
+                            choice1:
                             Console.WriteLine("Access Level of the User: 1. Administrator 2. Marketing Executive");
-                            int access = Convert.ToInt32(Console.ReadLine());
-                            if(access == 1)
+                            int access = 0;
+                            while (!int.TryParse(Console.ReadLine(), out access))
+                            {
+                                Console.WriteLine("Please enter a valid option!");
+                                Console.WriteLine("Try Again:");
+                            }
+                            if (access == 1)
                             {
                                 user.IsAdmin = 1;
                             }
@@ -453,6 +508,7 @@ namespace PresentationLayer
                                 Console.WriteLine("--------------------------------------------------------------------------");
                                 Console.WriteLine("Pick a correct option.");
                                 Console.WriteLine("--------------------------------------------------------------------------");
+                                goto choice1;
                             }
                             bool check = adminServices.AddUser(user);
                             if (check)
@@ -492,9 +548,14 @@ namespace PresentationLayer
 
                     case 3:
                         {
+                            choice2:
                             Console.WriteLine("Are you sure you want to continue? yes/no:");
-                            string choice = Console.ReadLine();
-
+                            string choice = null;
+                            while (!fieldChecks.StringCheck(Console.ReadLine(), out choice))
+                            {
+                                Console.WriteLine("Please enter a valid Name!");
+                                Console.WriteLine("Try Again:");
+                            }
                             if (choice.ToLower().Equals("yes"))
                             {
                                 Console.WriteLine("Enter UserID:");
@@ -518,6 +579,7 @@ namespace PresentationLayer
                                 Console.WriteLine("--------------------------------------------------------------------------");
                                 Console.WriteLine("Pick the correct option.");
                                 Console.WriteLine("--------------------------------------------------------------------------");
+                                goto choice2;
                             }
                         }
                         break;
@@ -622,7 +684,9 @@ namespace PresentationLayer
                         }
                         else
                         {
+                            Console.WriteLine("--------------------------------------------------------------------------");
                             Console.WriteLine("Given Campaign ID does not exist");
+                            Console.WriteLine("--------------------------------------------------------------------------");
                             throw new Exception("NoDataExists");
                         }
                         break;
@@ -642,8 +706,9 @@ namespace PresentationLayer
                         }
                         else
                         {
-
-                            Console.WriteLine("Wrong Executive Name");
+                            Console.WriteLine("--------------------------------------------------------------------------");
+                            Console.WriteLine("No record to display.");
+                            Console.WriteLine("--------------------------------------------------------------------------");
                         }
 
                         break;

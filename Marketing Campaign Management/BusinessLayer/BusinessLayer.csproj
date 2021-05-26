@@ -50,6 +50,7 @@
     <Compile Include="Services\IExecutiveService.cs" />
     <Compile Include="Validations\AccessCheck.cs" />
     <Compile Include="Validations\DataChecks.cs" />
+    <Compile Include="Validations\FieldChecks.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DatabaseLayer\DatabaseLayer.csproj">
