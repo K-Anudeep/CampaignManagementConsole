@@ -122,6 +122,55 @@ namespace DatabaseLayer.Repositories
 
         }
 
+        public List<Campaigns> ViewAllCampaigns()
+        {
+            try
+            {
+                List<Campaigns> campaigns = null;
+                command = new SqlCommand()
+                {
+                    CommandText = "ViewAllCampaigns",
+                    CommandType = CommandType.StoredProcedure,
+                    Connection = connection
+                };
+                connection.Open();
+                dataAdapter = new SqlDataAdapter(command);
+                DataSet dataSet = new DataSet();
+                dataAdapter.Fill(dataSet, "ViewAllCampaigns");
+                if (dataSet.Tables["ViewAllCampaigns"].Rows.Count > 0)
+                {
+                    campaigns = new List<Campaigns>();
+                    foreach (DataRow dataRow in dataSet.Tables["ViewAllCampaigns"].Rows)
+                    {
+                        campaigns.Add(
+                             new Campaigns()
+                             {
+                                 CampaignID = (int)dataRow["CampaignID"],
+                                 Name = dataRow["Name"].ToString(),
+                                 Venue = dataRow["Venue"].ToString(),
+                                 AssignedTo = (int)dataRow["AssignedTo"],
+                                 StartedOn = (DateTime)(dataRow["StartedOn"]),
+                                 CompletedOn = Convert.ToDateTime(dataRow["CompletedOn"]),
+                                 IsOpen = (bool)dataRow["IsOpen"]
+                             }
+                            );
+                    }
+                }
+                return campaigns;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
+                return null;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
         public List<Campaigns> ViewCampaignsByExec()
         {
             try

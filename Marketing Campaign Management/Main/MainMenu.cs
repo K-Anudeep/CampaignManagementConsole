@@ -15,7 +15,6 @@ namespace PresentationLayer
     {
         public static void Menu()
         {
-            ExceptionLogging exceptionLogging = null;
             try
             {                
                 SessionDetails session = new SessionDetails();

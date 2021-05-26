@@ -18,7 +18,6 @@ namespace PresentationLayer
         AdminServices adminServices = null;
         DataChecks dataChecks = null;
         FieldChecks fieldChecks = null;
-        ExceptionLogging exceptionLogging = null;
         public AdminMenu()
         {   
             AdminMenu:
@@ -256,14 +255,15 @@ namespace PresentationLayer
                 Console.WriteLine("1. Add Campaigns");
                 Console.WriteLine("2. Close Campaigns");
                 Console.WriteLine("3. Show a specific Campaign");
-                Console.WriteLine("4. back to Main menu");
-                int Campaigns = 0;
-                while (!int.TryParse(Console.ReadLine(), out Campaigns))
+                Console.WriteLine("4. Show All Campaigns");
+                Console.WriteLine("5. Back to Main Menu");
+                int campaignsOptions = 0;
+                while (!int.TryParse(Console.ReadLine(), out campaignsOptions))
                 {
                     Console.WriteLine("Please Enter a valid numerical value!");
                     Console.WriteLine("Enter your option: ");
                 }
-                switch (Campaigns)
+                switch (campaignsOptions)
                 {
                     case 1:
                         {
@@ -384,6 +384,27 @@ namespace PresentationLayer
                         }
                         break;
                     case 4:
+                        List<Campaigns> campaignsAll = adminServices.ViewAllCampaigns();
+                        if (campaignsAll != null)
+                        {
+                            var exeTable = new ConsoleTable("Assigned Executives", "Campaign ID", "Name", "Venue", "Started On", "Completed On", "Status");
+                            foreach (Campaigns c in campaignsAll)
+                            {
+                                exeTable.AddRow(c.AssignedTo, c.CampaignID, c.Name, c.Venue, c.StartedOn.ToString("d"), c.CompletedOn.ToString("d"), c.IsOpen);
+                            }
+                            exeTable.Write(Format.Alternative);
+                            Console.WriteLine("");
+                            Console.WriteLine("Note: Campaign Default duration is set to 7 days. Date gets updated upon closing the campaign.");
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("--------------------------------------------------------------------------");
+                            Console.WriteLine("No record to display.");
+                            Console.WriteLine("--------------------------------------------------------------------------");
+                        }
+                        break;
+                    case 5:
                         break;
                     default:
                         Console.WriteLine("--------------------------------------------------------------------------");

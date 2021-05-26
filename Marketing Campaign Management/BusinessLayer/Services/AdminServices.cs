@@ -146,6 +146,22 @@ namespace BusinessLayer.Services
                 return null;
             }
         }
+
+        public List<Campaigns> ViewAllCampaigns()
+        {
+            try
+            {
+                campaignsRepo = new CampaignsRepo();
+                return campaignsRepo.ViewAllCampaigns();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
+                return null;
+            }
+
+        }
         //Users
 
         public bool AddUser(Users users)

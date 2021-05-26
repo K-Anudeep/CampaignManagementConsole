@@ -18,7 +18,6 @@ namespace PresentationLayer
         ExecutiveService execService = null;
         DataChecks dataChecks = null;
         FieldChecks fieldChecks = null;
-        ExceptionLogging exceptionLogging = null;
 
         public ExecutiveMenu()
         {
@@ -80,7 +79,7 @@ namespace PresentationLayer
 
         public void Sales()
         {
-        SalesMenu:
+            SalesMenu:
             dataChecks = new DataChecks();
             fieldChecks = new FieldChecks();
             try

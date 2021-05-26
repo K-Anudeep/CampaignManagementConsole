@@ -28,7 +28,7 @@ namespace BusinessLayer.Exceptions
                 writer.WriteLine($"Location : {ex.StackTrace}");
                 writer.WriteLine("  :");
                 writer.WriteLine($" Message :{ex.Message}");
-                writer.WriteLine("-------------------------------");
+                writer.WriteLine("--------------------------------");
             }
         }
 
