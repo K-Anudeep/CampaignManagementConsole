@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -285,8 +286,16 @@ namespace PresentationLayer
                             {
                                 if (dataChecks.AdminCheck(campaign.AssignedTo))
                                 {
-                                    Console.WriteLine("Start date of Campaign(YYYY-MM-DD):");
-                                    campaign.StartedOn = Convert.ToDateTime(Console.ReadLine());
+                                    Console.WriteLine("Start date of Campaign(dd-MM-yyyy):");
+                                    string dateLine = Console.ReadLine();
+                                    DateTime date;
+                                    while (!DateTime.TryParseExact(dateLine, "dd-MM-yyyy", null, DateTimeStyles.None, out date))
+                                    {
+                                        Console.WriteLine("Please enter a valid date in the given format.");
+                                        Console.WriteLine("Enter Date: ");
+                                        dateLine = Console.ReadLine();
+                                    }
+                                    campaign.StartedOn = date;
                                     bool add = adminServices.AddCampaigns(campaign);
                                     if (add == true)
                                     {
@@ -417,8 +426,16 @@ namespace PresentationLayer
                             user.LoginID = Console.ReadLine();
                             Console.WriteLine("Enter Password for the user:");
                             user.Password = Console.ReadLine();
-                            Console.WriteLine("Enter Date Of Join(YYYY-MM-DD):");
-                            user.DateOfJoin = Convert.ToDateTime(Console.ReadLine());
+                            Console.WriteLine("Enter Date Of Join(dd-MM-yyyy):");
+                            string dateLine = Console.ReadLine();
+                            DateTime date;
+                            while (!DateTime.TryParseExact(dateLine, "dd-MM-yyyy", null, DateTimeStyles.None, out date))
+                            {
+                                Console.WriteLine("Please enter a valid date in the given format.");
+                                Console.WriteLine("Enter Date: ");
+                                dateLine = Console.ReadLine();
+                            }
+                            user.DateOfJoin = date;
                             Console.WriteLine("Enter Address:");
                             user.Address = Console.ReadLine();
                             Console.WriteLine("Access Level of the User: 1. Administrator 2. Marketing Executive");

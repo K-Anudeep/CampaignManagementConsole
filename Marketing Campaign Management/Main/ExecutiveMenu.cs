@@ -243,14 +243,16 @@ namespace PresentationLayer
                                 leads.PreferredMoC = "Email";
                                 Console.WriteLine("Wrong Option: Defaulted to Email as the primary Mode of Contact.");
                             }
-                            Console.WriteLine("Enter Date Approached by Consumer(YYYY-MM-DD): ");
+                            Console.WriteLine("Enter Date Approached by Consumer(dd-MM-YYYY): ");
+                            string dateLine = Console.ReadLine();
                             DateTime date;
-                            while(!DateTime.TryParseExact(Console.ReadLine(),"yyyy-MM-dd",CultureInfo.InvariantCulture,DateTimeStyles.None, out date))
+                            while(!DateTime.TryParseExact(dateLine,"dd-MM-yyyy",null,DateTimeStyles.None, out date))
                             {
                                 Console.WriteLine("Please enter a valid date in the given format.");
                                 Console.WriteLine("Enter Date: ");
+                                dateLine = Console.ReadLine();
                             }
-                            date = leads.DateApproached;
+                            leads.DateApproached = date;
                             Console.WriteLine("Enter Product ID: ");
                             leads.ProductID = Int32.Parse(Console.ReadLine());
                             execService = new ExecutiveService();
