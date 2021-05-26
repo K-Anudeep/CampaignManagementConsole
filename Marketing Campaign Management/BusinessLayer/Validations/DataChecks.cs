@@ -93,33 +93,30 @@ namespace BusinessLayer.Validations
             }
         }
 
-        //public bool EmailCheck(string email)
-        //{
-        //    var check = new EmailAddressAttribute();
-        //    if (check.IsValid(email))
-        //    {
-        //        if (EmailCheck2(email))
-        //            return true;
-        //        else
-        //            return false;
-        //    }
-        //    else
-        //        return false;
-        //}
         public bool EmailCheck(string email)
         {
-            string regexEmail = @"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$";
-            if (Regex.IsMatch(email.ToString(), regexEmail))
+            var check = new EmailAddressAttribute();
+            if (check.IsValid(email))
             {
                 return true;
             }
             else
                 return false;
         }
+        //public bool EmailCheck(string email)
+        //{
+        //    string regexEmail = @"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$";
+        //    if (Regex.IsMatch(email.ToString(), regexEmail))
+        //    {
+        //        return true;
+        //    }
+        //    else
+        //        return false;
+        //}
 
         public bool PhoneNoCheck(string phone)
         {
-            if(Regex.IsMatch(phone.ToString(), @"^([0] |\+91)?[6 - 9]\d{ 9}$"))
+            if(Regex.IsMatch(phone.ToString(), @"^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$"))
             {
                 return true;
             }

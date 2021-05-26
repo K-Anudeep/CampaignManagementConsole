@@ -233,6 +233,7 @@ namespace PresentationLayer
             LeadsMenu:
             Leads leads = new Leads();
             dataChecks = new DataChecks();
+            fieldChecks = new FieldChecks();
             try
             {
                 Console.WriteLine("Manage your Leads");
@@ -257,7 +258,7 @@ namespace PresentationLayer
                         {
                             Console.WriteLine("Enter the Consumer Name: ");
                             string consumerName = null;
-                            while (!fieldChecks.StringCheck(Console.ReadLine(), out consumerName))
+                            while(!fieldChecks.StringCheck(Console.ReadLine(), out consumerName))
                             {
                                 Console.WriteLine("Please Enter a valid name!");
                                 Console.WriteLine("Try again:");
