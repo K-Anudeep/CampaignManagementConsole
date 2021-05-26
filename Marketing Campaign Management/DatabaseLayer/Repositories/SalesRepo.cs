@@ -7,11 +7,13 @@ using DatabaseLayer.Interfaces;
 using System.Data.SqlClient;
 using Entities;
 using System.Data;
+using System.Configuration;
 
 namespace DatabaseLayer.Repositories
 {
     public class SalesRepo : ISalesRepo
     {
+        SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["MCMConnection"].ConnectionString);
         SqlCommand command = null;
         SqlDataAdapter dataAdapter = null;
 
@@ -23,13 +25,13 @@ namespace DatabaseLayer.Repositories
                 {
                     CommandText = "AddSales",
                     CommandType = CommandType.StoredProcedure,
-                    Connection = Connection.connection
+                    Connection = connection
                 };
                 command.Parameters.AddWithValue("@leadid", sales.LeadID);
                 command.Parameters.AddWithValue("@shippingaddress", sales.ShippingAddress);
                 command.Parameters.AddWithValue("@billingaddress", sales.BillingAddress);
                 command.Parameters.AddWithValue("@paymentmode", sales.PaymentMode);
-                Connection.Open();
+                connection.Open();
                 command.ExecuteNonQuery();
                 return true;
             }
@@ -40,7 +42,7 @@ namespace DatabaseLayer.Repositories
             }
             finally
             {
-                Connection.Close();
+                connection.Close();
             }
         }
 
@@ -53,9 +55,9 @@ namespace DatabaseLayer.Repositories
                 {
                     CommandText = "VIEWSALES",
                     CommandType = CommandType.StoredProcedure,
-                    Connection = Connection.connection
+                    Connection = connection
                 };
-                Connection.Open();
+                connection.Open();
                 dataAdapter = new SqlDataAdapter(command);
                 DataSet dataSet = new DataSet();
                 dataAdapter.Fill(dataSet, "Sales");

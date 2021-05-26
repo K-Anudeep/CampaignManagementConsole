@@ -13,6 +13,7 @@ namespace DatabaseLayer.Repositories
 {
     public class ProductRepo : IProductsRepo
     {
+        SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["MCMConnection"].ConnectionString);
         SqlCommand command = null;
         SqlDataAdapter dataAdapter = null;
 
@@ -24,12 +25,12 @@ namespace DatabaseLayer.Repositories
                 {
                     CommandText = "AddProduct",
                     CommandType = CommandType.StoredProcedure,
-                    Connection = Connection.connection
+                    Connection = connection
                 };
                 command.Parameters.AddWithValue("@productname", product.ProductName);
                 command.Parameters.AddWithValue("@description", product.Description);
                 command.Parameters.AddWithValue("@unitprice", product.UnitPrice);
-                Connection.Open();
+                connection.Open();
                 command.ExecuteNonQuery();
                 return true;
 
@@ -41,7 +42,7 @@ namespace DatabaseLayer.Repositories
             }
             finally
             {
-                Connection.Close();
+                connection.Close();
             }
         }
 
@@ -54,7 +55,7 @@ namespace DatabaseLayer.Repositories
                 {
                     CommandText = "DisplayProducts",
                     CommandType = CommandType.StoredProcedure,
-                    Connection = Connection.connection
+                    Connection = connection
                 };
 
                 dataAdapter = new SqlDataAdapter(command);
@@ -90,13 +91,13 @@ namespace DatabaseLayer.Repositories
         {
             try
             {
-                Connection.Open();
+                connection.Open();
                 Products product = null;
                 command = new SqlCommand()
                 {
                     CommandText = "OneProduct",
                     CommandType = CommandType.StoredProcedure,
-                    Connection = Connection.connection
+                    Connection = connection
                 };
                 command.Parameters.AddWithValue("@productid", pId);
                 dataAdapter = new SqlDataAdapter(command);
@@ -131,10 +132,10 @@ namespace DatabaseLayer.Repositories
                 {
                     CommandText = "DeleteProduct",
                     CommandType = CommandType.StoredProcedure,
-                    Connection = Connection.connection
+                    Connection = connection
                 };
                 command.Parameters.AddWithValue("@productid", pID);
-                Connection.Open();
+                connection.Open();
                 command.ExecuteNonQuery();
                 return true;
             }
@@ -145,7 +146,7 @@ namespace DatabaseLayer.Repositories
             }
             finally
             {
-                Connection.Close();
+               connection.Close();
             }
         }
 
