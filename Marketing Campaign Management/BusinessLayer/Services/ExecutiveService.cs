@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DatabaseLayer.Repositories;
+using BusinessLayer.Exceptions;
 using Entities;
 
 namespace BusinessLayer.Services
@@ -29,6 +30,7 @@ namespace BusinessLayer.Services
             }
             catch(Exception ex)
             {
+                ExceptionLogging.WriteLog(ex);
                 throw ex;
             }
         }
@@ -48,6 +50,7 @@ namespace BusinessLayer.Services
             }
             catch(Exception ex)
             {
+                ExceptionLogging.WriteLog(ex);
                 throw ex;
             }
         }
@@ -67,6 +70,7 @@ namespace BusinessLayer.Services
             }
             catch(Exception ex)
             {
+                ExceptionLogging.WriteLog(ex);
                 throw ex;
             }
         }
@@ -81,6 +85,7 @@ namespace BusinessLayer.Services
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
                 return null;
             }
         }
@@ -99,6 +104,7 @@ namespace BusinessLayer.Services
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
                 return null;
             }
 
@@ -125,6 +131,7 @@ namespace BusinessLayer.Services
             catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
                 return false;
             }
         }
@@ -139,6 +146,7 @@ namespace BusinessLayer.Services
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
                 return null;
             }
 

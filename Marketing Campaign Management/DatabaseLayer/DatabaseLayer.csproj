@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DBException\ExceptionLogging.cs" />
     <Compile Include="Interfaces\ICampaignsRepo.cs" />
     <Compile Include="Interfaces\ILeadsRepo.cs" />
     <Compile Include="Interfaces\IProductsRepo.cs" />
@@ -55,7 +56,9 @@
     <Compile Include="Repositories\UserRepo.cs" />
     <Compile Include="Repositories\ProductRepo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entities\Entities.csproj">
       <Project>{7afb29a2-4de0-4efd-8830-6bd672a717de}</Project>

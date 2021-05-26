@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Entities;
 using DatabaseLayer.Repositories;
+using BusinessLayer.Exceptions;
 
 namespace BusinessLayer.Services
 {
@@ -31,6 +32,7 @@ namespace BusinessLayer.Services
             catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
                 return false;
             }
         }
@@ -45,6 +47,7 @@ namespace BusinessLayer.Services
             catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
                 return null;
             }
         }
@@ -59,6 +62,7 @@ namespace BusinessLayer.Services
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
                 return null;
             }
         }
@@ -79,6 +83,7 @@ namespace BusinessLayer.Services
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
                 return false;
             }
         }
@@ -101,6 +106,7 @@ namespace BusinessLayer.Services
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
                 return false;
             }
         }
@@ -121,6 +127,7 @@ namespace BusinessLayer.Services
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
                 return false;
             }
         }
@@ -135,6 +142,7 @@ namespace BusinessLayer.Services
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
                 return null;
             }
         }
@@ -156,6 +164,7 @@ namespace BusinessLayer.Services
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
                 return false;
             }
         }
@@ -170,6 +179,7 @@ namespace BusinessLayer.Services
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
                 return null;
             }
         }
@@ -190,6 +200,7 @@ namespace BusinessLayer.Services
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
                 return false;
             }
         }
@@ -204,6 +215,7 @@ namespace BusinessLayer.Services
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
                 return null;
             }
         }
@@ -220,6 +232,7 @@ namespace BusinessLayer.Services
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
                 return null;
             }
         }
@@ -234,6 +247,7 @@ namespace BusinessLayer.Services
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
                 return null;
             }
         }

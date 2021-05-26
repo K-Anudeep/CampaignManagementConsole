@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Entities;
 using DatabaseLayer.Repositories;
+using BusinessLayer.Exceptions;
 
 namespace BusinessLayer.Validations
 {
@@ -26,6 +27,7 @@ namespace BusinessLayer.Validations
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
                 return false;
             }
         }
@@ -47,6 +49,7 @@ namespace BusinessLayer.Validations
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
                 return false;
             }
         }

@@ -72,18 +72,12 @@ namespace PresentationLayer
             }
             catch(Exception ex) when (ex.Message == "IncorrectOptionError")
             {
-                using (StreamWriter w = File.AppendText("log.txt"))
-                {
-                    exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
-                }
+                ExceptionLogging.WriteLog(ex);
                 goto AdminMenu;
             }
             catch (Exception ex)
             {
-                using (StreamWriter w = File.AppendText("log.txt"))
-                {
-                    exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
-                }
+                ExceptionLogging.WriteLog(ex);
                 goto AdminMenu;
             }            
         }
@@ -243,18 +237,12 @@ namespace PresentationLayer
             }
             catch (Exception ex) when (ex.Message == "IncorrectOptionError")
             {
-                using (StreamWriter w = File.AppendText("log.txt"))
-                {
-                    exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
-                }
+                ExceptionLogging.WriteLog(ex);
                 goto ProductMenu;
             }
             catch (Exception ex)
             {
-                using (StreamWriter w = File.AppendText("log.txt"))
-                {
-                    exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
-                }
+                ExceptionLogging.WriteLog(ex);
                 goto ProductMenu;
             }
         }
@@ -406,18 +394,12 @@ namespace PresentationLayer
             }
             catch (Exception ex) when (ex.Message == "IncorrectOptionError")
             {
-                using (StreamWriter w = File.AppendText("log.txt"))
-                {
-                    exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
-                }
+                ExceptionLogging.WriteLog(ex);
                 goto CampaignMenu;
             }
             catch (Exception ex)
             {
-                using (StreamWriter w = File.AppendText("log.txt"))
-                {
-                    exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
-                }
+                ExceptionLogging.WriteLog(ex);
                 goto CampaignMenu;
             }
         }
@@ -620,18 +602,12 @@ namespace PresentationLayer
             }
             catch (Exception ex) when (ex.Message == "IncorrectOptionError")
             {
-                using (StreamWriter w = File.AppendText("log.txt"))
-                {
-                    exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
-                }
+                ExceptionLogging.WriteLog(ex);
                 goto UserMenu;
             }
             catch (Exception ex)
             {
-                using (StreamWriter w = File.AppendText("log.txt"))
-                {
-                    exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
-                }
+                ExceptionLogging.WriteLog(ex);
                 goto UserMenu;
             }
             
@@ -723,18 +699,12 @@ namespace PresentationLayer
             }
             catch (Exception ex) when (ex.Message == "IncorrectOptionError")
             {
-                using (StreamWriter w = File.AppendText("log.txt"))
-                {
-                    exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
-                }
+                ExceptionLogging.WriteLog(ex);
                 goto ReportMenu;
             }
             catch (Exception ex)
             {
-                using (StreamWriter w = File.AppendText("log.txt"))
-                {
-                    exceptionLogging = new ExceptionLogging(ex.Message, w, ex.ToString());
-                }
+                ExceptionLogging.WriteLog(ex);
                 goto ReportMenu;
             }
         }

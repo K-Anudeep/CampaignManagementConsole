@@ -8,6 +8,7 @@ using DatabaseLayer.Interfaces;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
+using DatabaseLayer.DBException;
 
 
 namespace DatabaseLayer.Repositories
@@ -39,6 +40,7 @@ namespace DatabaseLayer.Repositories
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
                 return false;
             }
             finally
@@ -65,6 +67,7 @@ namespace DatabaseLayer.Repositories
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
                 return false;
             }
             finally
@@ -109,6 +112,7 @@ namespace DatabaseLayer.Repositories
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
                 return null;
             }
 
@@ -155,6 +159,7 @@ namespace DatabaseLayer.Repositories
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
                 return null;
             }
         }
@@ -201,6 +206,7 @@ namespace DatabaseLayer.Repositories
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
                 return null;
             }
         }
@@ -237,6 +243,7 @@ namespace DatabaseLayer.Repositories
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
                 return false;
             }
         }
