@@ -36,7 +36,12 @@ namespace PresentationLayer
                     Console.WriteLine("4.LOGOUT");
                     Console.WriteLine("");
                     Console.WriteLine("Enter your option");
-                    int Options = int.Parse(Console.ReadLine());
+                    int Options = 0;
+                    while (!int.TryParse(Console.ReadLine(), out Options))
+                    {
+                        Console.WriteLine("Please Enter a valid numerical value!");
+                        Console.WriteLine("Try again: ");
+                    }
                     switch (Options)
                     {
                         case 1:
@@ -93,8 +98,12 @@ namespace PresentationLayer
                     case 1:
                         Sales salesData = new Sales();
                         Console.WriteLine("Enter the LeadID to create Sales Order for: ");
-                        int leadCheck = Convert.ToInt32(Console.ReadLine());
-
+                        int leadCheck = 0;
+                        while (!int.TryParse(Console.ReadLine(), out leadCheck))
+                        {
+                            Console.WriteLine("Please Enter a valid numerical value!");
+                            Console.WriteLine("Try again: ");
+                        }
                         execService = new ExecutiveService();
                         bool statusCheck = dataChecks.CheckLead(leadCheck);
                         if (statusCheck == true)
@@ -102,9 +111,15 @@ namespace PresentationLayer
                             salesData.LeadID = leadCheck;
                             Console.WriteLine("Enter the Shipping Address: ");
                             salesData.ShippingAddress = Console.ReadLine();
+                            Choice1:
                             Console.WriteLine("Is your billing address the same as shipping address? 1.Yes 2. No");
-                            int same = Convert.ToInt32(Console.ReadLine());
-                            if(same == 1)
+                            int same = 0;
+                            while (!int.TryParse(Console.ReadLine(), out same))
+                            {
+                                Console.WriteLine("Please Enter a valid numerical value!");
+                                Console.WriteLine("Try again: ");
+                            }
+                            if (same == 1)
                             {
                                 salesData.BillingAddress = salesData.ShippingAddress;
                             }
@@ -118,9 +133,17 @@ namespace PresentationLayer
                                 Console.WriteLine("--------------------------------------------------------------------------");
                                 Console.WriteLine("Choose the correct option!");
                                 Console.WriteLine("--------------------------------------------------------------------------");
+                                goto Choice1;
+
                             }
+                            Choice2:
                             Console.WriteLine("Enter your Payment Mode: 1. Prepaid 2. COD(Cash on Delivery)");
-                            int payment = Int32.Parse(Console.ReadLine());
+                            int payment = 0;
+                            while (!int.TryParse(Console.ReadLine(), out payment))
+                            {
+                                Console.WriteLine("Please Enter a valid numerical value!");
+                                Console.WriteLine("Try again: ");
+                            }
                             if (payment == 1)
                             {
                                 salesData.PaymentMode = "Prepaid";
@@ -134,6 +157,7 @@ namespace PresentationLayer
                                 Console.WriteLine("--------------------------------------------------------------------------");
                                 Console.WriteLine("Choose the correct option!");
                                 Console.WriteLine("--------------------------------------------------------------------------");
+                                goto Choice2;
                             }
 
                             bool addSales = execService.AddSales(salesData);
@@ -218,18 +242,37 @@ namespace PresentationLayer
                 {
                     case 1:
                         Console.WriteLine("Enter the CampaignID: ");
-                        leads.CampaignID = Convert.ToInt32(Console.ReadLine());
+                        int CampaignID = 0;
+                        while (!int.TryParse(Console.ReadLine(), out CampaignID))
+                        {
+                            Console.WriteLine("Please Enter a valid numerical value!");
+                            Console.WriteLine("Try again: ");
+                        }
+                        leads.CampaignID = CampaignID;
                         bool campCheck = dataChecks.CampaignStatusCheck(leads.CampaignID);
                         if (campCheck == true)
                         {
                             Console.WriteLine("Enter the Consumer Name: ");
                             leads.ConsumerName = Console.ReadLine();
                             Console.WriteLine("Enter Email Address: ");
-                            leads.EmailAddress = Console.ReadLine();
+                            string email = Console.ReadLine();
+                            while(!dataChecks.EmailCheck(email))
+                            {
+                                Console.WriteLine("Please enter a valid email address.");
+                                Console.WriteLine("Try again: ");
+                                email = Console.ReadLine();
+                            }
+                            leads.EmailAddress = email;
                             Console.WriteLine("Enter Phone Number: ");
                             leads.PhoneNo = Console.ReadLine();
+                            Choice3:
                             Console.WriteLine("Enter your preffered Mode of Contact: 1. Email 2. Phone ");
-                            int moc = Convert.ToInt32(Console.ReadLine());
+                            int moc = 0;
+                            while (!int.TryParse(Console.ReadLine(), out moc))
+                            {
+                                Console.WriteLine("Please Enter a valid numerical value!");
+                                Console.WriteLine("Try again: ");
+                            }
                             if (moc == 1)
                             {
                                 leads.PreferredMoC = "Email";
@@ -241,7 +284,8 @@ namespace PresentationLayer
                             else
                             {
                                 leads.PreferredMoC = "Email";
-                                Console.WriteLine("Wrong Option: Defaulted to Email as the primary Mode of Contact.");
+                                Console.WriteLine("Wrong Option: Please choose from the given options.");
+                                goto Choice3;
                             }
                             Console.WriteLine("Enter Date Approached by Consumer(dd-MM-YYYY): ");
                             string dateLine = Console.ReadLine();
@@ -254,7 +298,13 @@ namespace PresentationLayer
                             }
                             leads.DateApproached = date;
                             Console.WriteLine("Enter Product ID: ");
-                            leads.ProductID = Int32.Parse(Console.ReadLine());
+                            int ProductID = 0;
+                            while (!int.TryParse(Console.ReadLine(), out ProductID))
+                            {
+                                Console.WriteLine("Please Enter a valid numerical value!");
+                                Console.WriteLine("Try again: ");
+                            }
+                            leads.ProductID = ProductID;
                             execService = new ExecutiveService();
                             bool addLeads = execService.AddLeads(leads);
                             if (addLeads == true)
@@ -277,14 +327,25 @@ namespace PresentationLayer
                         break;
                     case 2:
                         Console.WriteLine("Enter a LeadID: ");
-                        int leadId = Convert.ToInt32(Console.ReadLine());
+                        int leadId =0;
+                        while (!int.TryParse(Console.ReadLine(), out leadId))
+                        {
+                            Console.WriteLine("Please Enter a valid numerical value!");
+                            Console.WriteLine("Try again: ");
+                        }
                         execService = new ExecutiveService();
                         bool leadCheck = dataChecks.CheckLead(leadId);
                         if(leadCheck == true)
                         {
+                            Choise4:
                             Console.WriteLine("How do you want to follow up with this Lead? 1. Won 2. Lost");
-                            int followUp = Convert.ToInt32(Console.ReadLine());
-                            if(followUp == 1)
+                            int followUp = 0;
+                            while (!int.TryParse(Console.ReadLine(), out followUp))
+                            {
+                                Console.WriteLine("Please Enter a valid numerical value!");
+                                Console.WriteLine("Try again: ");
+                            }
+                            if (followUp == 1)
                             {
                                 string newStatus = "Won";
                                 bool follow = execService.FollowLead(leadId, newStatus);
@@ -309,6 +370,7 @@ namespace PresentationLayer
                             else
                             {
                                 Console.WriteLine("Wrong option.");
+                                goto Choise4;
                             }
                         }
                         else

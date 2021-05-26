@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using DatabaseLayer.Repositories;
 using Entities;
+using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 
 namespace BusinessLayer.Validations
 {
@@ -18,7 +20,7 @@ namespace BusinessLayer.Validations
         public bool CampaignStatusCheck(int leadID)
         {
             bool check = campaignsRepo.CampaignStatusCheck(leadID);
-            if(check == true)
+            if (check == true)
             {
                 return true;
             }
@@ -90,5 +92,29 @@ namespace BusinessLayer.Validations
                 return true;
             }
         }
+
+        public bool EmailCheck(string email)
+        {
+            var check = new EmailAddressAttribute();
+            if (check.IsValid(email))
+            {
+                //if (EmailCheck2(email))
+                    return true;
+                //else
+                //    return false;
+            }
+            else
+                return false;
+        }
+        //public bool EmailCheck2(string email)
+        //{
+        //    string regexEmail = @"^([a - zA - Z0 - 9_\-\.] +)@((\[[0 - 9]{ 1,3}\.[0 - 9]{ 1,3}\.[0 - 9]{ 1,3}\.)| (([a - zA - Z0 - 9\-] +\.)+))([azA - Z]{ 2,4}|[0 - 9]{ 1,3})(\]?)$";
+        //    if (Regex.IsMatch(email.ToString(), regexEmail))
+        //    {
+        //        return true;
+        //    }
+        //    else
+        //        return false;
+        //}
     }
 }

@@ -525,8 +525,12 @@ namespace PresentationLayer
                     case 4:
                         {
                             Console.WriteLine("Enter User ID:");
-                            int userId = Convert.ToInt32(Console.ReadLine());
-
+                            int userId = 0;
+                            while (!int.TryParse(Console.ReadLine(), out userId))
+                            {
+                                Console.WriteLine("Please Enter a valid numerical value!");
+                                Console.WriteLine("Try again: ");
+                            }
                             Users user = adminServices.OneUser(userId);
                             var userTable = new ConsoleTable("User ID", "Name ", "Login ID", "Password", "Date of Joining", "Address", "Discountinued", "Admin");
                             if (user != null)
