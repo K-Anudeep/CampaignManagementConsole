@@ -13,6 +13,7 @@ namespace DatabaseLayer.Repositories
 {
     public class UserRepo : IUsersRepo
     {
+        SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["MCMConnection"].ConnectionString);
         SqlCommand command = null;
         SqlDataAdapter dataAdapter = null;
         public bool AddUsers(Users user)
@@ -23,7 +24,7 @@ namespace DatabaseLayer.Repositories
                 {
                     CommandText = "Add_Users",
                     CommandType = CommandType.StoredProcedure,
-                    Connection = Connection.connection
+                    Connection = connection
                 };
                 command.Parameters.AddWithValue("@FullName", user.FullName);
                 command.Parameters.AddWithValue("@LoginID", user.LoginID);
@@ -31,7 +32,7 @@ namespace DatabaseLayer.Repositories
                 command.Parameters.AddWithValue("@DateOfJoin", user.DateOfJoin);
                 command.Parameters.AddWithValue("@Address", user.Address);
                 command.Parameters.AddWithValue("@IsAdmin", user.IsAdmin);
-                Connection.Open();
+                connection.Open();
                 command.ExecuteNonQuery();
                 return true;
 
@@ -43,7 +44,7 @@ namespace DatabaseLayer.Repositories
             }
             finally
             {
-                Connection.Close();
+                connection.Close();
             }
         }
 
@@ -55,10 +56,10 @@ namespace DatabaseLayer.Repositories
                 {
                     CommandText = "DiscontinueUser",
                     CommandType = CommandType.StoredProcedure,
-                    Connection = Connection.connection
+                    Connection = connection
                 };
                 command.Parameters.AddWithValue("@UserID", uId);
-                Connection.Open();
+                connection.Open();
                 command.ExecuteNonQuery();
                 return true;             
                 
@@ -70,7 +71,7 @@ namespace DatabaseLayer.Repositories
             }
             finally
             {
-                Connection.Close();
+                connection.Close();
             }
         }
 
@@ -83,7 +84,7 @@ namespace DatabaseLayer.Repositories
                 {
                     CommandText = "DisplayUsers",
                     CommandType = CommandType.StoredProcedure,
-                    Connection = Connection.connection
+                    Connection = connection
 
                 };
                 dataAdapter = new SqlDataAdapter(command);
@@ -129,7 +130,7 @@ namespace DatabaseLayer.Repositories
                 {
                     CommandText = "DisplayUsersByID",
                     CommandType = CommandType.StoredProcedure,
-                    Connection = Connection.connection
+                    Connection = connection
 
                 };
                 command.Parameters.AddWithValue("@UserID", uId);

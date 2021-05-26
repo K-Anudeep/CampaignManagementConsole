@@ -7,6 +7,7 @@ using DatabaseLayer.Interfaces;
 using System.Data.SqlClient;
 using Entities;
 using System.Data;
+using System.Configuration;
 
 namespace DatabaseLayer.Repositories
 {

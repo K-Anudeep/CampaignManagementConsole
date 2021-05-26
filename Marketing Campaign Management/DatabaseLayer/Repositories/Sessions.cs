@@ -13,6 +13,7 @@ namespace DatabaseLayer.Repositories
 {
     public class Sessions
     {
+        SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["MCMConnection"].ConnectionString);
         SqlCommand command = null;
         SqlDataAdapter dataAdapter = null;
         public bool DbValidation(string logID, string password)
@@ -24,7 +25,7 @@ namespace DatabaseLayer.Repositories
                 {
                     CommandText = "Session",
                     CommandType = CommandType.StoredProcedure,
-                    Connection = Connection.connection
+                    Connection = connection
 
                 };
                 command.Parameters.AddWithValue("@LoginID", logID);
