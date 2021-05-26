@@ -115,6 +115,10 @@ namespace DatabaseLayer.Repositories
                 ExceptionLogging.WriteLog(ex);
                 return null;
             }
+            finally
+            {
+                connection.Close();
+            }
 
         }
 
@@ -161,6 +165,10 @@ namespace DatabaseLayer.Repositories
                 Console.WriteLine(ex.Message);
                 ExceptionLogging.WriteLog(ex);
                 return null;
+            }
+            finally
+            {
+                connection.Close();
             }
         }
 
@@ -209,6 +217,10 @@ namespace DatabaseLayer.Repositories
                 ExceptionLogging.WriteLog(ex);
                 return null;
             }
+            finally
+            {
+                connection.Close();
+            }
         }
 
         public bool CampaignStatusCheck(int cId)
@@ -245,6 +257,10 @@ namespace DatabaseLayer.Repositories
                 Console.WriteLine(ex.Message);
                 ExceptionLogging.WriteLog(ex);
                 return false;
+            }
+            finally
+            {
+                connection.Close();
             }
         }
 

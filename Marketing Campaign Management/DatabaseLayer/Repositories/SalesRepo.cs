@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using Entities;
 using System.Data;
 using System.Configuration;
+using DatabaseLayer.DBException;
 
 namespace DatabaseLayer.Repositories
 {
@@ -38,6 +39,7 @@ namespace DatabaseLayer.Repositories
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
                 return false;
             }
             finally
@@ -85,7 +87,12 @@ namespace DatabaseLayer.Repositories
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
                 return null;
+            }
+            finally
+            {
+                connection.Close();
             }
         }
     }

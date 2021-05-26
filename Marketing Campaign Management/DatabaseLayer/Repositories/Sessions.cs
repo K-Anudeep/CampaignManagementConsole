@@ -8,6 +8,7 @@ using DatabaseLayer.Interfaces;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
+using DatabaseLayer.DBException;
 
 namespace DatabaseLayer.Repositories
 {
@@ -21,6 +22,7 @@ namespace DatabaseLayer.Repositories
             try
             {
                 SessionDetails session = null;
+                connection.Open();
                 command = new SqlCommand()
                 {
                     CommandText = "Session",
@@ -51,7 +53,12 @@ namespace DatabaseLayer.Repositories
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
                 return false;
+            }
+            finally
+            {
+                connection.Close();
             }
 
         }
@@ -71,6 +78,7 @@ namespace DatabaseLayer.Repositories
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                ExceptionLogging.WriteLog(ex);
                 return false;
             }
 
