@@ -97,7 +97,7 @@ namespace PresentationLayer
                 fieldChecks = new FieldChecks();
                 Console.WriteLine("Choose fromt he following: ");
                 Console.WriteLine("1.To Add Product");
-                Console.WriteLine("2.To Display Product");
+                Console.WriteLine("2.To Display Products");
                 Console.WriteLine("3.To Display a specific Product");
                 Console.WriteLine("4.To Delete a Product");
                 Console.WriteLine("5. Back to Main menu");
@@ -152,7 +152,7 @@ namespace PresentationLayer
                         DisplayProduct = adminServices.ViewProducts();
                         if (DisplayProduct != null)
                         {
-                            var productTable = new ConsoleTable("ProductID", "Productname ", "Description ", "UnitPrice");
+                            var productTable = new ConsoleTable("Product ID", "Product Name ", "Description ", "Unit Price");
                             foreach (Products p in DisplayProduct)
                             {
                                 productTable.AddRow(p.ProductID, p.ProductName, p.Description, p.UnitPrice);
@@ -170,7 +170,7 @@ namespace PresentationLayer
                         Console.WriteLine("Enter Product ID to get the product details");
                         int productId = int.Parse(Console.ReadLine());
                         Products product = adminServices.OneProduct(productId);
-                        var oneTable = new ConsoleTable("ProductID", "Productname ", "Description ", "UnitPrice");
+                        var oneTable = new ConsoleTable("Product ID", "Product Name ", "Description ", "Unit Price");
 
                         if (product != null)
                         {
