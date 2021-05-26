@@ -93,22 +93,22 @@ namespace BusinessLayer.Validations
             }
         }
 
+        //public bool EmailCheck(string email)
+        //{
+        //    var check = new EmailAddressAttribute();
+        //    if (check.IsValid(email))
+        //    {
+        //        if (EmailCheck2(email))
+        //            return true;
+        //        else
+        //            return false;
+        //    }
+        //    else
+        //        return false;
+        //}
         public bool EmailCheck(string email)
         {
-            var check = new EmailAddressAttribute();
-            if (check.IsValid(email))
-            {
-                //if (EmailCheck2(email))
-                    return true;
-                //else
-                //    return false;
-            }
-            else
-                return false;
-        }
-        public bool EmailCheck2(string email)
-        {
-            string regexEmail = @"^(([0 - 9a - z]((\.(? !\.)) |[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$";
+            string regexEmail = @"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$";
             if (Regex.IsMatch(email.ToString(), regexEmail))
             {
                 return true;
