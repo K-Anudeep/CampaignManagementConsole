@@ -337,7 +337,7 @@ namespace PresentationLayer
                         bool leadCheck = dataChecks.CheckLead(leadId);
                         if(leadCheck == true)
                         {
-                            Choise4:
+                            Choice4:
                             Console.WriteLine("How do you want to follow up with this Lead? 1. Won 2. Lost");
                             int followUp = 0;
                             while (!int.TryParse(Console.ReadLine(), out followUp))
@@ -370,7 +370,7 @@ namespace PresentationLayer
                             else
                             {
                                 Console.WriteLine("Wrong option.");
-                                goto Choise4;
+                                goto Choice4;
                             }
                         }
                         else
