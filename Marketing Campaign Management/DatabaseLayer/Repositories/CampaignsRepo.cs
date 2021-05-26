@@ -298,7 +298,7 @@ namespace DatabaseLayer.Repositories
                     return true;
                 }
                 else
-                    throw new Exception("Error: Campaign is either not assigned to you or it is closed!");
+                    return false;
 
             }
             catch (Exception ex)

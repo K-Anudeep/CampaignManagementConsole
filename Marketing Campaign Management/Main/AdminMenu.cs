@@ -88,7 +88,7 @@ namespace PresentationLayer
                 adminServices = new AdminServices();
                 dataChecks = new DataChecks();
                 fieldChecks = new FieldChecks();
-                Console.WriteLine("Choose fromt he following: ");
+                Console.WriteLine("Choose from the following: ");
                 Console.WriteLine("1.To Add Product");
                 Console.WriteLine("2.To Display Products");
                 Console.WriteLine("3.To Display a specific Product");
@@ -161,7 +161,12 @@ namespace PresentationLayer
                         break;
                     case 3:
                         Console.WriteLine("Enter Product ID to get the product details");
-                        int productId = int.Parse(Console.ReadLine());
+                        int productId = 0;
+                        while (!int.TryParse(Console.ReadLine(), out productId))
+                        {
+                            Console.WriteLine("Please Enter a valid numerical value!");
+                            Console.WriteLine("Try Again:");
+                        }
                         Products product = adminServices.OneProduct(productId);
                         var oneTable = new ConsoleTable("Product ID", "Product Name ", "Description ", "Unit Price");
 
@@ -200,10 +205,12 @@ namespace PresentationLayer
                                     Console.WriteLine("--------------------------------------------------------------------------");
                                     Console.WriteLine("Error in Deleting!");
                                     Console.WriteLine("--------------------------------------------------------------------------");
+                                    throw new Exception("Deletion Error");
                                 }
                             }
                             else if (confirm == "no")
                             {
+                                Console.WriteLine("Deletion Aborted!");
                                 break;
                             }
                             else
@@ -251,6 +258,8 @@ namespace PresentationLayer
             try
             {
                 adminServices = new AdminServices();
+                dataChecks = new DataChecks();
+                fieldChecks = new FieldChecks();
                 Console.WriteLine("Choose an option:");
                 Console.WriteLine("1. Add Campaigns");
                 Console.WriteLine("2. Close Campaigns");
@@ -348,16 +357,26 @@ namespace PresentationLayer
                         }
                         if (dataChecks.CheckCampaign(cId))
                         {
-                            Console.WriteLine("Campaign is Closed");
-                            Console.WriteLine("--------------------------------------------------------------------------");
+                            if (adminServices.CloseCampaigns(cId))
+                            {
+                                Console.WriteLine("--------------------------------------------------------------------------");
+                                Console.WriteLine("Campaign is Closed");
+                                Console.WriteLine("--------------------------------------------------------------------------");
 
+                            }
+                            else
+                            {
+                                Console.WriteLine("--------------------------------------------------------------------------");
+                                Console.WriteLine("Failed to Close Campaign");
+                                Console.WriteLine("--------------------------------------------------------------------------");
+
+                            }
                         }
                         else
                         {
                             Console.WriteLine("--------------------------------------------------------------------------");
-                            Console.WriteLine("Failed to Close Campaign");
+                            Console.WriteLine("No such Campaign");
                             Console.WriteLine("--------------------------------------------------------------------------");
-
                         }
 
                         break;
@@ -379,7 +398,7 @@ namespace PresentationLayer
                         else
                         {
                             Console.WriteLine("--------------------------------------------------------------------------");
-                            Console.WriteLine("No data with that Executive ID");
+                            Console.WriteLine("No data with that Campaign ID");
                             Console.WriteLine("--------------------------------------------------------------------------");
                         }
                         break;
@@ -387,10 +406,10 @@ namespace PresentationLayer
                         List<Campaigns> campaignsAll = adminServices.ViewAllCampaigns();
                         if (campaignsAll != null)
                         {
-                            var exeTable = new ConsoleTable("Assigned Executives", "Campaign ID", "Name", "Venue", "Started On", "Completed On", "Status");
+                            var exeTable = new ConsoleTable("Campaign ID", "Campaign Name", "Assigned Executives", "Venue", "Started On", "Completed On", "Status");
                             foreach (Campaigns c in campaignsAll)
                             {
-                                exeTable.AddRow(c.AssignedTo, c.CampaignID, c.Name, c.Venue, c.StartedOn.ToString("d"), c.CompletedOn.ToString("d"), c.IsOpen);
+                                exeTable.AddRow(c.CampaignID, c.Name, c.AssignedTo, c.Venue, c.StartedOn.ToString("d"), c.CompletedOn.ToString("d"), c.IsOpen);
                             }
                             exeTable.Write(Format.Alternative);
                             Console.WriteLine("");
@@ -431,6 +450,7 @@ namespace PresentationLayer
             {
                 adminServices = new AdminServices();
                 dataChecks = new DataChecks();
+                fieldChecks = new FieldChecks();
                 Console.WriteLine("Chose and Option:");
                 Console.WriteLine("1. Add Users");
                 Console.WriteLine("2. Display Users");
@@ -563,12 +583,19 @@ namespace PresentationLayer
                             {
                                 Console.WriteLine("Enter UserID:");
                                 int userId = Convert.ToInt32(Console.ReadLine());
-                                bool userValid = dataChecks.CheckUser(userId);
-                                bool check = adminServices.DiscontinueUser(userId);
-
-                                if (check == true)
+                                if (dataChecks.CheckUser(userId))
                                 {
-                                    Console.WriteLine("User is successfully discontinued");
+                                    bool check = adminServices.DiscontinueUser(userId);
+
+                                    if (check == true)
+                                    {
+                                        Console.WriteLine("User is successfully discontinued");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Error");
+                                        throw new Exception("Error in Deletion");
+                                    }
                                 }
                                 else
                                 {
@@ -576,6 +603,12 @@ namespace PresentationLayer
                                     Console.WriteLine("No records found");
                                     Console.WriteLine("--------------------------------------------------------------------------");
                                 }
+                            }
+                            else if(choice.ToLower().Equals("no"))
+                            {
+                                Console.WriteLine("--------------------------------------------------------------------------");
+                                Console.WriteLine("Aborted");
+                                Console.WriteLine("--------------------------------------------------------------------------");
                             }
                             else
                             {
@@ -640,6 +673,7 @@ namespace PresentationLayer
             {
                 adminServices = new AdminServices();
                 dataChecks = new DataChecks();
+                fieldChecks = new FieldChecks();
                 Console.WriteLine("Choose one of the options:");
                 Console.WriteLine("1. To View Leads by Campaign");
                 Console.WriteLine("2. To View Campaigns by Executives and Number of Leads for it");

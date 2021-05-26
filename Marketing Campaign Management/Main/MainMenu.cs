@@ -85,6 +85,7 @@ namespace PresentationLayer
             catch (Exception ex)
             {
                 Console.WriteLine("An Error Occured: Please contact the Administrator");
+                Environment.Exit(0);
                 ExceptionLogging.WriteLog(ex);
             }
         }

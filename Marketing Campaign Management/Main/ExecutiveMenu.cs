@@ -88,7 +88,12 @@ namespace PresentationLayer
                 Console.WriteLine("1. Create a sales order");
                 Console.WriteLine("2. View sales orders");
                 Console.WriteLine("3. Go Back");
-                int sales = int.Parse(Console.ReadLine());
+                int sales = 0;
+                while (!int.TryParse(Console.ReadLine(), out sales))
+                {
+                    Console.WriteLine("Please Enter a valid numerical value!");
+                    Console.WriteLine("Enter your option: ");
+                }
                 switch (sales)
                 {
                     case 1:
@@ -240,18 +245,23 @@ namespace PresentationLayer
                 Console.WriteLine("2. Follow leads: ");
                 Console.WriteLine("3. View Leads based on your assigned Campaigns: ");
                 Console.WriteLine("4. Back to Main Menu");
-                int Leads = int.Parse(Console.ReadLine());
-                switch (Leads)
+                int leadOptions = 0;
+                while (!int.TryParse(Console.ReadLine(), out leadOptions))
+                {
+                    Console.WriteLine("Please Enter a valid numerical value!");
+                    Console.WriteLine("Enter your option: ");
+                }
+                switch (leadOptions)
                 {
                     case 1:
                         Console.WriteLine("Enter the CampaignID: ");
-                        int CampaignID = 0;
-                        while (!int.TryParse(Console.ReadLine(), out CampaignID))
+                        int campaignId = 0;
+                        while (!int.TryParse(Console.ReadLine(), out campaignId))
                         {
                             Console.WriteLine("Please Enter a valid numerical value!");
                             Console.WriteLine("Try again: ");
                         }
-                        leads.CampaignID = CampaignID;
+                        leads.CampaignID = campaignId;
                         bool campCheck = dataChecks.CampaignStatusCheck(leads.CampaignID);
                         if (campCheck == true)
                         {
@@ -321,24 +331,32 @@ namespace PresentationLayer
                                 Console.WriteLine("Try again: ");
                             }
                             leads.ProductID = ProductID;
-                            execService = new ExecutiveService();
-                            bool addLeads = execService.AddLeads(leads);
-                            if (addLeads == true)
+                            if (dataChecks.CheckProduct(ProductID))
                             {
-                                Console.WriteLine("Added new Lead!");
+                                execService = new ExecutiveService();
+                                bool addLeads = execService.AddLeads(leads);
+                                if (addLeads == true)
+                                {
+                                    Console.WriteLine("Added new Lead!");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("--------------------------------------------------------------------------");
+                                    Console.WriteLine("Failed to add new lead");
+                                    Console.WriteLine("--------------------------------------------------------------------------");
+
+                                }
                             }
                             else
                             {
                                 Console.WriteLine("--------------------------------------------------------------------------");
-                                Console.WriteLine("Failed to add new lead");
+                                Console.WriteLine("No Product with that ID: Exiting.");
                                 Console.WriteLine("--------------------------------------------------------------------------");
-
                             }
                         }
                         else
-                        {
-                            Console.WriteLine("--------------------------------------------------------------------------");
-                            throw new Exception("Error Campaign Not Assigned to you or Campaign is Closed!");
+                        {                            
+                            throw new Exception("Error: Campaign Not Assigned to you or Campaign is Closed!");
                         }
                         break;
                     case 2:
@@ -432,6 +450,9 @@ namespace PresentationLayer
             }
             catch (Exception ex)
             {
+                Console.WriteLine("--------------------------------------------------------------------------");
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("--------------------------------------------------------------------------");
                 ExceptionLogging.WriteLog(ex);
                 goto LeadsMenu;
             }
@@ -445,8 +466,13 @@ namespace PresentationLayer
                 Console.WriteLine("1. View assigned Campaigns");
                 Console.WriteLine("2. Back to the previous menu.");
                 Console.WriteLine();
-                int Campaign = int.Parse(Console.ReadLine());
-                switch (Campaign)
+                int campaign = 0;
+                while (!int.TryParse(Console.ReadLine(), out campaign))
+                {
+                    Console.WriteLine("Please Enter a valid numerical value!");
+                    Console.WriteLine("Try again: ");
+                }
+                switch (campaign)
                 {
                     case 1:
                         List<Campaigns> viewCampaigns = new List<Campaigns>();

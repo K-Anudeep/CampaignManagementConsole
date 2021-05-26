@@ -17,16 +17,22 @@ namespace BusinessLayer.Validations
         LeadsRepo leadsRepo = new LeadsRepo();
         ProductRepo productRepo = new ProductRepo();
 
-        public bool CampaignStatusCheck(int leadID)
+        public bool CampaignStatusCheck(int cId)
         {
-            bool check = campaignsRepo.CampaignStatusCheck(leadID);
-            if (check == true)
+            if (campaignsRepo.OneCampaign(cId) != null)
             {
-                return true;
+                if(campaignsRepo.CampaignStatusCheck(cId))
+                {
+                    return true;
+                }    
+                else
+                {
+                    return false;
+                }
             }
             else
             {
-                return false;
+                throw new Exception("Error: No Campaign with that ID found.");
             }
         }
 
@@ -112,26 +118,26 @@ namespace BusinessLayer.Validations
             }
         }
 
-        public bool EmailCheck(string email)
-        {
-            var check = new EmailAddressAttribute();
-            if (check.IsValid(email))
-            {
-                return true;
-            }
-            else
-                return false;
-        }
         //public bool EmailCheck(string email)
         //{
-        //    string regexEmail = @"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$";
-        //    if (Regex.IsMatch(email.ToString(), regexEmail))
+        //    var check = new EmailAddressAttribute();
+        //    if (check.IsValid(email))
         //    {
         //        return true;
         //    }
         //    else
         //        return false;
         //}
+        public bool EmailCheck(string email)
+        {
+            string regexEmail = @"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$";
+            if (Regex.IsMatch(email.ToString(), regexEmail))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
 
         public bool PhoneNoCheck(string phone)
         {

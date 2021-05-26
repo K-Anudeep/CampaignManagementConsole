@@ -43,7 +43,6 @@ namespace DatabaseLayer.Repositories
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
                 ExceptionLogging.WriteLog(ex);
                 return false;
             }
